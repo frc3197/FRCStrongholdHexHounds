@@ -2,8 +2,8 @@
 #include "../RobotMap.h"
 
 Chassis::Chassis() :
-		Subsystem("Chassis")
 {
+	Subsystem("Chassis"),
 	leftStick(0), rightStick(1), can1(1), can2(2), can3(3), can4(4),
 	robotDrive(can1,can2,can3,can4)
 }
