@@ -15,7 +15,7 @@ void Chassis::InitDefaultCommand()
 }
 
 void Chassis::tankDrive(){
-	robotDrive(leftStick, rigthStick, true);
+	robotDrive(leftStick, rightStick, true);
 }
 
 // Put methods for controlling this subsystem
