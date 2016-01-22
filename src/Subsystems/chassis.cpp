@@ -15,7 +15,7 @@ void Chassis::InitDefaultCommand()
 }
 
 void Chassis::tankDrive(){
-	robotDrive(leftStick, rightStick, true);
+	robotDrive(leftStick.getForward(), rightStick.getForward(), true);
 }
 
 // Put methods for controlling this subsystem

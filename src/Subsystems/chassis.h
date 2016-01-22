@@ -19,6 +19,7 @@ private:
 public:
 	ExampleSubsystem();
 	void InitDefaultCommand();
+	void tankDrive();
 };
 
 #endif
