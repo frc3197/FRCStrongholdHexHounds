@@ -7,6 +7,7 @@ ExampleSubsystem* CommandBase::examplesubsystem = NULL;
 //ExampleCommand* CommandBase::examplecommand = NULL;
 OI* CommandBase::oi = NULL;
 Chassis* CommandBase::chassis = NULL;
+BallSuckerShooter* CommandBase::ballSuckerShooter = NULL;
 
 CommandBase::CommandBase(char const *name) :
 		Command(name)
@@ -25,5 +26,6 @@ void CommandBase::init()
 	// line should be repeated for each subsystem in the project.
 	chassis = new Chassis();
 	oi = new OI();
+	ballSuckerShooter = new BallSuckerShooter();
 
 }

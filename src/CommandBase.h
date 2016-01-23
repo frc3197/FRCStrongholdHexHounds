@@ -8,6 +8,7 @@
 #include "Subsystems/Chassis.h"
 #include "OI.h"
 #include "WPILib.h"
+#include "Subsystems/BallSuckerShooter.h"
 
 /**
  * The base for all commands. All atomic commands should subclass CommandBase.
@@ -25,6 +26,7 @@ public:
 	//static ExampleCommand *examplecommand;
 	static OI *oi;
 	static Chassis *chassis;
+	static BallSuckerShooter *ballSuckerShooter;
 
 };
 
