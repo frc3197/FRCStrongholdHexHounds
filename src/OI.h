@@ -9,6 +9,7 @@ private:
 
 public:
 	OI();
+	float getForward(float yVal);
 };
 
 #endif
