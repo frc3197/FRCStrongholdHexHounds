@@ -6,10 +6,11 @@
 class OI
 {
 private:
-
+	Joystick stick;
 public:
 	OI();
-	float getForward(float yVal);
+	float getLeft();
+	float getRight();
 };
 
 #endif

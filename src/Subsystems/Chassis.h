@@ -8,19 +8,18 @@
 class Chassis: public Subsystem
 {
 private:
-	Joystick stick;
-	RobotDrive robotDrive;
 	CANTalon can1;
 	CANTalon can2;
 	CANTalon can3;
 	CANTalon can4;
+	RobotDrive robotDrive;
 	// It's desirable that everything possible under private except
 	// for methods that implement subsystem capabilities
 public:
 	Chassis();
 	void InitDefaultCommand();
-	void tankDrive();
-	OI *oi;
+	void tankDrive(float left, float right);
+//	OI *oi;
 };
 
 #endif

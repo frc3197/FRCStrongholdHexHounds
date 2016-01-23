@@ -2,11 +2,11 @@
 #include "../Commands/drivewithJoystick.h"
 #include "../RobotMap.h"
 
-OI* oi = NULL;
+//OI* oi = NULL;
 
 Chassis::Chassis():
 	Subsystem("Chassis"),
-	stick(0), can1(1), can2(2), can3(3), can4(4),
+	can1(1), can2(2), can3(3), can4(4),
 	robotDrive(can3,can2,can1,can4)
 {
 	robotDrive.SetSafetyEnabled(false);
@@ -19,8 +19,8 @@ void Chassis::InitDefaultCommand()
 	//SetDefaultCommand(new MySpecialCommand());
 }
 
-void Chassis::tankDrive(){
-	robotDrive.TankDrive(oi->getForward(-stick.GetRawAxis(1)),oi->getForward(-stick.GetRawAxis(5)), true);
+void Chassis::tankDrive(float left, float right){
+	robotDrive.TankDrive(left, right, true);
 }
 
 // Put methods for controlling this subsystem
