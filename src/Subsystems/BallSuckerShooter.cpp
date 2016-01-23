@@ -4,7 +4,7 @@
 
 BallSuckerShooter::BallSuckerShooter() :
 		Subsystem("BallSuckerShooter"),
-		can1(1), can2(2), can3(3)
+		can5(1), can6(2), can7(3)
 {
 
 }
@@ -17,15 +17,15 @@ void BallSuckerShooter::InitDefaultCommand()
 }
 
 void BallSuckerShooter::setPickupMotorSpeed(float val){
-	can1.Set(val);
+	can5.Set(val);
 }
 
 void  BallSuckerShooter::setLowGoalShoot(float val){
-	can2.Set(val);
+	can6.Set(val);
 }
 
 void BallSuckerShooter::setHighGoalShoot(float val){
-	can3.Set(val);
+	can7.Set(val);
 }
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

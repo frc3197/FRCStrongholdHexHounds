@@ -7,9 +7,9 @@
 class BallSuckerShooter: public Subsystem
 {
 private:
-	CANTalon can1;
-	CANTalon can2;
-	CANTalon can3;
+	CANTalon can5;//Ball Pickup
+	CANTalon can6;//Low Goal Shooter
+	CANTalon can7;//High Goal Shooter
 	// It's desirable that everything possible under private except
 	// for methods that implement subsystem capabilities
 public:
