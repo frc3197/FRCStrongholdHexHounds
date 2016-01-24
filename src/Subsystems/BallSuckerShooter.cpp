@@ -4,7 +4,7 @@
 
 BallSuckerShooter::BallSuckerShooter() :
 		Subsystem("BallSuckerShooter"),
-		can5(1), can6(2), can7(3)
+		can5(5), can6(6), can7(7)
 {
 
 }

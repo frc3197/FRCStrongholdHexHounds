@@ -37,21 +37,31 @@ int OI::getShoot()
 	bool newButton1 = button1.Get();
 	bool newButton2 = button2.Get();
 	bool newButton3 = button3.Get();
+	bool newButton4 = button4.Get();
+	bool newButton5 = button5.Get();
 	currButton;
 	if(newButton1)
 	{
-		currButton = "A";
+		currButton = "A"; //Ball Suck
 		return 1;
 	}
 	else if(newButton2)
 	{
-		currButton = "B";
+		currButton = "B"; //Low goal
 		return 2;
 	}
 	else if(newButton3)
 	{
-		currButton = "X";
+		currButton = "X"; //High Goal
 		return 3;
+	}
+	else if(newButton4){
+		currButton = "Y";
+		return 4;
+	}
+	else if(newButton5){
+		currButton = "LB";
+		return 5;
 	}
 	else
 	{
