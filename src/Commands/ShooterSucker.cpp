@@ -55,19 +55,18 @@ void ShooterSucker::Execute()
 		time.Start();
 		actTime += tempTime+time.Get();
 		ballSuckerShooter->setLowGoalShoot(-.15);
-		ballSuckerShooter->setHighGoalShoot(.1);
-		if(time.Get() >= 1&&time.Get()<3.6)
+		ballSuckerShooter->setHighGoalShoot(.9);
+		if(time.Get() >= .3&&time.Get()<1)
 		{
-			ballSuckerShooter->setHighGoalShoot(.1);
-			ballSuckerShooter->setHighGoalShoot(.8);
+			ballSuckerShooter->setHighGoalShoot(.9);
 
 		}
-		if(time.Get() >= 3.6&&time.Get() < 5)
+		if(time.Get() >= 1&&time.Get() < 1.25)
 		{
 			ballSuckerShooter->setLowGoalShoot(.5);
-			ballSuckerShooter->setHighGoalShoot(.8);
+			ballSuckerShooter->setHighGoalShoot(.9);
 		}
-		if(time.Get() >= 5)
+		if(time.Get() >= 1.25)
 		{
 			ballSuckerShooter->setPickupMotorSpeed(0);
 			ballSuckerShooter->setLowGoalShoot(0);
