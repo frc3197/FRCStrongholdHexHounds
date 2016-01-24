@@ -42,12 +42,12 @@ int OI::getShoot()
 	currButton;
 	if(newButton1)
 	{
-		currButton = "A"; //Ball Suck
+		currButton = "A"; //low goal
 		return 1;
 	}
 	else if(newButton2)
 	{
-		currButton = "B"; //Low goal
+		currButton = "B"; //ball suck
 		return 2;
 	}
 	else if(newButton3)

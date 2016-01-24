@@ -22,46 +22,57 @@ void ShooterSucker::Initialize()
 void ShooterSucker::Execute()
 {
 	num = oi->getShoot();
+	if(num==4){
+		b = true;
+	}
+	else if(!b)
+	{
+		time.Reset();
+		ballSuckerShooter->setPickupMotorSpeed(0);
+		ballSuckerShooter->setLowGoalShoot(0);
+		ballSuckerShooter->setHighGoalShoot(0);
+	}
 	SmartDashboard::PutNumber("Button Number", num);
-	SmartDashboard::PutNumber("Time", time.Get());
-	ballSuckerShooter->setPickupMotorSpeed(0);
-	ballSuckerShooter->setLowGoalShoot(0);
-	ballSuckerShooter->setHighGoalShoot(0);
 
 	if(num==1)
-	{//ball sucker
+	{//low goal
 		ballSuckerShooter->setPickupMotorSpeed(1);
-		ballSuckerShooter->setLowGoalShoot(1);
+		ballSuckerShooter->setLowGoalShoot(-1);
 	}
 	else if(num==2)
-	{//low goal
+	{//ball suck
 			SmartDashboard::PutNumber("Time", time.Get());
-			ballSuckerShooter->setPickupMotorSpeed(1);
-			ballSuckerShooter->setLowGoalShoot(-1);
+			ballSuckerShooter->setPickupMotorSpeed(-1);
+			ballSuckerShooter->setLowGoalShoot(1);
 	}
 	/*else if(num==3)
 	{//high goal shooter
 		SmartDashboard::PutNumber("Time", time.Get());
 		ballSuckerShooter->setLowGoalShoot(-.15);
 	}*/
-	else if(num==4){
+	else if(b){
 		tempTime = time.Get();
 		time.Start();
 		actTime += tempTime+time.Get();
 		ballSuckerShooter->setLowGoalShoot(-.15);
-		ballSuckerShooter->setHighGoalShoot(1);
-		if(time.Get() >= .1)
+		ballSuckerShooter->setHighGoalShoot(.1);
+		if(time.Get() >= 1&&time.Get()<3.6)
 		{
-			ballSuckerShooter->setHighGoalShoot(1);
+			ballSuckerShooter->setHighGoalShoot(.1);
+			ballSuckerShooter->setHighGoalShoot(.8);
+
 		}
-		if(time.Get() >= 1.6)
+		if(time.Get() >= 3.6&&time.Get() < 5)
 		{
-			ballSuckerShooter->setLowGoalShoot(.15);
-			ballSuckerShooter->setHighGoalShoot(1);
+			ballSuckerShooter->setLowGoalShoot(.5);
+			ballSuckerShooter->setHighGoalShoot(.8);
 		}
-		if(time.Get() >= 2.0)
+		if(time.Get() >= 5)
 		{
-			ballSuckerShooter->setHighGoalShoot(-.5);
+			ballSuckerShooter->setPickupMotorSpeed(0);
+			ballSuckerShooter->setLowGoalShoot(0);
+			ballSuckerShooter->setHighGoalShoot(0);
+			b = false;
 			time.Reset();
 		}
 	}

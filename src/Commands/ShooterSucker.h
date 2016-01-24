@@ -13,6 +13,7 @@ private:
 	int lastNum;
 	double tempTime;
 	double actTime;
+	bool b = false;
 public:
 	ShooterSucker();
 	void Initialize();
