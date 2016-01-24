@@ -11,6 +11,8 @@ private:
 	Timer time;
 	int num;
 	int lastNum;
+	double tempTime;
+	double actTime;
 public:
 	ShooterSucker();
 	void Initialize();
