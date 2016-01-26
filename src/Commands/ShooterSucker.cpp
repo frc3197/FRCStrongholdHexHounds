@@ -9,13 +9,11 @@ ShooterSucker::ShooterSucker()
 
 // Called just before this Command runs the first time
 void ShooterSucker::Initialize()
-{
+{//initializes speeds to 0
 	ballSuckerShooter->setPickupMotorSpeed(0);
 	ballSuckerShooter->setLowGoalShoot(0);
 	ballSuckerShooter->setHighGoalShoot(0);
 	num = 0;
-	tempTime = 0;
-	actTime = 0;
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -23,9 +21,9 @@ void ShooterSucker::Execute()
 {
 	num = oi->getShoot();
 	if(num==4){
-		b = true;
+		highGoalBool = true;
 	}
-	else if(!b)
+	else if(!highGoalBool)
 	{
 		time.Reset();
 		ballSuckerShooter->setPickupMotorSpeed(0);
@@ -50,28 +48,26 @@ void ShooterSucker::Execute()
 		SmartDashboard::PutNumber("Time", time.Get());
 		ballSuckerShooter->setLowGoalShoot(-.15);
 	}*/
-	else if(b){
-		tempTime = time.Get();
+	else if(highGoalBool){//high goal shooter
 		time.Start();
-		actTime += tempTime+time.Get();
 		ballSuckerShooter->setLowGoalShoot(-.15);
-		ballSuckerShooter->setHighGoalShoot(.9);
+		ballSuckerShooter->setHighGoalShoot(.9);//winds ball back while starting high goal motor
 		if(time.Get() >= .3&&time.Get()<1)
 		{
-			ballSuckerShooter->setHighGoalShoot(.9);
+			ballSuckerShooter->setHighGoalShoot(.9);//stops winding ball back
 
 		}
 		if(time.Get() >= 1&&time.Get() < 1.25)
 		{
 			ballSuckerShooter->setLowGoalShoot(.5);
-			ballSuckerShooter->setHighGoalShoot(.9);
+			ballSuckerShooter->setHighGoalShoot(.9);//shoots ball forward into high goal motor to shoot ball out
 		}
 		if(time.Get() >= 1.25)
 		{
 			ballSuckerShooter->setPickupMotorSpeed(0);
 			ballSuckerShooter->setLowGoalShoot(0);
 			ballSuckerShooter->setHighGoalShoot(0);
-			b = false;
+			highGoalBool = false;
 			time.Reset();
 		}
 	}

@@ -36,7 +36,11 @@ private:
 	JoystickButton button10; //Right Stick Click
 
 	string currButton;
+	AnalogInput ultra;
+	float voltage;
+	float range;
 
+	bool inverse = false;
 
 
 
@@ -45,6 +49,8 @@ public:
 	float getLeft();
 	float getRight();
 	int getShoot();
+	void rangeSensor();
+	bool getBoolean();
 };
 
 #endif

@@ -7,6 +7,9 @@
 
 class driveWithJoystick: public CommandBase
 {
+private:
+	bool inverse;
+
 public:
 	driveWithJoystick();
 	void Initialize();

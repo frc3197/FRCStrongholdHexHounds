@@ -17,15 +17,15 @@ void BallSuckerShooter::InitDefaultCommand()
 }
 
 void BallSuckerShooter::setPickupMotorSpeed(float val){
-	can5.Set(val);
+	can5.Set(val); //sets pickup motor speed
 }
 
 void  BallSuckerShooter::setLowGoalShoot(float val){
-	can6.Set(val);
+	can6.Set(val);//sets low goal motor speed
 }
 
 void BallSuckerShooter::setHighGoalShoot(float val){
-	can7.Set(val);
+	can7.Set(val);//sets high goal motor speed
 }
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

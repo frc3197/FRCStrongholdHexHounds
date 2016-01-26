@@ -11,9 +11,7 @@ private:
 	Timer time;
 	int num;
 	int lastNum;
-	double tempTime;
-	double actTime;
-	bool b = false;
+	bool highGoalBool = false;
 public:
 	ShooterSucker();
 	void Initialize();

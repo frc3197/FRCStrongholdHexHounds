@@ -11,12 +11,13 @@ OI::OI():
 	button7(&stick, BUTTON7),
 	button8(&stick, BUTTON8),
 	button9(&stick, BUTTON9),
-	button10(&stick, BUTTON10)
+	button10(&stick, BUTTON10),
+	ultra(0)
 {
 	// Process operator interface input here.
 }
 
-float OI::getLeft(){
+float OI::getLeft(){//gets left stick Y value
 	float yVal = stick.GetRawAxis(1);
 	if((yVal<.1)&&(yVal>-.1)){
 		yVal = 0;
@@ -24,7 +25,7 @@ float OI::getLeft(){
 	return -yVal;
 }
 
-float OI::getRight(){
+float OI::getRight(){//gets right stick Y value
 	float yVal = stick.GetRawAxis(5);
 	if((yVal<.1)&&(yVal>-.1)){
 		yVal = 0;
@@ -33,7 +34,7 @@ float OI::getRight(){
 }
 
 int OI::getShoot()
-{
+{//returns which button is pressed
 	bool newButton1 = button1.Get();
 	bool newButton2 = button2.Get();
 	bool newButton3 = button3.Get();
@@ -71,4 +72,25 @@ int OI::getShoot()
 	SmartDashboard::PutString("Button Pressed", currButton);
 }
 
+void OI::rangeSensor()
+{
+	voltage = ultra.GetVoltage();
+	SmartDashboard::PutNumber("Voltage", voltage);
+	range = voltage*100;
+	SmartDashboard::PutNumber("Range", range);
 
+}
+
+bool OI::getBoolean()
+{
+	bool newButton = button6.Get();
+	if(inverse&&newButton)
+	{
+		inverse = false;
+	}
+	else if(newButton)
+	{
+		inverse = true;
+	}
+	return inverse;
+}

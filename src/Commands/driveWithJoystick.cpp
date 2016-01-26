@@ -17,7 +17,16 @@ void driveWithJoystick::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void driveWithJoystick::Execute()
 {
-	chassis->tankDrive(oi->getLeft(),oi->getRight());
+	oi->rangeSensor();
+	inverse = oi->getBoolean();
+	if(inverse)
+	{
+		chassis->tankDrive(-oi->getLeft(),-oi->getRight());
+	}
+	else
+	{
+		chassis->tankDrive(oi->getLeft(),oi->getRight());
+	}
 }
 
 // Make this return true when this Command no longer needs to run execute()
