@@ -37,8 +37,12 @@ private:
 
 	string currButton;
 	AnalogInput ultra;
+	AnalogInput ultra2;
 	float voltage;
 	float range;
+	float voltage2;
+	float range2;
+	DigitalOutput dio;
 
 	bool inverse = false;
 
