@@ -13,6 +13,7 @@ public:
 	AutoTurn();
 	void InitDefaultCommand();
 	void reverse180();
+	void align();
 };
 
 #endif

@@ -19,6 +19,11 @@ void AutoTurn::reverse180()
 {
 
 }
+
+void AutoTurn::align()
+{
+
+}
 // Put methods for controlling this subsystem
 // here. Call these from Commands.
 

@@ -38,6 +38,7 @@ private:
 	string currButton;
 	AnalogInput ultra;
 	AnalogInput ultra2;
+	DigitalInput rangeFinder;
 	float voltage;
 	float range;
 	float voltage2;

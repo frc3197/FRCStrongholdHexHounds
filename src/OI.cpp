@@ -12,7 +12,7 @@ OI::OI():
 	button8(&stick, BUTTON8),
 	button9(&stick, BUTTON9),
 	button10(&stick, BUTTON10),
-	ultra(0), ultra2(1), dio(0)
+	ultra(0), ultra2(1), rangeFinder(6), dio(0)
 {
 	// Process operator interface input here.
 }
@@ -74,15 +74,17 @@ int OI::getShoot()
 
 void OI::rangeSensor()
 {
-	voltage = ultra.GetVoltage();
+	voltage = ultra.GetAverageVoltage();
 	SmartDashboard::PutNumber("Voltage", voltage);
 	range = voltage*100;
 	SmartDashboard::PutNumber("Range", range);
 
-	voltage2 = ultra2.GetVoltage();
+	voltage2 = ultra2.GetAverageVoltage();
 	SmartDashboard::PutNumber("Voltage 2", voltage2);
 	range2 = voltage2*100;
 	SmartDashboard::PutNumber("Range 2", range2);
+
+	SmartDashboard::PutNumber("Range Finder Range", rangeFinder.Get());
 }
 
 /*void OI::rangeSensor()
