@@ -53,11 +53,11 @@ int OI::getShoot()
 	}
 	else if(newButton3)
 	{
-		currButton = "X"; //High Goal
+		currButton = "X";
 		return 3;
 	}
 	else if(newButton4){
-		currButton = "Y";
+		currButton = "Y"; //High Goal
 		return 4;
 	}
 	else if(newButton5){
@@ -72,34 +72,51 @@ int OI::getShoot()
 	SmartDashboard::PutString("Button Pressed", currButton);
 }
 
-void OI::rangeSensor()
-{
-	voltage = ultra.GetAverageVoltage();
-	SmartDashboard::PutNumber("Voltage", voltage);
-	range = voltage*100;
-	SmartDashboard::PutNumber("Range", range);
-
-	voltage2 = ultra2.GetAverageVoltage();
-	SmartDashboard::PutNumber("Voltage 2", voltage2);
-	range2 = voltage2*100;
-	SmartDashboard::PutNumber("Range 2", range2);
-
-	SmartDashboard::PutNumber("Range Finder Range", rangeFinder.Get());
-}
-
 /*void OI::rangeSensor()
 {
-	dio.Pulse(1.6);
-	voltage = ultra.GetVoltage();
+	voltage = ultra.GetAverageVoltage();//gets range sensor 1
 	SmartDashboard::PutNumber("Voltage", voltage);
 	range = voltage*100;
 	SmartDashboard::PutNumber("Range", range);
 
-	voltage2 = ultra2.GetVoltage();
+	voltage2 = ultra2.GetAverageVoltage();//gets range sensor 2
 	SmartDashboard::PutNumber("Voltage 2", voltage2);
 	range2 = voltage2*100;
 	SmartDashboard::PutNumber("Range 2", range2);
+
+	if(rangeFinder.Get() == 1)//gets whether there is a ball or not
+	{
+		SmartDashboard::PutString("Range Finder Range", "You've got balls");
+	}
+	else
+	{
+		SmartDashboard::PutString("Range Finder Range", "Sorry, no balls");
+	}
 }*/
+
+void OI::rangeSensor()
+{
+	dio.Pulse(1.6);//sets up pulse
+
+	voltage = ultra.GetAverageVoltage();//gets range sensor 1
+	SmartDashboard::PutNumber("Voltage", voltage);
+	range = voltage*100;
+	SmartDashboard::PutNumber("Range", range);
+
+	voltage2 = ultra2.GetAverageVoltage();//gets range sensor 2
+	SmartDashboard::PutNumber("Voltage 2", voltage2);
+	range2 = voltage2*100;
+	SmartDashboard::PutNumber("Range 2", range2);
+
+	if(rangeFinder.Get() == 1)//gets whether there is a ball or not
+	{
+		SmartDashboard::PutString("Range Finder Range", "You've got balls");
+	}
+	else
+	{
+		SmartDashboard::PutString("Range Finder Range", "Sorry, no balls");
+	}
+}
 
 bool OI::getBoolean()
 {
@@ -114,3 +131,19 @@ bool OI::getBoolean()
 	}
 	return inverse;
 }
+
+bool OI::getButtonX()
+{
+	return button3.Get();
+}
+
+bool OI::getButtonLB()
+{
+	return button5.Get();
+}
+
+float OI::getRangeDif()
+{
+	return (ultra.GetAverageVoltage()*100) - (ultra2.GetAverageVoltage()*100);
+}
+

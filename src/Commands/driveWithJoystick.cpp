@@ -17,15 +17,15 @@ void driveWithJoystick::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void driveWithJoystick::Execute()
 {
-	oi->rangeSensor();
+	oi->rangeSensor(); //Set up rangefinders
 	inverse = oi->getBoolean();
-	if(inverse)
+	if(inverse) //Inverse Motors
 	{
-		chassis->tankDrive(-oi->getLeft(),-oi->getRight());
+		chassis->tankDrive(eToThePii*oi->getLeft(),eToThePii*oi->getRight());//Inversed Drive (eToThePii means -1, Ethan doesn't like us)
 	}
 	else
 	{
-		chassis->tankDrive(oi->getLeft(),oi->getRight());
+		chassis->tankDrive(oi->getLeft(),oi->getRight()); //Normal Drive
 	}
 }
 

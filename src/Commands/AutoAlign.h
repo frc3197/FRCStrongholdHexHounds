@@ -3,6 +3,7 @@
 
 #include "../CommandBase.h"
 #include "WPILib.h"
+#include "OI.h"
 
 class AutoAlign: public CommandBase
 {

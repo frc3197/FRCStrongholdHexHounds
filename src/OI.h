@@ -56,6 +56,9 @@ public:
 	int getShoot();
 	void rangeSensor();
 	bool getBoolean();
+	bool getButtonX();
+	bool getButtonLB();
+	float getRangeDif();
 };
 
 #endif

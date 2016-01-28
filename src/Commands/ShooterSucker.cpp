@@ -39,7 +39,6 @@ void ShooterSucker::Execute()
 	}
 	else if(num==2)
 	{//ball suck
-			SmartDashboard::PutNumber("Time", time.Get());
 			ballSuckerShooter->setPickupMotorSpeed(-1);
 			ballSuckerShooter->setLowGoalShoot(1);
 	}
@@ -52,12 +51,12 @@ void ShooterSucker::Execute()
 		time.Start();
 		ballSuckerShooter->setLowGoalShoot(-.15);
 		ballSuckerShooter->setHighGoalShoot(.9);//winds ball back while starting high goal motor
-		if(time.Get() >= .3&&time.Get()<1)
+		if((time.Get() >= .3) && (time.Get()<1))
 		{
 			ballSuckerShooter->setHighGoalShoot(.9);//stops winding ball back
 
 		}
-		if(time.Get() >= 1&&time.Get() < 1.25)
+		if((time.Get() >= 1) && (time.Get() < 1.25))
 		{
 			ballSuckerShooter->setLowGoalShoot(.5);
 			ballSuckerShooter->setHighGoalShoot(.9);//shoots ball forward into high goal motor to shoot ball out

@@ -9,6 +9,7 @@ class driveWithJoystick: public CommandBase
 {
 private:
 	bool inverse;
+	static const int eToThePii = -1;
 
 public:
 	driveWithJoystick();
