@@ -7,6 +7,12 @@
 
 class AutoAlign: public CommandBase
 {
+private:
+	Timer time;
+	bool oneButtonOnly = false;
+	float rangeDiffErrorRange = 1.5;
+	int eToThePii = -1;
+
 public:
 	AutoAlign();
 	void Initialize();

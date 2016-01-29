@@ -13,7 +13,6 @@ private:
 	CANTalon can3;
 	CANTalon can4;
 	RobotDrive drive;
-	Timer time;
 	// It's desirable that everything possible under private except
 	// for methods that implement subsystem capabilities
 public:

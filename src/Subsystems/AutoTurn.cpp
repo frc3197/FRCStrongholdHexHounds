@@ -2,8 +2,8 @@
 #include "../RobotMap.h"
 #include "../Commands/AutoAlign.h"
 
-#define FORWARD_MOTOR_SPEED .5
-#define BACKWARD_MOTOR_SPEED -.5
+#define FORWARD_MOTOR_SPEED .75
+#define BACKWARD_MOTOR_SPEED -.75
 #define FORWARD_MOTOR_SPEED_FAST 1.0
 #define BACKWARD_MOTOR_SPEED_FAST -1.0
 
@@ -23,23 +23,19 @@ void AutoTurn::InitDefaultCommand()
 
 void AutoTurn::reverse180()
 {
-	time.Start();
 	drive.TankDrive(FORWARD_MOTOR_SPEED_FAST, BACKWARD_MOTOR_SPEED_FAST, true);
-	if(time.Get() >= 2)
-	{
-		drive.TankDrive(0.0, 0.0, true);
-		time.Reset();
-	}
 }
 
 void AutoTurn::turnClockwise()
 {
-	drive.TankDrive(FORWARD_MOTOR_SPEED, BACKWARD_MOTOR_SPEED, true);
+	SmartDashboard::PutString("Turn CLockwise", "turn clockwise executed");
+	drive.TankDrive(FORWARD_MOTOR_SPEED, BACKWARD_MOTOR_SPEED, false);
 }
 
 void AutoTurn::turnCounterClockwise()
 {
-	drive.TankDrive(BACKWARD_MOTOR_SPEED, FORWARD_MOTOR_SPEED, true);
+	SmartDashboard::PutString("Turn Counter CLockwise", "turn counter clockwise executed");
+	drive.TankDrive(BACKWARD_MOTOR_SPEED, FORWARD_MOTOR_SPEED, false);
 }
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

@@ -12,8 +12,14 @@ OI::OI():
 	button8(&stick, BUTTON8),
 	button9(&stick, BUTTON9),
 	button10(&stick, BUTTON10),
-	ultra(0), ultra2(1), rangeFinder(6), dio(0)
+	ultra(0), ultra2(1),
+	rangeFinder(6),
+	dio(0)
+	//spi(0)
+	//gyro(spi)
 {
+	//gyro.Calibrate();
+	//gyro.Reset();
 	// Process operator interface input here.
 }
 
@@ -100,12 +106,12 @@ void OI::rangeSensor()
 
 	voltage = ultra.GetAverageVoltage();//gets range sensor 1
 	SmartDashboard::PutNumber("Voltage", voltage);
-	range = voltage*100;
+	range = voltage*104 + 2;
 	SmartDashboard::PutNumber("Range", range);
 
 	voltage2 = ultra2.GetAverageVoltage();//gets range sensor 2
 	SmartDashboard::PutNumber("Voltage 2", voltage2);
-	range2 = voltage2*100;
+	range2 = voltage2*104 + 2;
 	SmartDashboard::PutNumber("Range 2", range2);
 
 	if(rangeFinder.Get() == 1)//gets whether there is a ball or not
@@ -139,11 +145,32 @@ bool OI::getButtonX()
 
 bool OI::getButtonLB()
 {
-	return button5.Get();
+	if((button5.Get()) && (LB))
+	{
+		LB = false;
+	}
+	else if(button5.Get())
+	{
+		LB = false;
+	}
+	return LB;
 }
 
 float OI::getRangeDif()
 {
-	return (ultra.GetAverageVoltage()*100) - (ultra2.GetAverageVoltage()*100);
+	return (ultra.GetAverageVoltage()*104 + 2) - (ultra2.GetAverageVoltage()*104 + 2);
 }
+
+float OI::getAngle()
+{
+	//return (gyro.GetAngle());
+	return 0;
+}
+
+void OI::gyroReset()
+{
+	//gyro.Calibrate();
+	//gyro.Reset();
+}
+
 

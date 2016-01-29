@@ -21,7 +21,7 @@ void driveWithJoystick::Execute()
 	inverse = oi->getBoolean();
 	if(inverse) //Inverse Motors
 	{
-		chassis->tankDrive(eToThePii*oi->getLeft(),eToThePii*oi->getRight());//Inversed Drive (eToThePii means -1, Ethan doesn't like us)
+		chassis->tankDrive(eToThePii*oi->getRight(), eToThePii*oi->getLeft());//Inversed Drive (eToThePii means -1, Ethan doesn't like us)
 	}
 	else
 	{

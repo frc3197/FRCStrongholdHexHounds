@@ -44,8 +44,12 @@ private:
 	float voltage2;
 	float range2;
 	DigitalOutput dio;
+	//SPI spi;
+	//ADXRS450_Gyro gyro;
 
 	bool inverse = false;
+	bool LB = false;
+
 
 
 
@@ -59,6 +63,8 @@ public:
 	bool getButtonX();
 	bool getButtonLB();
 	float getRangeDif();
+	float getAngle();
+	void gyroReset();
 };
 
 #endif
