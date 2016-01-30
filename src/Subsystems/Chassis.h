@@ -14,10 +14,7 @@ private:
 	CANTalon can3;
 	CANTalon can4;
 	RobotDrive robotDrive;
-	int randomTurnMult = rand() % 3 - 1;
-	int eToThePii = -1;
-	// It's desirable that everything possible under private except
-	// for methods that implement subsystem capabilities
+
 public:
 	Chassis();
 	void InitDefaultCommand();

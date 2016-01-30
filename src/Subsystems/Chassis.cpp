@@ -3,7 +3,7 @@
 #include "../RobotMap.h"
 
 #define MOTOR_SPEED .5
-#define MOTOR_SPEED_FAST 1.0
+#define MOTOR_SPEED_FAST .8
 
 
 Chassis::Chassis():
@@ -17,33 +17,30 @@ Chassis::Chassis():
 void Chassis::InitDefaultCommand()
 {
 	SetDefaultCommand(new driveWithJoystick());
-	// Set the default command for a subsystem here.
-	//SetDefaultCommand(new MySpecialCommand());
 }
 
-void Chassis::tankDrive(float left, float right){
+void Chassis::tankDrive(float left, float right)
+{
 	robotDrive.TankDrive(left, right, true);
 }
 
-void Chassis::reverse180()//auto reverses 180 degrees
+void Chassis::reverse180() //auto reverses 180 degrees
 {
-	robotDrive.TankDrive(MOTOR_SPEED_FAST, eToThePii* MOTOR_SPEED_FAST, true);
-	SmartDashboard::PutString("Counter Clockwise", "reverse180 Thou'st here now");
-
+	robotDrive.TankDrive(MOTOR_SPEED_FAST, -MOTOR_SPEED_FAST, true);
+	SmartDashboard::PutString("Counter Clockwise", "*Slow Clap* You turned around!");
 }
 
-void Chassis::turnClockwise()//auto-aligns if right sensor>left sensor
+void Chassis::turnClockwise() //auto-aligns if right sensor>left sensor
 {
 	SmartDashboard::PutString("Turn CLockwise", "turn clockwise executed");
-	robotDrive.TankDrive(MOTOR_SPEED, eToThePii*MOTOR_SPEED, false);
+	robotDrive.TankDrive(MOTOR_SPEED, -MOTOR_SPEED, false);
 }
 
-void Chassis::turnCounterClockwise()//auto-aligns if left sensor > right sensor
+void Chassis::turnCounterClockwise() //auto-aligns if left sensor > right sensor
 {
 	SmartDashboard::PutString("Turn Counter CLockwise", "turn counter clockwise executed");
-	robotDrive.TankDrive(MOTOR_SPEED, eToThePii* MOTOR_SPEED, false);
+	robotDrive.TankDrive(-MOTOR_SPEED, MOTOR_SPEED, false);
 }
 
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
+
 

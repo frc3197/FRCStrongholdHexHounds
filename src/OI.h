@@ -4,6 +4,7 @@
 #include "WPILib.h"
 #include <iostream>
 #include <string>
+#include  <SPI.h>
 
 using namespace std;
 
@@ -44,8 +45,6 @@ private:
 	float voltage2;
 	float range2;
 	DigitalOutput dio;
-	//Port spiPort;
-	//SPI spi;
 	ADXRS450_Gyro gyro;
 
 	bool inverse = false;
@@ -62,6 +61,7 @@ public:
 	bool getBoolean();
 	bool getButtonX();
 	bool getButtonLB();
+	bool returnLB();
 	float getRangeDif();
 	float getAngle();
 	void gyroReset();

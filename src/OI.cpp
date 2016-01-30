@@ -1,4 +1,7 @@
 #include "OI.h"
+#include "SPI.h"
+
+#define DEADZONE .1
 
 OI::OI():
 	stick(0),
@@ -15,25 +18,22 @@ OI::OI():
 	ultra(0), ultra2(1),
 	rangeFinder(6),
 	dio(0),
-	//spiPort(0),
-	//spi(spiPort),
-	//gyro(spi)
-	gyro()
+	gyro(SPI::kOnboardCS0)
 {
 	gyro.Calibrate();
 	gyro.Reset();
 	// Process operator interface input here.
 }
 
-float OI::getLeft(){//gets left stick Y value
+float OI::getLeft()//gets left stick Y value
+	{
 	float yVal = stick.GetRawAxis(1);
-	if((yVal<.1)&&(yVal>-.1)){
-		yVal = 0;
-	}
+	if((yVal < DEADZONE)&&(yVal > -DEADZONE)) return 0;
 	return -yVal;
-}
+	}
 
-float OI::getRight(){//gets right stick Y value
+float OI::getRight()//gets right stick Y value
+	{
 	float yVal = stick.GetRawAxis(5);
 	if((yVal<.1)&&(yVal>-.1)){
 		yVal = 0;
@@ -61,7 +61,7 @@ int OI::getShoot()
 	}
 	else if(newButton3)
 	{
-		currButton = "X";
+		currButton = "X"; //auto
 		return 3;
 	}
 	else if(newButton4){
@@ -79,28 +79,6 @@ int OI::getShoot()
 	}
 	SmartDashboard::PutString("Button Pressed", currButton);
 }
-
-/*void OI::rangeSensor()
-{
-	voltage = ultra.GetAverageVoltage();//gets range sensor 1
-	SmartDashboard::PutNumber("Voltage", voltage);
-	range = voltage*100;
-	SmartDashboard::PutNumber("Range", range);
-
-	voltage2 = ultra2.GetAverageVoltage();//gets range sensor 2
-	SmartDashboard::PutNumber("Voltage 2", voltage2);
-	range2 = voltage2*100;
-	SmartDashboard::PutNumber("Range 2", range2);
-
-	if(rangeFinder.Get() == 1)//gets whether there is a ball or not
-	{
-		SmartDashboard::PutString("Range Finder Range", "You've got balls");
-	}
-	else
-	{
-		SmartDashboard::PutString("Range Finder Range", "Sorry, no balls");
-	}
-}*/
 
 void OI::rangeSensor()
 {
@@ -151,15 +129,20 @@ bool OI::getButtonX()
 
 bool OI::getButtonLB()
 {
-	if((button5.Get()) && (LB))
+	/*if((button5.Get()) && (LB))
 	{
 		LB = false;
 	}
 	else if(button5.Get())
 	{
-		LB = false;
-	}
-	return LB;
+		LB = true;
+	}*/
+	return button5.Get();
+}
+
+bool OI::returnLB()
+{
+	return button5.Get();
 }
 
 float OI::getRangeDif()
@@ -180,7 +163,6 @@ void OI::resetButtonX()
 
 void OI::gyroReset()
 {
-	gyro.Calibrate();
 	gyro.Reset();
 }
 

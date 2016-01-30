@@ -1,58 +1,80 @@
 #include "driveWithJoystick.h"
 
+#define ERROR_RANGE 1.5
 
 driveWithJoystick::driveWithJoystick()
 {
 	Requires(chassis);
-	// Use Requires() here to declare subsystem dependencies
-	// eg. Requires(chassis);
+
 }
 
-// Called just before this Command runs the first time
 void driveWithJoystick::Initialize()
 {
 
 }
 
-// Called repeatedly when this Command is scheduled to run
 void driveWithJoystick::Execute()
 {
+	if(!LBPressed)
+	{
+		LBPressed = oi->getButtonLB();
+		LBLast = false;
+	}
+
+	if(LBPressed && !LBLast)
+	{
+		LBLast = true;
+		oi->gyroReset();
+	}
+
+
 	inverse = oi->getBoolean();
 	oi->rangeSensor();
-	if(inverse) //Inverse Motors
+
+	if((oi->getButtonX()) && ((oi->getRangeDif() >= -ERROR_RANGE) || (oi->getRangeDif() <= ERROR_RANGE)))
 	{
-		chassis->tankDrive(eToThePii*oi->getRight(), eToThePii*oi->getLeft());//Inversed Drive (eToThePii means -1, Ethan doesn't like us)
-	}
-	else if((oi->getButtonX()) && ((oi->getRangeDif() >= eToThePii*rangeDiffErrorRange) || (oi->getRangeDif() <= rangeDiffErrorRange)))
-	{
-		if(oi->getRangeDif() >= rangeDiffErrorRange)
+		if(oi->getRangeDif() >= ERROR_RANGE)
 		{
 			chassis->turnClockwise();
-			SmartDashboard::PutString("Clockwise", "got to turnClockwise");
 		}
-		else if(oi->getRangeDif() <= -rangeDiffErrorRange)
+
+		else if(oi->getRangeDif() <= -ERROR_RANGE)
 		{
 			chassis->turnCounterClockwise();
-			SmartDashboard::PutString("Counter Clockwise", "got to turnCounterClockwise");
 		}
+
 	}
-	else if((oi->getButtonLB()) && (oi-> getAngle()  >= 180))
+	else if((LBPressed) && (oi-> getAngle()  <= TURNAMOUNT))
 	{
-		oneButtonOnly = false;
+		resetLB = true;
 		chassis->reverse180();
+		SmartDashboard::PutNumber("Working", 1);
+
+	}
+	else if (inverse) //Inverse Motors
+	{
+		chassis->tankDrive(-oi->getRight(), -oi->getLeft());//Inversed Drive
 	}
 	else
 	{
-		chassis->tankDrive(oi->getLeft(),oi->getRight()); //Normal Drive
+		chassis->tankDrive(oi->getLeft(), oi->getRight()); //Normal Drive
 	}
 
-	if((oi->getRangeDif() <= rangeDiffErrorRange) && (oi->getRangeDif() >= -rangeDiffErrorRange))
+
+	if((oi->getRangeDif() <= ERROR_RANGE) && (oi->getRangeDif() >= -ERROR_RANGE))
 	{
 		oi->resetButtonX();
 	}
+
+	if(oi->getAngle() >= TURNAMOUNT && resetLB)
+	{
+		resetLB = oi->getButtonLB();
+		LBLast = LBPressed;
+		LBPressed = false;
+	}
 }
 
-// Make this return true when this Command no longer needs to run execute()
+
 bool driveWithJoystick::IsFinished()
 {
 	return false;

@@ -1,19 +1,14 @@
-#ifndef SHOOTER_SUCKER_H
-#define SHOOTER_SUCKER_H
+#ifndef AUTO_DRIVE_H
+#define AUTO_DRIVE_H
 
 #include "../CommandBase.h"
 #include "WPILib.h"
 #include "OI.h"
 
-class ShooterSucker: public CommandBase
+class autoDrive: public CommandBase
 {
-private:
-	Timer time;
-	int buttonNum;
-	bool highGoalBool = false;
-
 public:
-	ShooterSucker();
+	autoDrive();
 	void Initialize();
 	void Execute();
 	bool IsFinished();

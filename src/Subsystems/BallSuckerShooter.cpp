@@ -12,21 +12,22 @@ BallSuckerShooter::BallSuckerShooter() :
 void BallSuckerShooter::InitDefaultCommand()
 {
 	SetDefaultCommand(new ShooterSucker());
-	// Set the default command for a subsystem here.
-	//SetDefaultCommand(new MySpecialCommand());
+
 }
 
-void BallSuckerShooter::setPickupMotorSpeed(float val){
+void BallSuckerShooter::setPickupMotorSpeed(float val)
+{
 	can5.Set(val); //sets pickup motor speed
 }
 
-void  BallSuckerShooter::setLowGoalShoot(float val){
+void  BallSuckerShooter::setLowGoalShoot(float val)
+{
 	can6.Set(val);//sets low goal motor speed
 }
 
-void BallSuckerShooter::setHighGoalShoot(float val){
+void BallSuckerShooter::setHighGoalShoot(float val)
+{
 	can7.Set(val);//sets high goal motor speed
 }
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
+
 

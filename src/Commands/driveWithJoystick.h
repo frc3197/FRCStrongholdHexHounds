@@ -9,10 +9,12 @@
 class driveWithJoystick: public CommandBase
 {
 private:
+
 	bool inverse;
-	static const int eToThePii = -1;
-	bool oneButtonOnly = false;
-	float rangeDiffErrorRange = 1.5;
+	float TURNAMOUNT = 170;
+	bool LBPressed = false;
+	bool resetLB = true;//useless variable to set LB to false
+	bool LBLast = false;
 
 public:
 	driveWithJoystick();
