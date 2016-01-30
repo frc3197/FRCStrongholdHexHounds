@@ -36,7 +36,7 @@ void driveWithJoystick::Execute()
 			SmartDashboard::PutString("Counter Clockwise", "got to turncounterClockwise");
 		}
 	}
-	else if(oi->getButtonLB())
+	else if((oi->getButtonLB()) && (oi-> getAngle()))
 	{
 		oneButtonOnly = false;
 		chassis->reverse180();

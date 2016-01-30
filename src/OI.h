@@ -44,14 +44,13 @@ private:
 	float voltage2;
 	float range2;
 	DigitalOutput dio;
+	//Port spiPort;
 	//SPI spi;
-	//ADXRS450_Gyro gyro;
+	ADXRS450_Gyro gyro;
 
 	bool inverse = false;
 	bool LB = false;
 	bool autoAlignBot = false;
-
-
 
 
 public:

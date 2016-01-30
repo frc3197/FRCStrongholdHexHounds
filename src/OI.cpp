@@ -14,12 +14,14 @@ OI::OI():
 	button10(&stick, BUTTON10),
 	ultra(0), ultra2(1),
 	rangeFinder(6),
-	dio(0)
-	//spi(0)
+	dio(0),
+	//spiPort(0),
+	//spi(spiPort),
 	//gyro(spi)
+	gyro()
 {
-	//gyro.Calibrate();
-	//gyro.Reset();
+	gyro.Calibrate();
+	gyro.Reset();
 	// Process operator interface input here.
 }
 
@@ -167,8 +169,8 @@ float OI::getRangeDif()
 
 float OI::getAngle()
 {
-	//return (gyro.GetAngle());
-	return 0;
+	SmartDashboard::PutNumber("Gyro Angle", gyro.GetAngle());
+	return (gyro.GetAngle());
 }
 
 void OI::resetButtonX()
@@ -178,8 +180,8 @@ void OI::resetButtonX()
 
 void OI::gyroReset()
 {
-	//gyro.Calibrate();
-	//gyro.Reset();
+	gyro.Calibrate();
+	gyro.Reset();
 }
 
 
