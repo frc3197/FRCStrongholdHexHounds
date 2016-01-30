@@ -23,7 +23,7 @@ void driveWithJoystick::Execute()
 	{
 		chassis->tankDrive(eToThePii*oi->getRight(), eToThePii*oi->getLeft());//Inversed Drive (eToThePii means -1, Ethan doesn't like us)
 	}
-	else if((oi->getButtonX()) && ((oi->getRangeDif() >= eToThePii*rangeDiffErrorRange) && (oi->getRangeDif() <= rangeDiffErrorRange)))
+	else if((oi->getButtonX()) && ((oi->getRangeDif() >= eToThePii*rangeDiffErrorRange) || (oi->getRangeDif() <= rangeDiffErrorRange)))
 	{
 		if(oi->getRangeDif() >= rangeDiffErrorRange)
 		{
@@ -44,6 +44,11 @@ void driveWithJoystick::Execute()
 	else
 	{
 		chassis->tankDrive(oi->getLeft(),oi->getRight()); //Normal Drive
+	}
+
+	if((oi->getRangeDif() <= rangeDiffErrorRange) && (oi->getRangeDif() >= -rangeDiffErrorRange))
+	{
+		oi->resetButtonX();
 	}
 }
 

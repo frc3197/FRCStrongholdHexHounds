@@ -140,7 +140,11 @@ bool OI::getBoolean()
 
 bool OI::getButtonX()
 {
-	return button3.Get();
+	if(button3.Get())
+	{
+		autoAlignBot = true;
+	}
+	return autoAlignBot;
 }
 
 bool OI::getButtonLB()
@@ -165,6 +169,11 @@ float OI::getAngle()
 {
 	//return (gyro.GetAngle());
 	return 0;
+}
+
+void OI::resetButtonX()
+{
+	autoAlignBot = false;
 }
 
 void OI::gyroReset()

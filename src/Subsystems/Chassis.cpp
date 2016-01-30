@@ -2,8 +2,8 @@
 #include "../Commands/drivewithJoystick.h"
 #include "../RobotMap.h"
 
-#define FORWARD_MOTOR_SPEED .75
-#define BACKWARD_MOTOR_SPEED -.75
+#define FORWARD_MOTOR_SPEED .5
+#define BACKWARD_MOTOR_SPEED -.5
 #define FORWARD_MOTOR_SPEED_FAST 1.0
 #define BACKWARD_MOTOR_SPEED_FAST -1.0
 

@@ -49,6 +49,7 @@ private:
 
 	bool inverse = false;
 	bool LB = false;
+	bool autoAlignBot = false;
 
 
 
@@ -65,6 +66,7 @@ public:
 	float getRangeDif();
 	float getAngle();
 	void gyroReset();
+	void resetButtonX();
 };
 
 #endif
