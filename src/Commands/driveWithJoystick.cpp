@@ -17,11 +17,29 @@ void driveWithJoystick::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void driveWithJoystick::Execute()
 {
-	oi->rangeSensor(); //Set up rangefinders
 	inverse = oi->getBoolean();
+	oi->rangeSensor();
 	if(inverse) //Inverse Motors
 	{
 		chassis->tankDrive(eToThePii*oi->getRight(), eToThePii*oi->getLeft());//Inversed Drive (eToThePii means -1, Ethan doesn't like us)
+	}
+	else if((oi->getButtonX()) && ((oi->getRangeDif() >= eToThePii*rangeDiffErrorRange) && (oi->getRangeDif() <= rangeDiffErrorRange)))
+	{
+		if(oi->getRangeDif() >= rangeDiffErrorRange)
+		{
+			chassis->turnClockwise();
+			SmartDashboard::PutString("Clockwise", "got to turnClockwise");
+		}
+		else if(oi->getRangeDif() <= -rangeDiffErrorRange)
+		{
+			chassis->turnCounterClockwise();
+			SmartDashboard::PutString("Counter Clockwise", "got to turncounterClockwise");
+		}
+	}
+	else if(oi->getButtonLB())
+	{
+		oneButtonOnly = false;
+		chassis->reverse180();
 	}
 	else
 	{

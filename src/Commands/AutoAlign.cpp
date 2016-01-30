@@ -2,7 +2,7 @@
 
 AutoAlign::AutoAlign()
 {
-	Requires(autoTurn);
+	//Requires(autoTurn);
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
 }
@@ -17,6 +17,7 @@ void AutoAlign::Initialize()
 void AutoAlign::Execute()
 {
 	time.Start();
+	oi->rangeSensor();
 	SmartDashboard::PutString("AutoAlign", "AutoAlign executed");
 	if(oi->getButtonX())
 	{
@@ -24,19 +25,19 @@ void AutoAlign::Execute()
 		oneButtonOnly = true;
 		if(oi->getRangeDif() >= rangeDiffErrorRange)
 		{
-			autoTurn->turnClockwise();
+			//autoTurn->turnClockwise();
 			SmartDashboard::PutString("Clockwise", "got to turnClockwise");
 		}
 		else if(oi->getRangeDif() <= -rangeDiffErrorRange)
 		{
-			autoTurn->turnCounterClockwise();
+			//autoTurn->turnCounterClockwise();
 			SmartDashboard::PutString("Counter Clockwise", "got to turncounterClockwise");
 		}
 	}
 	else if(oi->getButtonLB())
 	{
 		oneButtonOnly = false;
-		autoTurn->reverse180();
+		//autoTurn->reverse180();
 	}
 	time.Reset();
 }
@@ -48,7 +49,8 @@ bool AutoAlign::IsFinished()
 	{
 		if((oi->getRangeDif() <= rangeDiffErrorRange) &&(oi->getRangeDif() >= eToThePii*rangeDiffErrorRange))
 		{
-			SmartDashboard::PutBoolean("Is Finished", true);
+			SmartDashboard::PutBoolean("Is Finished", true
+					);
 			return true;
 		}
 		else

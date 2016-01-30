@@ -19,7 +19,9 @@ public:
 	Chassis();
 	void InitDefaultCommand();
 	void tankDrive(float left, float right);
-//	OI *oi;
+	void reverse180();
+	void turnClockwise();
+	void turnCounterClockwise();
 };
 
 #endif

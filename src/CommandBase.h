@@ -9,7 +9,7 @@
 #include "OI.h"
 #include "WPILib.h"
 #include "Subsystems/BallSuckerShooter.h"
-#include "Subsystems/AutoTurn.h"
+//#include "Subsystems/AutoTurn.h"
 /**
  * The base for all commands. All atomic commands should subclass CommandBase.
  * CommandBase stores creates and stores each control system. To access a
@@ -27,7 +27,7 @@ public:
 	static OI *oi;
 	static Chassis *chassis;
 	static BallSuckerShooter *ballSuckerShooter;
-	static AutoTurn *autoTurn;;
+	//static AutoTurn *autoTurn;;
 
 };
 
