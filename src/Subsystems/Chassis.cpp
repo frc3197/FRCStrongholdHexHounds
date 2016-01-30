@@ -2,10 +2,9 @@
 #include "../Commands/drivewithJoystick.h"
 #include "../RobotMap.h"
 
-#define FORWARD_MOTOR_SPEED .5
-#define BACKWARD_MOTOR_SPEED -.5
-#define FORWARD_MOTOR_SPEED_FAST 1.0
-#define BACKWARD_MOTOR_SPEED_FAST -1.0
+#define MOTOR_SPEED .5
+#define MOTOR_SPEED_FAST 1.0
+
 
 Chassis::Chassis():
 	Subsystem("Chassis"),
@@ -28,19 +27,21 @@ void Chassis::tankDrive(float left, float right){
 
 void Chassis::reverse180()//auto reverses 180 degrees
 {
-	robotDrive.TankDrive(FORWARD_MOTOR_SPEED_FAST, BACKWARD_MOTOR_SPEED_FAST, true);
+	robotDrive.TankDrive(MOTOR_SPEED_FAST, eToThePii* MOTOR_SPEED_FAST, true);
+	SmartDashboard::PutString("Counter Clockwise", "reverse180 Thou'st here now");
+
 }
 
 void Chassis::turnClockwise()//auto-aligns if right sensor>left sensor
 {
 	SmartDashboard::PutString("Turn CLockwise", "turn clockwise executed");
-	robotDrive.TankDrive(FORWARD_MOTOR_SPEED, BACKWARD_MOTOR_SPEED, false);
+	robotDrive.TankDrive(MOTOR_SPEED, eToThePii*MOTOR_SPEED, false);
 }
 
 void Chassis::turnCounterClockwise()//auto-aligns if left sensor > right sensor
 {
 	SmartDashboard::PutString("Turn Counter CLockwise", "turn counter clockwise executed");
-	robotDrive.TankDrive(BACKWARD_MOTOR_SPEED, FORWARD_MOTOR_SPEED, false);
+	robotDrive.TankDrive(MOTOR_SPEED, eToThePii* MOTOR_SPEED, false);
 }
 
 // Put methods for controlling this subsystem

@@ -33,7 +33,7 @@ void driveWithJoystick::Execute()
 		else if(oi->getRangeDif() <= -rangeDiffErrorRange)
 		{
 			chassis->turnCounterClockwise();
-			SmartDashboard::PutString("Counter Clockwise", "got to turncounterClockwise");
+			SmartDashboard::PutString("Counter Clockwise", "got to turnCounterClockwise");
 		}
 	}
 	else if((oi->getButtonLB()) && (oi-> getAngle()  >= 180))
