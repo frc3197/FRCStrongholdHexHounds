@@ -66,6 +66,7 @@ public:
 	float getAngle();
 	void gyroReset();
 	void resetButtonX();
+	bool getButton10();
 };
 
 #endif

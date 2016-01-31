@@ -14,6 +14,7 @@ private:
 	CANTalon can3;
 	CANTalon can4;
 	RobotDrive robotDrive;
+	Encoder encode;
 
 public:
 	Chassis();
@@ -22,6 +23,13 @@ public:
 	void reverse180();
 	void turnClockwise();
 	void turnCounterClockwise();
+	void SetCan1Speed(float speed);
+	void SetCan2Speed(float speed);
+	void SetCan3Speed(float speed);
+	void SetCan4Speed(float speed);
+	float GetEncodeDistance();
+	void ResetEncoder();
+	void Turn();
 };
 
 #endif

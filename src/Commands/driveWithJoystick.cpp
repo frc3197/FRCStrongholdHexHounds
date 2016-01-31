@@ -10,7 +10,7 @@ driveWithJoystick::driveWithJoystick()
 
 void driveWithJoystick::Initialize()
 {
-
+	inverse = false;
 }
 
 void driveWithJoystick::Execute()
@@ -31,7 +31,7 @@ void driveWithJoystick::Execute()
 	inverse = oi->getBoolean();
 	oi->rangeSensor();
 
-	if((oi->getButtonX()) && ((oi->getRangeDif() >= -ERROR_RANGE) || (oi->getRangeDif() <= ERROR_RANGE)))
+	if(((oi->getButtonX()) && (oi->getButton10())) && ((oi->getRangeDif() >= -ERROR_RANGE) || (oi->getRangeDif() <= ERROR_RANGE)))
 	{
 		if(oi->getRangeDif() >= ERROR_RANGE)
 		{

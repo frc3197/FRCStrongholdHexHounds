@@ -1,6 +1,8 @@
 #include "AutoDriveToDefense.h"
 #include "../RobotMap.h"
 #include "../Commands/autoDrive.h"
+#include "../Commands/AutoDriveDefense.h"
+
 
 AutoDriveToDefense::AutoDriveToDefense() :
 		Subsystem("AutoDriveToDefense"),

@@ -166,4 +166,7 @@ void OI::gyroReset()
 	gyro.Reset();
 }
 
-
+bool OI::getButton10()
+{
+	return button10.Get();
+}

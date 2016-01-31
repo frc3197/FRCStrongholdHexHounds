@@ -1,18 +1,13 @@
-#ifndef AUTO_DRIVE_H
-#define AUTO_DRIVE_H
+#ifndef AUTODRIVEDEFENSE_H
+#define AUTODRIVEDEFENSE_H
 
 #include "../CommandBase.h"
 #include "WPILib.h"
-#include "OI.h"
 
-
-class autoDrive: public CommandBase
+class AutoDriveDefense: public CommandBase
 {
-private:
-	Timer time;
-
 public:
-	autoDrive();
+	AutoDriveDefense();
 	void Initialize();
 	void Execute();
 	bool IsFinished();
