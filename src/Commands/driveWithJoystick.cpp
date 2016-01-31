@@ -61,7 +61,7 @@ void driveWithJoystick::Execute()
 	}
 
 
-	if((oi->getRangeDif() <= ERROR_RANGE) && (oi->getRangeDif() >= -ERROR_RANGE))
+	if(((oi->getRangeDif() <= ERROR_RANGE) && (oi->getRangeDif() >= -ERROR_RANGE)) && (!oi->getButton10()))
 	{
 		oi->resetButtonX();
 	}
