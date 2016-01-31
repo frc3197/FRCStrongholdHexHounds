@@ -11,7 +11,7 @@ class driveWithJoystick: public CommandBase
 private:
 
 	bool inverse;
-	float TURNAMOUNT = 170;
+	float TURNAMOUNT = 171.5;
 	bool LBPressed = false;
 	bool resetLB = true;//useless variable to set LB to false
 	bool LBLast = false;

@@ -2,12 +2,15 @@
 
 #define STOPSPEED 0
 #define FULLSPEED 1
+
 #define LOWGOALRETRACTSPEED -0.15
 #define LOWGOALPUSHSPEED 0.5
 #define HIGHGOALPUSHSPEED 0.9
+
 #define STARTTIME 0.3
 #define REVTIME 1.25
 #define SHOOTFINISH 1.5
+
 #define BUTTONA 1
 #define BUTTONB 2
 #define BUTTONX 3
@@ -66,24 +69,27 @@ void ShooterSucker::Execute()
 		time.Start();
 
 		ballSuckerShooter->setLowGoalShoot(LOWGOALRETRACTSPEED);
+		ballSuckerShooter->setPickupMotorSpeed(-LOWGOALRETRACTSPEED);
 		ballSuckerShooter->setHighGoalShoot(HIGHGOALPUSHSPEED);//winds ball back while starting high goal motor
 
 		if((time.Get() >= STARTTIME) && (time.Get()<REVTIME))
 		{
+			ballSuckerShooter->setLowGoalShoot(STOPSPEED);
+			ballSuckerShooter->setPickupMotorSpeed(STOPSPEED);
 			ballSuckerShooter->setHighGoalShoot(HIGHGOALPUSHSPEED);//stops winding ball back
 		}
 
 		if((time.Get() >= REVTIME) && (time.Get() < SHOOTFINISH))
 		{
-			ballSuckerShooter->setPickupMotorSpeed(-LOWGOALPUSHSPEED);
-			ballSuckerShooter->setLowGoalShoot(LOWGOALPUSHSPEED);
+			ballSuckerShooter->setLowGoalShoot(-LOWGOALRETRACTSPEED);
+			ballSuckerShooter->setPickupMotorSpeed(LOWGOALRETRACTSPEED);
 			ballSuckerShooter->setHighGoalShoot(HIGHGOALPUSHSPEED);//shoots ball forward into high goal motor to shoot ball out
 		}
 
 		if(time.Get() >= SHOOTFINISH)
 		{
-			ballSuckerShooter->setPickupMotorSpeed(STOPSPEED);
 			ballSuckerShooter->setLowGoalShoot(STOPSPEED);
+			ballSuckerShooter->setPickupMotorSpeed(STOPSPEED);
 			ballSuckerShooter->setHighGoalShoot(STOPSPEED);
 			highGoalBool = false;
 			time.Reset();
