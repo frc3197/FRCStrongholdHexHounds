@@ -1,16 +1,15 @@
-#ifndef AUTODRIVEDEFENSE_H
-#define AUTODRIVEDEFENSE_H
+#ifndef AUTONOMOUS_H
+#define AUTONOMOUS_H
 
 #include "../CommandBase.h"
 #include "WPILib.h"
 
-class AutoDriveDefense: public CommandBase
-{
-private:
-	int num = 0;
 
+
+class Autonomous: public CommandGroup
+{
 public:
-	AutoDriveDefense();
+	Autonomous();
 	void Initialize();
 	void Execute();
 	bool IsFinished();
