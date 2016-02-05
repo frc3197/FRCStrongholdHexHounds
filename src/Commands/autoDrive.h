@@ -10,6 +10,11 @@ class autoDrive: public CommandBase
 {
 private:
 	Timer time;
+	float angle = 0.0;
+	bool onRamp = false;
+	float absInput = 0.0;
+	float oldOutput = 0.0;
+	float output = 0.0;
 
 public:
 	autoDrive();

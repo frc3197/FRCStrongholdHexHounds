@@ -3,11 +3,13 @@
 
 #include "../CommandBase.h"
 #include "WPILib.h"
-
-
+#include "OI.h"
 
 class Autonomous: public CommandGroup
 {
+private:
+	int num = 0;
+
 public:
 	Autonomous();
 	void Initialize();

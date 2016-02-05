@@ -7,7 +7,9 @@
 class AutoDriveDefense: public CommandBase
 {
 private:
-	int num = 0;
+	int position = 0;
+	int state = 0;
+	bool finish = false;
 
 public:
 	AutoDriveDefense();

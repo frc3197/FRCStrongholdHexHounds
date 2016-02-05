@@ -11,126 +11,335 @@ AutoDriveDefense::AutoDriveDefense()
 // Called just before this Command runs the first time
 void AutoDriveDefense::Initialize()
 {
-
+	oi->gyroReset();
+	chassis->ResetEncoder();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void AutoDriveDefense::Execute()
 {
-	chassis->ResetEncoder();
-	oi->gyroReset();
-	switch(num)
+	chassis->SetCan1Speed(-.6);
+	chassis->SetCan2Speed(-.6);
+	chassis->SetCan3Speed(-.6);
+	chassis->SetCan4Speed(-.6);
+	//oi->gyroReset();
+	/*switch(position)
 	{
-	case 1:
-		while(chassis->GetEncodeDistance() < (149.34))
+	case 1://low bar position 1
+		switch(state)
 		{
-			chassis->tankDrive(.8, .8);
-		}
-		while(oi->getAngle() < 120)
-		{
-			chassis->tankDrive(.8, -.8);
-		}
-		chassis->ResetEncoder();
-		while(chassis->GetEncodeDistance() < 68.1 - 17)
-		{
-			chassis->tankDrive(.8, .8);
+			case 1:
+				if(chassis->GetEncodeDistance() < (149.34))
+				{
+					chassis->tankDrive(.8, .8);
+				}
+				else
+				{
+					state = 2;
+				}
+			break;
+
+			case 2:
+				if(oi->getAngle() < 120)
+				{
+					chassis->tankDrive(.8, -.8);
+				}
+				else
+				{
+				chassis->ResetEncoder();
+					state = 3;
+				}
+			break;
+
+			case 3:
+				if(chassis->GetEncodeDistance() < 149.34 + 68.1 - 17)
+				{
+					chassis->tankDrive(.8, .8);
+				}
+				else
+				{
+					finish = true;
+				}
+			break;
+
+			default:
+
+			break;
 		}
 	break;
 
-	case 2:
-		while(chassis->GetEncodeDistance() < (137.59))
+	case 2://position 2
+		switch(state)
 		{
-			chassis->tankDrive(.8, .8);
-		}
-		while(oi->getAngle() < 120)
-		{
-			chassis->tankDrive(.8, -.8);
-		}
-		chassis->ResetEncoder();
-		while(chassis->GetEncodeDistance() < 36.34 - 17)
-		{
-			chassis->tankDrive(.8, .8);
+			case 1:
+				if(chassis->GetEncodeDistance() < (137.59))
+				{
+					chassis->tankDrive(.8, .8);
+				}
+				else
+				{
+					state = 2;
+				}
+			break;
+
+			case 2:
+				if(oi->getAngle() < 120)
+				{
+					chassis->tankDrive(.8, -.8);
+				}
+				else
+				{
+					chassis->ResetEncoder();
+					state = 3;
+				}
+			break;
+
+			case 3:
+				if(chassis->GetEncodeDistance() < 36.34 - 17)
+				{
+					chassis->tankDrive(.8, .8);
+				}
+				else
+				{
+					finish = true;
+				}
+			break;
+
+			default:
+
+			break;
 		}
 	break;
 
-	case 3:
-		while(chassis->GetEncodeDistance() < 27.33)
+	case 3://position 3
+		switch(state)
 		{
-			chassis->tankDrive(.8, .8);
-		}
-		while(oi->getAngle() < 45)
-		{
-			chassis->tankDrive(.8, -.8);
-		}
-		chassis->ResetEncoder();
-		while(chassis->GetEncodeDistance() < 54.0)
-		{
-			chassis->tankDrive(.8, .8);
-		}
-		while(oi->getAngle() < 45)
-		{
-			chassis->tankDrive(.8, -.8);
-		}
-		chassis->ResetEncoder();
-		while(chassis->GetEncodeDistance() < 57.43 - 17)
-		{
-			chassis->tankDrive(.8, .8);
+			case 1:
+				if(chassis->GetEncoderDistance() <= 27.33)
+				{
+					chassis->SetCan1Speed(-.8);
+					chassis->SetCan2Speed(-.8);
+					chassis->SetCan3Speed(-.8);
+					chassis->SetCan4Speed(-.8);
+				}
+				else
+				{
+					state = 2;
+				}
+			break;
+
+			case 2:
+				if(oi->getAngle() <= 45)
+				{
+					chassis->SetCan1Speed(-.8);
+					chassis->SetCan2Speed(.8);
+					chassis->SetCan3Speed(.8);
+					chassis->SetCan4Speed(-.8);
+				}
+				else
+				{
+					chassis->ResetEncoder();
+					state = 3;
+				}
+			break;
+
+			case 3:
+				if(chassis->GetEncoderDistance() <= 54)
+				{
+					chassis->SetCan1Speed(-.8);
+					chassis->SetCan2Speed(-.8);
+					chassis->SetCan3Speed(-.8);
+					chassis->SetCan4Speed(-.8);
+				}
+				else
+				{
+					oi->gyroReset();
+					state = 4;
+				}
+			break;
+
+			case 4:
+				if(oi->getAngle() >= -45)
+				{
+					chassis->SetCan1Speed(.8);
+					chassis->SetCan2Speed(-.8);
+					chassis->SetCan3Speed(-.8);
+					chassis->SetCan4Speed(.8);
+				}
+				else
+				{
+					chassis->ResetEncoder();
+					state = 5;
+				}
+			break;
+
+			case 5:
+				if(oi->GetEncoderDistance() <= 57.3 - 17)
+				{
+					chassis->SetCan1Speed(-.8);
+					chassis->SetCan2Speed(-.8);
+					chassis->SetCan3Speed(-.8);
+					chassis->SetCan4Speed(-.8);
+				}
+				else
+				{
+					finish = true;
+				}
+			break;
+
+			default:
+
+			break;
 		}
 	break;
 
-	case 4:
-		while(chassis->GetEncodeDistance() < 48.36)
+	case 4: //position 4
+		switch(state)
 		{
-			chassis->tankDrive(.8, .8);
-		}
-		while(oi->getAngle() < 45)
-		{
-			chassis->tankDrive(.8, -.8);
-		}
-		chassis->ResetEncoder();
-		while(chassis->GetEncodeDistance() < 24.85)
-		{
-			chassis->tankDrive(.8, .8);
-		}
-		while(oi->getAngle() < 45)
-		{
-			chassis->tankDrive(.8, -.8);
-		}
-		chassis->ResetEncoder();
-		while(chassis->GetEncodeDistance() < 57.43 - 17)
-		{
-			chassis->tankDrive(.8, .8);
-		}
+			case 1:
+				if(chassis->GetEncoderDistance() <= 48.36)
+				{
+					chassis->SetCan1Speed(-.8);
+					chassis->SetCan2Speed(-.8);
+					chassis->SetCan3Speed(-.8);
+					chassis->SetCan4Speed(-.8);
+				}
+				else
+				{
+					state = 2;
+				}
+			break;
 
+			case 2:
+				if(oi->getAngle() >= -45)
+				{
+					chassis->SetCan1Speed(.8);
+					chassis->SetCan2Speed(-.8);
+					chassis->SetCan3Speed(-.8);
+					chassis->SetCan4Speed(.8);
+				}
+				else
+				{
+					chassis->ResetEncoder();
+					state = 3;
+				}
+			break;
+
+			case 3:
+				if(chassis->GetEncoderDistance() <= 24.85)
+				{
+					chassis->SetCan1Speed(-.8);
+					chassis->SetCan2Speed(-.8);
+					chassis->SetCan3Speed(-.8);
+					chassis->SetCan4Speed(-.8);
+				}
+				else
+				{
+					oi->gyroReset();
+					state = 4;
+				}
+			break;
+
+			case 4:
+				if(oi->getAngle() <= 45)
+				{
+					chassis->SetCan1Speed(-.8);
+					chassis->SetCan2Speed(.8);
+					chassis->SetCan3Speed(.8);
+					chassis->SetCan4Speed(-.8);
+				}
+				else
+				{
+					chassis->ResetEncoder();
+					state = 5;
+				}
+			break;
+
+			case 5:
+				if(oi->GetEncoderDistance() <= 57.43 - 17)
+				{
+					chassis->SetCan1Speed(-.8);
+					chassis->SetCan2Speed(-.8);
+					chassis->SetCan3Speed(-.8);
+					chassis->SetCan4Speed(-.8);
+				}
+				else
+				{
+					finish = true;
+				}
+			break;
+
+			default:
+
+			break;
+		}
 	break;
 
-	case 5:
-		while(chassis->GetEncodeDistance() < (154.91 - 17))
+	case 5: //position 5
+		switch(state)
 		{
-			chassis->tankDrive(.8, .8);
-		}
-		while(oi->getAngle() < 116.45)
-		{
-			chassis->tankDrive(.8, -.8);
-		}
-		chassis->ResetEncoder();
-		while(chassis->GetEncodeDistance() < 9.34)
-		{
-			chassis->tankDrive(.8, .8);
-		}
+			case 1:
+				if(chassis->GetEncodeDistance() < (154.91 - 17))
+				{
+					chassis->tankDrive(.8, .8);
+				}
+				else
+				{
+					state = 2;
+				}
+			break;
 
+			case 2:
+				if(oi->getAngle() < 116.45)
+				{
+					chassis->tankDrive(.8, -.8);
+				}
+				else
+				{
+					chassis->ResetEncoder();
+					state = 3;
+				}
+			break;
+
+			case 3:
+				if(chassis->GetEncodeDistance() < 9.34)
+				{
+					chassis->tankDrive(.8, .8);
+				}
+				else
+				{
+					finish = true;
+				}
+			break;
+
+			default:
+
+			break;
+		}
 	break;
 
 	default:
 
 	break;
-	}
+	}*/
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool AutoDriveDefense::IsFinished()
 {
-	return false;
+	if(oi->getAngle() <= -90)
+	{
+		chassis->SetCan1Speed(0);
+		chassis->SetCan2Speed(0);
+		chassis->SetCan3Speed(0);
+		chassis->SetCan4Speed(0);
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+	//return finish
 }
 
 // Called once after isFinished returns true

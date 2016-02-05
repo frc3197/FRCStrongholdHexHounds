@@ -5,6 +5,7 @@
 #include "WPILib.h"
 #include "OI.h"
 #include <cstdlib>
+#include <ADXL362.h>
 
 class Chassis: public Subsystem
 {
@@ -15,6 +16,7 @@ private:
 	CANTalon can4;
 	RobotDrive robotDrive;
 	Encoder encode;
+	ADXL362 accel;
 
 public:
 	Chassis();
@@ -30,6 +32,7 @@ public:
 	float GetEncodeDistance();
 	void ResetEncoder();
 	void Turn();
+	float getAccelerometerZ();
 };
 
 #endif

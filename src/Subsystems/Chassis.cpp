@@ -10,7 +10,8 @@ Chassis::Chassis():
 	Subsystem("Chassis"),
 	can1(1), can2(2), can3(3), can4(4),
 	robotDrive(can3,can2,can1,can4),
-	encode(1, 2, false, Encoder::k4X)
+	encode(1, 2, false, Encoder::k4X),
+	accel(SPI::kOnboardCS1, ADXL362::kRange_2G)
 {
 	robotDrive.SetSafetyEnabled(false);
 }
@@ -22,6 +23,9 @@ void Chassis::InitDefaultCommand()
 
 void Chassis::tankDrive(float left, float right)
 {
+	SmartDashboard::PutNumber("Accel X", accel.GetAcceleration(ADXL362::kAxis_X));
+	SmartDashboard::PutNumber("Accel Y", accel.GetAcceleration(ADXL362::kAxis_Y));
+	SmartDashboard::PutNumber("Accel Z", accel.GetAcceleration(ADXL362::kAxis_Z));
 	robotDrive.TankDrive(left, right, true);
 }
 
@@ -77,4 +81,9 @@ void Chassis::ResetEncoder()
 void Chassis::Turn()
 {
 	robotDrive.TankDrive(MOTOR_SPEED_FAST, -MOTOR_SPEED_FAST, true);
+}
+
+float Chassis::getAccelerometerZ()
+{
+	return accel.GetAcceleration(ADXL362::kAxis_Z);
 }
