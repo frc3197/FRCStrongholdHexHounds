@@ -32,6 +32,8 @@ public:
 	float GetEncodeDistance();
 	void ResetEncoder();
 	void Turn();
+	//void Forward();
+	//void Backward();
 	float getAccelerometerZ();
 };
 

@@ -1,10 +1,16 @@
 #include "autoDrive.h"
 #include "AutoDriveDefense.h"
 //#include "CommandGroup.h"
-#define TIME 5
+#define TIME 2
+
 #define ERROR_RANGE 0
 #define ON_RAMP_RANGE .5
 
+#define OLD_OUTOUT_PERCENT .99
+#define ABS_INPUT_PERCENT .01
+
+#define CAN_MOTOR_SLOW_SPEED -.8
+#define CAN_MOTOR_FAST_SPEED -.85
 
 autoDrive::autoDrive()
 {
@@ -23,14 +29,14 @@ void autoDrive::Initialize()
 void autoDrive::Execute()
 {
 	absInput = fabs(chassis->getAccelerometerZ());
-	output = (0.9*oldOutput) + (0.1*absInput);
+	output = (OLD_OUTOUT_PERCENT*oldOutput) + (ABS_INPUT_PERCENT*absInput);
 	oldOutput = output;
 	SmartDashboard::PutNumber("Output", output);
 	/*
-	 	chassis->SetCan1Speed(-.8);
-		chassis->SetCan2Speed(-.8);
-		chassis->SetCan3Speed(-.8);
-		chassis->SetCan4Speed(-.8);
+	 	chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
+		chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
+		chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
+		chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
 
 		if(output > ON_RAMP_RANGE || output < -ON_RAMP_RANGE)
 		{
@@ -46,32 +52,32 @@ void autoDrive::Execute()
 	 angle = oi->getAngle();
 	 if(angle > ERROR_RANGE)
 	 {
-	 	chassis->SetCan1Speed(-.8);
-		chassis->SetCan2Speed(-.8);
-		chassis->SetCan3Speed(-.85);
-		chassis->SetCan4Speed(-.85);
+	 	chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
+		chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
+		chassis->SetCan3Speed(CAN_MOTOR_FAST_SPEED);
+		chassis->SetCan4Speed(CAN_MOTOR_FAST_SPEED);
 	 }
 	 else if(angle < ERROR_RANGE)
 	 {
-	 	chassis->SetCan1Speed(-.85);
-		chassis->SetCan2Speed(-.85);
-		chassis->SetCan3Speed(-.8);
-		chassis->SetCan4Speed(-.8);
+	 	chassis->SetCan1Speed(CAN_MOTOR_FAST_SPEED);
+		chassis->SetCan2Speed(CAN_MOTOR_FAST_SPEED);
+		chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
+		chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
 	 }
 	 else
 	 {
-	 	chassis->SetCan1Speed(-.8);
-	 	chassis->SetCan2Speed(-.8);
-		chassis->SetCan3Speed(-.8);
-		chassis->SetCan4Speed(-.8);
+	 	chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
+	 	chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
+		chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
+		chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
 	 }
 	 */
 
 	while(time.Get() < TIME/*chassis->GetEncodeDistance() <= 122 + 17*/)
 	{
 		chassis->SetCan1Speed(-.25);
-		chassis->SetCan2Speed(.25);
-		chassis->SetCan3Speed(.25);
+		chassis->SetCan2Speed(-.25);
+		chassis->SetCan3Speed(-.25);
 		chassis->SetCan4Speed(-.25);
 	}
 }

@@ -7,9 +7,10 @@
 class AutoDriveDefense: public CommandBase
 {
 private:
-	int position = 0;
-	int state = 0;
+	int position = 1;
+	int state = 1;
 	bool finish = false;
+	Timer time;
 
 public:
 	AutoDriveDefense();
