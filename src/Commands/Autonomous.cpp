@@ -6,8 +6,8 @@
 Autonomous::Autonomous()
 {
 	AddSequential(new autoDrive());
-	AddSequential(new AutoDriveDefense());
-	AddSequential(new autoDrive());
+	//AddSequential(new AutoDriveDefense());
+	//AddSequential(new autoDrive());
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
 }

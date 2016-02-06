@@ -46,6 +46,7 @@ private:
 	float range2;
 	DigitalOutput dio;
 	ADXRS450_Gyro gyro;
+	AnalogGyro elevationGyro;
 
 	bool inverse = false;
 	bool LB = false;
@@ -61,12 +62,13 @@ public:
 	bool getBoolean();
 	bool getButtonX();
 	bool getButtonLB();
-	bool returnLB();
 	float getRangeDif();
 	float getAngle();
 	void gyroReset();
 	void resetButtonX();
 	bool getButton10();
+	void elevationGyroReset();
+	float getElevationAngle();
 };
 
 #endif

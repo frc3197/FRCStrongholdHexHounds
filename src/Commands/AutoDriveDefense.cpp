@@ -1,7 +1,7 @@
 #include "AutoDriveDefense.h"
 
-#define CAN_MOTOR_SLOW_SPEED -.2
-#define CAN_MOTOR_FAST_SPEED -.25
+#define CAN_MOTOR_SLOW_SPEED -.4
+#define CAN_MOTOR_FAST_SPEED -.45
 
 AutoDriveDefense::AutoDriveDefense()
 {
@@ -37,20 +37,22 @@ void AutoDriveDefense::Execute()
 		switch(state)
 		{
 			case 1:
-				if(time.Get() <= 1.5)//chassis->GetEncodeDistance() < (149.34))
+				if(time.Get() <= 2.5)//chassis->GetEncodeDistance() < (149.34))
 				{
-					chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
-			 		chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
+			 		//chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
+					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 
 				}
 				else
 				{
-					chassis->SetCan1Speed(0);
-					chassis->SetCan2Speed(0);
-					chassis->SetCan3Speed(0);
-					chassis->SetCan4Speed(0);
+					//chassis->SetCan1Speed(0);
+					//chassis->SetCan2Speed(0);
+					//chassis->SetCan3Speed(0);
+					//chassis->SetCan4Speed(0);
+					chassis->tankDrive2(0, 0);
 					state = 2;
 				}
 				SmartDashboard::PutNumber("case 1", 1);
@@ -60,14 +62,20 @@ void AutoDriveDefense::Execute()
 			case 2:
 				if(oi->getAngle() < 120)
 				{
-					 chassis->turnClockwise();
+					//chassis->SetCan1Speed(-CAN_MOTOR_FAST_SPEED);
+					//chassis->SetCan2Speed(CAN_MOTOR_FAST_SPEED);
+					//chassis->SetCan3Speed(CAN_MOTOR_FAST_SPEED);
+					//chassis->SetCan4Speed(-CAN_MOTOR_FAST_SPEED);
+					//chassis->turnClockwise();
+					chassis->tankDrive2(CAN_MOTOR_FAST_SPEED, -CAN_MOTOR_FAST_SPEED);
 				}
 				else
 				{
-					chassis->SetCan1Speed(0);
-					chassis->SetCan2Speed(0);
-					chassis->SetCan3Speed(0);
-					chassis->SetCan4Speed(0);
+					//chassis->SetCan1Speed(0);
+					//chassis->SetCan2Speed(0);
+					//chassis->SetCan3Speed(0);
+					//chassis->SetCan4Speed(0);
+					chassis->tankDrive2(0, 0);
 					chassis->ResetEncoder();
 					state = 3;
 					time.Reset();
@@ -76,19 +84,21 @@ void AutoDriveDefense::Execute()
 			break;
 
 			case 3:
-				if(time.Get() <= 1.5)//chassis->GetEncodeDistance() < 149.34 + 68.1 - 17)
+				if(time.Get() <= 2.5)//chassis->GetEncodeDistance() < 149.34 + 68.1 - 17)
 				{
-					chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
+					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 				}
 				else
 				{
-					chassis->SetCan1Speed(0);
-					chassis->SetCan2Speed(0);
-					chassis->SetCan3Speed(0);
-					chassis->SetCan4Speed(0);
+					//chassis->SetCan1Speed(0);
+					//chassis->SetCan2Speed(0);
+					//chassis->SetCan3Speed(0);
+					//chassis->SetCan4Speed(0);
+					chassis->tankDrive2(0, 0);
 					finish = true;
 				}
 			 SmartDashboard::PutNumber("case 3", 3);
@@ -106,7 +116,7 @@ void AutoDriveDefense::Execute()
 			case 1:
 				if(chassis->GetEncodeDistance() < (137.59))
 				{
-					chassis->tankDrive(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
+					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 				}
 				else
 				{
@@ -117,7 +127,7 @@ void AutoDriveDefense::Execute()
 			case 2:
 				if(oi->getAngle() < 120)
 				{
-					chassis->tankDrive(CAN_MOTOR_SLOW_SPEED, -CAN_MOTOR_SLOW_SPEED);
+					chassis->tankDrive2(CAN_MOTOR_FAST_SPEED, -CAN_MOTOR_FAST_SPEED);
 				}
 				else
 				{
@@ -129,7 +139,7 @@ void AutoDriveDefense::Execute()
 			case 3:
 				if(chassis->GetEncodeDistance() < 36.34 - 17)
 				{
-					chassis->tankDrive(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
+					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 				}
 				else
 				{
@@ -149,10 +159,11 @@ void AutoDriveDefense::Execute()
 			case 1:
 				if(chassis->GetEncodeDistance() <= 27.33)
 				{
-					chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
+					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 				}
 				else
 				{
@@ -163,10 +174,11 @@ void AutoDriveDefense::Execute()
 			case 2:
 				if(oi->getAngle() <= 45)
 				{
-					chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan2Speed(-CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan3Speed(-CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan2Speed(-CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan3Speed(-CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
+					chassis->tankDrive2(CAN_MOTOR_FAST_SPEED, -CAN_MOTOR_FAST_SPEED);
 				}
 				else
 				{
@@ -178,10 +190,11 @@ void AutoDriveDefense::Execute()
 			case 3:
 				if(chassis->GetEncodeDistance() <= 54)
 				{
-					chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
+					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 				}
 				else
 				{
@@ -193,10 +206,11 @@ void AutoDriveDefense::Execute()
 			case 4:
 				if(oi->getAngle() >= -45)
 				{
-					chassis->SetCan1Speed(-CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan4Speed(-CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan1Speed(-CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan4Speed(-CAN_MOTOR_SLOW_SPEED);
+					chassis->tankDrive2(-CAN_MOTOR_FAST_SPEED, CAN_MOTOR_FAST_SPEED);
 				}
 				else
 				{
@@ -208,10 +222,11 @@ void AutoDriveDefense::Execute()
 			case 5:
 				if(chassis->GetEncodeDistance() <= (57.3 - 17))
 				{
-					chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
+					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 				}
 				else
 				{
@@ -231,10 +246,11 @@ void AutoDriveDefense::Execute()
 			case 1:
 				if(chassis->GetEncodeDistance() <= 48.36)
 				{
-					chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
+					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 				}
 				else
 				{
@@ -245,10 +261,11 @@ void AutoDriveDefense::Execute()
 			case 2:
 				if(oi->getAngle() >= -45)
 				{
-					chassis->SetCan1Speed(-CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan4Speed(-CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan1Speed(-CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan4Speed(-CAN_MOTOR_SLOW_SPEED);
+					chassis->tankDrive2(-CAN_MOTOR_FAST_SPEED, CAN_MOTOR_FAST_SPEED);
 				}
 				else
 				{
@@ -260,10 +277,11 @@ void AutoDriveDefense::Execute()
 			case 3:
 				if(chassis->GetEncodeDistance() <= 24.85)
 				{
-					chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
+					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED,CAN_MOTOR_SLOW_SPEED);
 				}
 				else
 				{
@@ -275,10 +293,11 @@ void AutoDriveDefense::Execute()
 			case 4:
 				if(oi->getAngle() <= 45)
 				{
-					chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan2Speed(-CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan3Speed(-CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan2Speed(-CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan3Speed(-CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
+					chassis->tankDrive2(CAN_MOTOR_FAST_SPEED, -CAN_MOTOR_FAST_SPEED);
 				}
 				else
 				{
@@ -290,10 +309,11 @@ void AutoDriveDefense::Execute()
 			case 5:
 				if(chassis->GetEncodeDistance() <= 57.43 - 17)
 				{
-					chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
-					chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
+					//chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
+					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 				}
 				else
 				{
@@ -313,7 +333,7 @@ void AutoDriveDefense::Execute()
 			case 1:
 				if(chassis->GetEncodeDistance() < (154.91 - 17))
 				{
-					chassis->tankDrive(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
+					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 				}
 				else
 				{
@@ -322,9 +342,9 @@ void AutoDriveDefense::Execute()
 			break;
 
 			case 2:
-				if(oi->getAngle() < 116.45)
+				if(oi->getAngle() > -116.45)
 				{
-					chassis->tankDrive(CAN_MOTOR_SLOW_SPEED, -CAN_MOTOR_SLOW_SPEED);
+					chassis->tankDrive2(-CAN_MOTOR_FAST_SPEED, CAN_MOTOR_FAST_SPEED);
 				}
 				else
 				{
@@ -336,7 +356,7 @@ void AutoDriveDefense::Execute()
 			case 3:
 				if(chassis->GetEncodeDistance() < 9.34)
 				{
-					chassis->tankDrive(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
+					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 				}
 				else
 				{

@@ -15,10 +15,11 @@ OI::OI():
 	button8(&stick, BUTTON8),
 	button9(&stick, BUTTON9),
 	button10(&stick, BUTTON10),
-	ultra(0), ultra2(1),
+	ultra(1), ultra2(2),
 	rangeFinder(6),
 	dio(0),
-	gyro(SPI::kOnboardCS0)
+	gyro(SPI::kOnboardCS0),
+	elevationGyro(0)
 {
 	gyro.Calibrate();
 	gyro.Reset();
@@ -140,11 +141,6 @@ bool OI::getButtonLB()
 	return button5.Get();
 }
 
-bool OI::returnLB()
-{
-	return button5.Get();
-}
-
 float OI::getRangeDif()
 {
 	return (ultra.GetAverageVoltage()*104 + 2) - (ultra2.GetAverageVoltage()*104 + 2);
@@ -164,6 +160,17 @@ void OI::resetButtonX()
 void OI::gyroReset()
 {
 	gyro.Reset();
+}
+
+void OI::elevationGyroReset()
+{
+	elevationGyro.Reset();
+}
+
+float OI::getElevationAngle()
+{
+	SmartDashboard::PutNumber("Elevation Angle", elevationGyro.GetAngle());
+	return elevationGyro.GetAngle();
 }
 
 bool OI::getButton10()

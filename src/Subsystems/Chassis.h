@@ -22,6 +22,7 @@ public:
 	Chassis();
 	void InitDefaultCommand();
 	void tankDrive(float left, float right);
+	void tankDrive2(float left, float right);
 	void reverse180();
 	void turnClockwise();
 	void turnCounterClockwise();

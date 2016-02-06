@@ -15,6 +15,13 @@ void driveWithJoystick::Initialize()
 
 void driveWithJoystick::Execute()
 {
+	absInput = fabs(chassis->getAccelerometerZ() - 1);
+	output = (0.95*oldOutput) + (0.05*absInput);
+	SmartDashboard::PutNumber("Output", output);
+	SmartDashboard::PutNumber("absInput", absInput);
+	SmartDashboard::PutNumber("oldOutput", oldOutput);
+	oldOutput = output;
+
 	if(!LBPressed)
 	{
 		LBPressed = oi->getButtonLB();
@@ -72,13 +79,6 @@ void driveWithJoystick::Execute()
 		LBLast = LBPressed;
 		LBPressed = false;
 	}
-
-	absInput = fabs(chassis->getAccelerometerZ());
-	output = (0.9*oldOutput) + (0.1*absInput);
-	oldOutput = output;
-	SmartDashboard::PutNumber("Output", output);
-	SmartDashboard::PutNumber("absInput", absInput);
-	SmartDashboard::PutNumber("oldOutput", oldOutput);
 }
 
 

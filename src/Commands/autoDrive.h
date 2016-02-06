@@ -15,6 +15,8 @@ private:
 	float absInput = 0.0;
 	float oldOutput = 0.0;
 	float output = 0.0;
+	bool finish = false;
+	float elevationAngle = 0.0;
 
 public:
 	autoDrive();

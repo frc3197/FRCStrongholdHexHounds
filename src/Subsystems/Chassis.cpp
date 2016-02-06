@@ -29,6 +29,14 @@ void Chassis::tankDrive(float left, float right)
 	robotDrive.TankDrive(left, right, true);
 }
 
+void Chassis::tankDrive2(float left, float right)
+{
+	SmartDashboard::PutNumber("Accel X", accel.GetAcceleration(ADXL362::kAxis_X));
+	SmartDashboard::PutNumber("Accel Y", accel.GetAcceleration(ADXL362::kAxis_Y));
+	SmartDashboard::PutNumber("Accel Z", accel.GetAcceleration(ADXL362::kAxis_Z));
+	robotDrive.TankDrive(-left, -right, false);
+}
+
 void Chassis::reverse180() //auto reverses 180 degrees
 {
 	robotDrive.TankDrive(MOTOR_SPEED_FAST, -MOTOR_SPEED_FAST, true);
@@ -38,13 +46,13 @@ void Chassis::reverse180() //auto reverses 180 degrees
 void Chassis::turnClockwise() //auto-aligns if right sensor>left sensor
 {
 	SmartDashboard::PutString("Turn CLockwise", "turn clockwise executed");
-	robotDrive.TankDrive(MOTOR_SPEED, -MOTOR_SPEED, false);
+	robotDrive.TankDrive(MOTOR_SPEED_FAST, -MOTOR_SPEED_FAST, false);
 }
 
 void Chassis::turnCounterClockwise() //auto-aligns if left sensor > right sensor
 {
 	SmartDashboard::PutString("Turn Counter CLockwise", "turn counter clockwise executed");
-	robotDrive.TankDrive(-MOTOR_SPEED, MOTOR_SPEED, false);
+	robotDrive.TankDrive(-MOTOR_SPEED_FAST, MOTOR_SPEED_FAST, false);
 }
 
 void Chassis::SetCan1Speed(float speed)
