@@ -1,7 +1,7 @@
 #include "Climber.h"
 
 #define TIME 2.5
-#define CLIMBER_SPEED 1
+#define CLIMBER_SPEED .5
 
 Climber::Climber()
 {
@@ -13,36 +13,68 @@ Climber::Climber()
 // Called just before this Command runs the first time
 void Climber::Initialize()
 {
+	bottomSwitchPressed = climberUp->getBottomSwitch();
+	topSwitchPressed = climberUp->getTopSwitch();
+	middleSwitchPressed = climberUp->getMiddleSwitch();
 	time.Reset();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void Climber::Execute()
 {
-	if(oi->getButton9() && !oi->getButton10())
-	{
-		time.Start();
-		climberUp->setCANTalon7(CLIMBER_SPEED);
+	bottomSwitchPressed = climberUp->getBottomSwitch();
+	topSwitchPressed = climberUp->getTopSwitch();
+	middleSwitchPressed = climberUp->getMiddleSwitch();
+
+	if(oi->getButton9())
+	{		if(middleSwitchPressed && !endMiddleSwitch)
+		{
+			time.Start();
+			climberUp->setCANTalon7(0);
+		}
+		else if(time.Get() >= .75)
+		{
+			climberUp->setCANTalon7(CLIMBER_SPEED);
+			endMiddleSwitch = true;
+		}
+		else if(topSwitchPressed)
+		{
+			climberUp->setCANTalon7(0);
+			finish = true;
+		}
+		else
+		{
+			climberUp->setCANTalon7(CLIMBER_SPEED);
+		}
 	}
 	else if(oi->getButton10())
 	{
-		time.Start();
-		climberUp->setCANTalon7(-CLIMBER_SPEED);
+		if (middleSwitchPressed  && !endMiddleSwitch)
+		{
+			climberUp->setCANTalon7(0);
+			time.Start();
+		}
+		else if (time.Get() >= .75)
+		{
+			climberUp->setCANTalon7(-CLIMBER_SPEED);
+			endMiddleSwitch = true;
+		}
+		else if (bottomSwitchPressed)
+		{
+			climberUp->setCANTalon7(0);
+			finish = true;
+		}
+		else
+		{
+			climberUp->setCANTalon7(-CLIMBER_SPEED);
+		}
 	}
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool Climber::IsFinished()
 {
-	if(time.Get() >= TIME)
-	{
-		climberUp->setCANTalon7(0);
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return finish;
 }
 
 // Called once after isFinished returns true

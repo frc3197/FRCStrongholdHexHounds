@@ -8,12 +8,18 @@ class ClimberUp: public Subsystem
 {
 private:
 	CANTalon CAN7;
+	DigitalInput limitSwitchDown;
+	DigitalInput limitSwitchMiddle;
+	DigitalInput limitSwitchTop;
 	// It's desirable that everything possible under private except
 	// for methods that implement subsystem capabilities
 public:
 	ClimberUp();
 	void InitDefaultCommand();
 	void setCANTalon7(float val);
+	bool getBottomSwitch();
+	bool getMiddleSwitch();
+	bool getTopSwitch();
 };
 
 #endif

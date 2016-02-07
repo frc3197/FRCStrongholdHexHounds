@@ -3,7 +3,10 @@
 
 ClimberUp::ClimberUp() :
 		Subsystem("ClimberUp"),
-		CAN7(7)
+		CAN7(7),
+		limitSwitchDown(3),
+		limitSwitchMiddle(4),
+		limitSwitchTop(5)
 {
 
 }
@@ -17,6 +20,21 @@ void ClimberUp::InitDefaultCommand()
 void ClimberUp::setCANTalon7(float val)
 {
 	CAN7.Set(val);
+}
+
+bool ClimberUp::getBottomSwitch()
+{
+	return limitSwitchDown.Get();
+}
+
+bool ClimberUp::getMiddleSwitch()
+{
+	return limitSwitchMiddle.Get();
+}
+
+bool ClimberUp::getTopSwitch()
+{
+	return limitSwitchTop.Get();
 }
 
 // Put methods for controlling this subsystem
