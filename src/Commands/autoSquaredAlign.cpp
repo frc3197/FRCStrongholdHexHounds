@@ -17,23 +17,22 @@ void autoSquaredAlign::Initialize()
 
 // Called repeatedly when this Command is scheduled to run
 void autoSquaredAlign::Execute()
-{
+{//auto aligns
+	if(oi->getRangeDif() >= ERROR_RANGE)
+	{
+		chassis->turnClockwise();
+	}
 
-			if(oi->getRangeDif() >= ERROR_RANGE)
-			{
-				chassis->turnClockwise();
-			}
-
-			else if(oi->getRangeDif() <= -ERROR_RANGE)
-			{
-				chassis->turnCounterClockwise();
-			}
+	else if(oi->getRangeDif() <= -ERROR_RANGE)
+	{
+		chassis->turnCounterClockwise();
+	}
 
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool autoSquaredAlign::IsFinished()
-{
+{//stops when range difference is within 1.5
 	if(oi->getRangeDif() < ERROR_RANGE && oi->getRangeDif() > -ERROR_RANGE)
 	{
 		chassis->tankDrive2(0, 0);

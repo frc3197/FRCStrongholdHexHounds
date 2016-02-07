@@ -16,13 +16,13 @@ void BallSuckerShooter::InitDefaultCommand()
 }
 
 void BallSuckerShooter::setPickupMotorSpeed(float val)
-{
+{//sets pickup and low motor speeds
 	can5.Set(val); //sets pickup motor speed
 }
 
 
 void BallSuckerShooter::setHighGoalShoot(float val)
-{
+{//sets high goal motor speed
 	can6.Set(val);//sets high goal motor speed
 }
 

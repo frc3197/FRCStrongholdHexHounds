@@ -24,11 +24,6 @@ void AutoDriveDefense::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void AutoDriveDefense::Execute()
 {
-	//chassis->SetCan1Speed(-.6);
-	//chassis->SetCan2Speed(-.6);
-	//chassis->SetCan3Speed(-.6);
-	//chassis->SetCan4Speed(-.6);
-	//oi->gyroReset();
 	SmartDashboard::PutNumber("State", state);
 	SmartDashboard::PutNumber("Gyro", oi->getAngle());
 	switch(position)
@@ -379,18 +374,6 @@ void AutoDriveDefense::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool AutoDriveDefense::IsFinished()
 {
-	/*if(oi->getAngle() <= -90)
-	{
-		chassis->SetCan1Speed(0);
-		chassis->SetCan2Speed(0);
-		chassis->SetCan3Speed(0);
-		chassis->SetCan4Speed(0);
-		return true;
-	}
-	else
-	{
-		return false;
-	}*/
 	return finish;
 }
 

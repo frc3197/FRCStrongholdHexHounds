@@ -58,7 +58,7 @@ void ShooterSucker::Execute()
 	}
 	else if(buttonNum == BUTTONRT)//ball suck
 	{
-			ballSuckerShooter->setPickupMotorSpeed(-FULLSPEED);
+		ballSuckerShooter->setPickupMotorSpeed(-FULLSPEED);
 	}
 
 	else if(highGoalBool) //high goal shooter

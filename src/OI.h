@@ -52,6 +52,13 @@ private:
 	bool LB = false;
 	bool autoAlignBot = false;
 
+	bool newButton1;
+	bool newButton2;
+	bool newButton3;
+	bool newButton4;
+	bool newButton5;
+
+
 
 public:
 	OI();
@@ -69,7 +76,7 @@ public:
 	bool getButton10();
 	void elevationGyroReset();
 	float getElevationAngle();
-	bool GetRT();
+	bool GetLT();
 	bool getButton9();
 };
 

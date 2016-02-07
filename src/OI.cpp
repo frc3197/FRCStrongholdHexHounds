@@ -44,11 +44,11 @@ float OI::getRight()//gets right stick Y value
 
 int OI::getShoot()
 {//returns which button is pressed
-	bool newButton1 = button6.Get();
-	bool newButton2 = button2.Get();
-	bool newButton3 = button3.Get();
-	bool newButton4 = button4.Get();
-	bool newButton5 = button5.Get();
+	newButton1 = button6.Get();
+	newButton2 = button2.Get();
+	newButton3 = button3.Get();
+	newButton4 = button4.Get();
+	newButton5 = button5.Get();
 	currButton = "";
 
 	if(newButton1)
@@ -98,7 +98,7 @@ void OI::rangeSensor()
 }
 
 bool OI::getBoolean()
-{
+{//changes bool value when button6 is pressed
 	bool newButton = button6.Get();
 	if(inverse&&newButton)
 	{
@@ -112,7 +112,7 @@ bool OI::getBoolean()
 }
 
 bool OI::getButtonX()
-{
+{//returns X
 	if(button3.Get())
 	{
 		autoAlignBot = true;
@@ -121,57 +121,49 @@ bool OI::getButtonX()
 }
 
 bool OI::getButtonLB()
-{
-	/*if((button5.Get()) && (LB))
-	{
-		LB = false;
-	}
-	else if(button5.Get())
-	{
-		LB = true;
-	}*/
+{//returns LB
 	return button5.Get();
 }
 
 float OI::getRangeDif()
-{
+{//returns difference between the range sensors
 	return (ultra.GetAverageVoltage()*104 + 2) - (ultra2.GetAverageVoltage()*104 + 2);
 }
 
 float OI::getAngle()
-{
+{//returns SPI gyro angle
 	SmartDashboard::PutNumber("Gyro Angle", gyro.GetAngle());
 	return (gyro.GetAngle());
 }
 
 void OI::resetButtonX()
-{
+{//resets button X
 	autoAlignBot = false;
 }
 
 void OI::gyroReset()
-{
+{//resets SPI gyro
 	gyro.Reset();
 }
 
 void OI::elevationGyroReset()
-{
+{//resets elevation gyro
 	elevationGyro.Calibrate();
 	elevationGyro.Reset();
 }
 
 float OI::getElevationAngle()
-{
+{//gets elevation gyro angle
 	return elevationGyro.GetAngle();
 }
 
 bool OI::getButton10()
-{
+{//returns right stick button
 	return button10.Get();
 }
 
-bool OI::GetRT()
-{
+bool OI::GetLT()
+{//returns whether RT > .5
 	if(stick.GetRawAxis(2) >= .5)
 	{
 		return true;
@@ -183,6 +175,6 @@ bool OI::GetRT()
 }
 
 bool OI::getButton9()
-{
+{//returns left stick pressed
 	return button9.Get();
 }

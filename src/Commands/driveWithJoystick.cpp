@@ -35,8 +35,8 @@ void driveWithJoystick::Execute()
 	inverse = oi->getBoolean();
 	oi->rangeSensor();
 
-	if(((oi->GetRT()) && (!oi->getButton10())) && ((oi->getRangeDif() >= ERROR_RANGE) || (oi->getRangeDif() <= -ERROR_RANGE)))
-	{
+	if(((oi->GetLT()) && (!oi->getButton10())) && ((oi->getRangeDif() >= ERROR_RANGE) || (oi->getRangeDif() <= -ERROR_RANGE)))
+	{//auto aligns
 		if(oi->getRangeDif() >= ERROR_RANGE)
 		{
 			chassis->turnClockwise();
@@ -46,10 +46,9 @@ void driveWithJoystick::Execute()
 		{
 			chassis->turnCounterClockwise();
 		}
-
 	}
 	else if((LBPressed) && (oi-> getAngle()  <= TURNAMOUNT))
-	{
+	{//reverses 180 deg
 		resetLB = true;
 		chassis->reverse180();
 		SmartDashboard::PutNumber("Working", 1);
@@ -65,10 +64,10 @@ void driveWithJoystick::Execute()
 	}
 
 
-	if(((oi->getRangeDif() <= ERROR_RANGE) && (oi->getRangeDif() >= -ERROR_RANGE)) && (!oi->getButton10()))
+	/*if(((oi->getRangeDif() <= ERROR_RANGE) && (oi->getRangeDif() >= -ERROR_RANGE)) && (!oi->getButton10()))
 	{
 		oi->resetButtonX();
-	}
+	}*/
 
 	if(oi->getAngle() >= TURNAMOUNT && resetLB)
 	{

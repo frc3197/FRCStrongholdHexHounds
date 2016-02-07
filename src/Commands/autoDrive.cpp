@@ -40,7 +40,7 @@ void autoDrive::Execute()
 
 	switch(number)
 	{
-		case 1:
+		case 1://movs forward until on ramp
 			SmartDashboard::PutNumber("Case", number);
 			chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 			if(elevationAngle >= ON_RAMP_RANGE)//output > .36)
@@ -49,7 +49,7 @@ void autoDrive::Execute()
 			}
 		break;
 
-		case 2:
+		case 2://moves forward until off ramp
 			 SmartDashboard::PutNumber("Case", number);
 			 angle = oi->getAngle();
 			 if(angle > ERROR_RANGE)
@@ -83,73 +83,6 @@ void autoDrive::Execute()
 
 		break;
 	}
-
-	/*if(oi->getElevationAngle() <= DOWN_RAMP_RANGE)
-	{
-		goingDownRamp = true;
-	}
-
-	elevationAngle = oi->getElevationAngle();
-
-	 if((onRamp) && (elevationAngle >= ELEVATION_ANGLE_RANGE))//output >= ON_RAMP_RANGE))
-	 {
-		 SmartDashboard::PutString("Running", "on ramp code");
-	 	 angle = oi->getAngle();
-
-	 	 if(angle > ERROR_RANGE)
-	 	 {
-	 		SmartDashboard::PutBoolean("Adjusting for angle", true);
-	 		//chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
-			//chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
-			//chassis->SetCan3Speed(CAN_MOTOR_FAST_SPEED);
-			//chassis->SetCan4Speed(CAN_MOTOR_FAST_SPEED);
-	 		chassis->tankDrive2(CAN_MOTOR_FAST_SPEED, CAN_MOTOR_SLOW_SPEED);
-	 	 }
-	 	 else if(angle < ERROR_RANGE)
-	 	 {
-	 		SmartDashboard::PutBoolean("Adjsuting for angle", true);
-	 		//chassis->SetCan1Speed(CAN_MOTOR_FAST_SPEED);
-			//chassis->SetCan2Speed(CAN_MOTOR_FAST_SPEED);
-			//chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
-			//chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
-	 		chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_FAST_SPEED);
-	 	 }
-	 	 else
-	 	 {
-	 		SmartDashboard::PutBoolean("Adjsuting for angle", false);
-	 		//chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
-	 		//chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
-			//chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
-			//chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
-	 		chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
-	 	 }
-	 }
-	 else if(onRamp && goingDownRamp)
-	 {
-	 	 finish = true;
-	 }
-	 else
-	 {
-	 	SmartDashboard::PutString("Running", "normal code, not on ramp");
-	 	//chassis->SetCan1Speed(CAN_MOTOR_SLOW_SPEED);
-	 	//chassis->SetCan2Speed(CAN_MOTOR_SLOW_SPEED);
-	 	//chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
-	 	//chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
-	 	chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
-
-	 	if(elevationAngle >= ON_RAMP_RANGE)//output > .36)
-		{
-			onRamp = true;
-		}
-	}*/
-
-	/*if(time.Get() < TIME  chassis->GetEncodeDistance() <= 122 + 17)
-	{
-		chassis->SetCan1Speed(-.25);
-		chassis->SetCan2Speed(-.25);
-		chassis->SetCan3Speed(-.25);
-		chassis->SetCan4Speed(-.25);
-	}*/
 	SmartDashboard::PutBoolean("Finish", finish);
 	SmartDashboard::PutBoolean("On Ramp", onRamp);
 	SmartDashboard::PutNumber("Elevation Angle", elevationAngle);
@@ -159,7 +92,7 @@ void autoDrive::Execute()
 bool autoDrive::IsFinished()
 {
 	if(finish)
-	{
+	{//stops moving if finished
 		chassis->tankDrive2(0, 0);
 	}
 	return finish;

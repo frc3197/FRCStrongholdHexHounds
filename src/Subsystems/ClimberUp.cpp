@@ -19,22 +19,22 @@ void ClimberUp::InitDefaultCommand()
 
 void ClimberUp::setCANTalon7(float val)
 {
-	CAN7.Set(val);
+	CAN7.Set(val);//sets climber motor speed
 }
 
 bool ClimberUp::getBottomSwitch()
 {
-	return limitSwitchDown.Get();
+	return limitSwitchDown.Get();//returns bottom limit switch
 }
 
 bool ClimberUp::getMiddleSwitch()
 {
-	return limitSwitchMiddle.Get();
+	return limitSwitchMiddle.Get();//returns middle limit switch (when climber arm angle = 90 deg
 }
 
 bool ClimberUp::getTopSwitch()
 {
-	return limitSwitchTop.Get();
+	return limitSwitchTop.Get();//returns top limit switch
 }
 
 // Put methods for controlling this subsystem

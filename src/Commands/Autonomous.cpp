@@ -6,10 +6,10 @@
 #include <Commands/autoShoot.h>
 Autonomous::Autonomous()
 {
-	AddSequential(new autoDrive());
-	AddSequential(new AutoDriveDefense());
-	AddSequential(new autoSquaredAlign());
-	AddSequential(new autoShoot());
+	AddSequential(new autoDrive());//drives over defense
+	AddSequential(new AutoDriveDefense());//drives to batter
+	AddSequential(new autoSquaredAlign());//auto aligns
+	AddSequential(new autoShoot());//shoots
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
 }

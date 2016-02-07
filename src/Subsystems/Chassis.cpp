@@ -23,7 +23,7 @@ void Chassis::InitDefaultCommand()
 }
 
 void Chassis::tankDrive(float left, float right)
-{
+{//tele-op tank drive
 	SmartDashboard::PutNumber("Accel X", accel.GetAcceleration(ADXL362::kAxis_X));
 	SmartDashboard::PutNumber("Accel Y", accel.GetAcceleration(ADXL362::kAxis_Y));
 	SmartDashboard::PutNumber("Accel Z", accel.GetAcceleration(ADXL362::kAxis_Z));
@@ -31,7 +31,7 @@ void Chassis::tankDrive(float left, float right)
 }
 
 void Chassis::tankDrive2(float left, float right)
-{
+{//auto tank drive
 	SmartDashboard::PutNumber("Accel X", accel.GetAcceleration(ADXL362::kAxis_X));
 	SmartDashboard::PutNumber("Accel Y", accel.GetAcceleration(ADXL362::kAxis_Y));
 	SmartDashboard::PutNumber("Accel Z", accel.GetAcceleration(ADXL362::kAxis_Z));
@@ -56,7 +56,7 @@ void Chassis::turnCounterClockwise() //auto-aligns if left sensor > right sensor
 	robotDrive.TankDrive(-MOTOR_SPEED_FAST, MOTOR_SPEED_FAST, false);
 }
 
-void Chassis::SetCan1Speed(float speed)
+/*void Chassis::SetCan1Speed(float speed)
 {
 	can1.Set(speed);
 }
@@ -74,21 +74,21 @@ void Chassis::SetCan3Speed(float speed)
 void Chassis::SetCan4Speed(float speed)
 {
 	can4.Set(speed);
-}
+}*/
 
 float Chassis::GetEncodeDistance()
-{
+{//gets encoder distance
 	float distance = encode.Get();
 	return distance;
 }
 
 void Chassis::ResetEncoder()
-{
+{//resets encoder
 	encode.Reset();
 }
 
 void Chassis::Turn()
-{
+{//turns robot
 	robotDrive.TankDrive(MOTOR_SPEED_FAST, -MOTOR_SPEED_FAST, true);
 }
 /*
@@ -102,7 +102,7 @@ void Chassis::Backward()
 }
 */
 float Chassis::getAccelerometerZ()
-{
+{//gets accelerometer z-axis
 	return accel.GetAcceleration(ADXL362::kAxis_Z);
 }
 
