@@ -16,6 +16,8 @@
 #define BUTTONX 3
 #define BUTTONY 4
 #define BUTTONLB 5
+#define BUTTONRB 6
+#define BUTTONRT 7
 
 ShooterSucker::ShooterSucker()
 {
@@ -29,7 +31,6 @@ void ShooterSucker::Initialize()
 {
 	//initializes speeds to 0
 	ballSuckerShooter->setPickupMotorSpeed(STOPSPEED);
-	ballSuckerShooter->setLowGoalShoot(STOPSPEED);
 	ballSuckerShooter->setHighGoalShoot(STOPSPEED);
 	buttonNum = 0;
 }
@@ -39,56 +40,48 @@ void ShooterSucker::Execute()
 {
 	buttonNum = oi->getShoot();
 
-	if(buttonNum == BUTTONY)
+	if(buttonNum == BUTTONLB)
 	{
 		highGoalBool = true;
 	}
-
 	else if(!highGoalBool)
 	{
 		time.Reset();
 		ballSuckerShooter->setPickupMotorSpeed(STOPSPEED);
-		ballSuckerShooter->setLowGoalShoot(STOPSPEED);
 		ballSuckerShooter->setHighGoalShoot(STOPSPEED);
 	}
 	SmartDashboard::PutNumber("Button Number", buttonNum);
 
-	if(buttonNum==BUTTONA)//low goal
+	if(buttonNum==BUTTONRB)//low goal
 	{
 		ballSuckerShooter->setPickupMotorSpeed(FULLSPEED);
-		ballSuckerShooter->setLowGoalShoot(-FULLSPEED);
 	}
-	else if(buttonNum == BUTTONB)//ball suck
+	else if(buttonNum == BUTTONRT)//ball suck
 	{
 			ballSuckerShooter->setPickupMotorSpeed(-FULLSPEED);
-			ballSuckerShooter->setLowGoalShoot(FULLSPEED);
 	}
 
 	else if(highGoalBool) //high goal shooter
 	{
 		time.Start();
 
-		ballSuckerShooter->setLowGoalShoot(LOWGOALRETRACTSPEED);
 		ballSuckerShooter->setPickupMotorSpeed(-LOWGOALRETRACTSPEED);
 		ballSuckerShooter->setHighGoalShoot(HIGHGOALPUSHSPEED);//winds ball back while starting high goal motor
 
 		if((time.Get() >= STARTTIME) && (time.Get()<REVTIME))
 		{
-			ballSuckerShooter->setLowGoalShoot(STOPSPEED);
 			ballSuckerShooter->setPickupMotorSpeed(STOPSPEED);
 			ballSuckerShooter->setHighGoalShoot(HIGHGOALPUSHSPEED);//stops winding ball back
 		}
 
 		if((time.Get() >= REVTIME) && (time.Get() < SHOOTFINISH))
 		{
-			ballSuckerShooter->setLowGoalShoot(-LOWGOALRETRACTSPEED);
 			ballSuckerShooter->setPickupMotorSpeed(LOWGOALRETRACTSPEED);
 			ballSuckerShooter->setHighGoalShoot(HIGHGOALPUSHSPEED);//shoots ball forward into high goal motor to shoot ball out
 		}
 
 		if(time.Get() >= SHOOTFINISH)
 		{
-			ballSuckerShooter->setLowGoalShoot(STOPSPEED);
 			ballSuckerShooter->setPickupMotorSpeed(STOPSPEED);
 			ballSuckerShooter->setHighGoalShoot(STOPSPEED);
 			highGoalBool = false;

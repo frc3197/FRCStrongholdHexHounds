@@ -9,14 +9,13 @@
 class autoDrive: public CommandBase
 {
 private:
-	Timer time;
 	float angle = 0.0;
 	bool onRamp = false;
-	float absInput = 0.0;
-	float oldOutput = 0.0;
-	float output = 0.0;
 	bool finish = false;
 	float elevationAngle = 0.0;
+	bool goingDownRamp = false;
+	int number = 1;
+	Timer time;
 
 public:
 	autoDrive();

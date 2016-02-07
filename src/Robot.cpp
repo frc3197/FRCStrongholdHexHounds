@@ -13,11 +13,13 @@
 class Robot: public IterativeRobot
 {
 private:
+	int num = 0;
 	Command *autonomousCommand;
 	LiveWindow *lw;
 
 	void RobotInit()
 	{
+		SmartDashboard::PutString("Is Running", "Not yet");
 		CommandBase::init();
 		autonomousCommand = new Autonomous();
 		lw = LiveWindow::GetInstance();
@@ -30,12 +32,15 @@ private:
 
 	void AutonomousInit()
 	{
+		SmartDashboard::PutString("Is Running", "Yes");
 		if (autonomousCommand != NULL)
 			autonomousCommand->Start();
 	}
 
 	void AutonomousPeriodic()
 	{
+		num++;
+		SmartDashboard::PutNumber("Executing Num", num);
 		Scheduler::GetInstance()->Run();
 	}
 

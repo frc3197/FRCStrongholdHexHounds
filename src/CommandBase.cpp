@@ -9,6 +9,7 @@ OI* CommandBase::oi = NULL;
 Chassis* CommandBase::chassis = NULL;
 BallSuckerShooter* CommandBase::ballSuckerShooter = NULL;
 AutoDriveToDefense* CommandBase::autoDriveToDefense = NULL;
+ClimberUp* CommandBase::climberUp = NULL;
 
 CommandBase::CommandBase(char const *name) : Command(name)
 {
@@ -26,6 +27,8 @@ void CommandBase::init()
 	oi = new OI();
 	ballSuckerShooter = new BallSuckerShooter();
 	autoDriveToDefense = new AutoDriveToDefense();
+	climberUp = new ClimberUp();
+
 
 
 }

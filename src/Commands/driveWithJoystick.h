@@ -18,6 +18,7 @@ private:
 	float absInput = 0.0;
 	float oldOutput = 0.0;
 	float output = 0.0;
+	float elevationAngle = 0.0;
 
 public:
 	driveWithJoystick();

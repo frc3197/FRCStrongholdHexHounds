@@ -69,6 +69,8 @@ public:
 	bool getButton10();
 	void elevationGyroReset();
 	float getElevationAngle();
+	bool GetRT();
+	bool getButton9();
 };
 
 #endif

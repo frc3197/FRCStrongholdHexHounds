@@ -11,16 +11,13 @@ driveWithJoystick::driveWithJoystick()
 void driveWithJoystick::Initialize()
 {
 	inverse = false;
+	oi->elevationGyroReset();
 }
 
 void driveWithJoystick::Execute()
 {
-	absInput = fabs(chassis->getAccelerometerZ() - 1);
-	output = (0.95*oldOutput) + (0.05*absInput);
-	SmartDashboard::PutNumber("Output", output);
-	SmartDashboard::PutNumber("absInput", absInput);
-	SmartDashboard::PutNumber("oldOutput", oldOutput);
-	oldOutput = output;
+	elevationAngle = fabs(oi->getElevationAngle());
+	SmartDashboard::PutNumber("Elevation Angle", elevationAngle);
 
 	if(!LBPressed)
 	{
@@ -38,7 +35,7 @@ void driveWithJoystick::Execute()
 	inverse = oi->getBoolean();
 	oi->rangeSensor();
 
-	if(((oi->getButtonX()) && (oi->getButton10())) && ((oi->getRangeDif() >= -ERROR_RANGE) || (oi->getRangeDif() <= ERROR_RANGE)))
+	if(((oi->GetRT()) && (!oi->getButton10())) && ((oi->getRangeDif() >= ERROR_RANGE) || (oi->getRangeDif() <= -ERROR_RANGE)))
 	{
 		if(oi->getRangeDif() >= ERROR_RANGE)
 		{

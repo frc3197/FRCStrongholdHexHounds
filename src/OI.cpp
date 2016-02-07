@@ -5,16 +5,16 @@
 
 OI::OI():
 	stick(0),
-	button1(&stick, BUTTON1),
-	button2(&stick, BUTTON2),
-	button3(&stick, BUTTON3),
-	button4(&stick, BUTTON4),
-	button5(&stick, BUTTON5),
-	button6(&stick, BUTTON6),
-	button7(&stick, BUTTON7),
-	button8(&stick, BUTTON8),
-	button9(&stick, BUTTON9),
-	button10(&stick, BUTTON10),
+	button1(&stick, BUTTON1),//A
+	button2(&stick, BUTTON2),//B
+	button3(&stick, BUTTON3),//X
+	button4(&stick, BUTTON4),//Y
+	button5(&stick, BUTTON5),//LB
+	button6(&stick, BUTTON6),//RB
+	button7(&stick, BUTTON7),//Back
+	button8(&stick, BUTTON8),//Start
+	button9(&stick, BUTTON9),//Left Stick
+	button10(&stick, BUTTON10),//Right Stick
 	ultra(1), ultra2(2),
 	rangeFinder(6),
 	dio(0),
@@ -44,33 +44,25 @@ float OI::getRight()//gets right stick Y value
 
 int OI::getShoot()
 {//returns which button is pressed
-	bool newButton1 = button1.Get();
+	bool newButton1 = button6.Get();
 	bool newButton2 = button2.Get();
 	bool newButton3 = button3.Get();
 	bool newButton4 = button4.Get();
 	bool newButton5 = button5.Get();
 	currButton = "";
+
 	if(newButton1)
 	{
-		currButton = "A"; //low goal
-		return 1;
+		currButton = "RB"; //low goal shooter
+		return 6;
 	}
-	else if(newButton2)
+	else if(stick.GetRawAxis(3) >= .5)
 	{
-		currButton = "B"; //ball suck
-		return 2;
-	}
-	else if(newButton3)
-	{
-		currButton = "X"; //auto
-		return 3;
-	}
-	else if(newButton4){
-		currButton = "Y"; //High Goal
-		return 4;
+		currButton = "RT"; //ball suck
+		return 7;
 	}
 	else if(newButton5){
-		currButton = "LB";
+		currButton = "LB"; //high goal shooter
 		return 5;
 	}
 	else
@@ -164,16 +156,33 @@ void OI::gyroReset()
 
 void OI::elevationGyroReset()
 {
+	elevationGyro.Calibrate();
 	elevationGyro.Reset();
 }
 
 float OI::getElevationAngle()
 {
-	SmartDashboard::PutNumber("Elevation Angle", elevationGyro.GetAngle());
 	return elevationGyro.GetAngle();
 }
 
 bool OI::getButton10()
 {
 	return button10.Get();
+}
+
+bool OI::GetRT()
+{
+	if(stick.GetRawAxis(2) >= .5)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool OI::getButton9()
+{
+	return button9.Get();
 }

@@ -1,17 +1,15 @@
-#ifndef AUTONOMOUS_H
-#define AUTONOMOUS_H
+#ifndef AUTO_SQUARED_ALIGN_H
+#define AUTO_SQUARED_ALIGN_H
 
 #include "../CommandBase.h"
 #include "WPILib.h"
-#include "OI.h"
 
-class Autonomous: public CommandGroup
+#include "Subsystems/Chassis.h"
+
+class autoSquaredAlign: public CommandBase
 {
-private:
-	int number = 0;
-
 public:
-	Autonomous();
+	autoSquaredAlign();
 	void Initialize();
 	void Execute();
 	bool IsFinished();

@@ -11,7 +11,8 @@ Chassis::Chassis():
 	can1(1), can2(2), can3(3), can4(4),
 	robotDrive(can3,can2,can1,can4),
 	encode(1, 2, false, Encoder::k4X),
-	accel(SPI::kOnboardCS1, ADXL362::kRange_2G)
+	accel(SPI::kOnboardCS1, ADXL362::kRange_2G),
+	usbCam("USB Camera", true)
 {
 	robotDrive.SetSafetyEnabled(false);
 }
@@ -104,3 +105,4 @@ float Chassis::getAccelerometerZ()
 {
 	return accel.GetAcceleration(ADXL362::kAxis_Z);
 }
+

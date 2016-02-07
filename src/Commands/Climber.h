@@ -1,17 +1,16 @@
-#ifndef AUTONOMOUS_H
-#define AUTONOMOUS_H
+#ifndef CLIMBER_H
+#define CLIMBER_H
 
 #include "../CommandBase.h"
 #include "WPILib.h"
-#include "OI.h"
 
-class Autonomous: public CommandGroup
+class Climber: public CommandBase
 {
 private:
-	int number = 0;
+	Timer time;
 
 public:
-	Autonomous();
+	Climber();
 	void Initialize();
 	void Execute();
 	bool IsFinished();

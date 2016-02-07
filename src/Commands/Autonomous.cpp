@@ -2,12 +2,14 @@
 #include <Commands/autoDrive.h>
 #include <Commands/AutoDriveDefense.h>
 #include <unistd.h>
-
+#include <Commands/autoSquaredAlign.h>
+#include <Commands/autoShoot.h>
 Autonomous::Autonomous()
 {
 	AddSequential(new autoDrive());
-	//AddSequential(new AutoDriveDefense());
-	//AddSequential(new autoDrive());
+	AddSequential(new AutoDriveDefense());
+	AddSequential(new autoSquaredAlign());
+	AddSequential(new autoShoot());
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
 }
@@ -21,7 +23,8 @@ void Autonomous::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void Autonomous::Execute()
 {
-
+	number++;
+	SmartDashboard::PutNumber("Number", number);
 }
 
 // Make this return true when this Command no longer needs to run execute()

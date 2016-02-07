@@ -17,6 +17,7 @@ private:
 	RobotDrive robotDrive;
 	Encoder encode;
 	ADXL362 accel;
+	USBCamera usbCam;
 
 public:
 	Chassis();

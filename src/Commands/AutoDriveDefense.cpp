@@ -60,7 +60,7 @@ void AutoDriveDefense::Execute()
 			break;
 
 			case 2:
-				if(oi->getAngle() < 120)
+				if(oi->getAngle() < 60)
 				{
 					//chassis->SetCan1Speed(-CAN_MOTOR_FAST_SPEED);
 					//chassis->SetCan2Speed(CAN_MOTOR_FAST_SPEED);
@@ -125,7 +125,7 @@ void AutoDriveDefense::Execute()
 			break;
 
 			case 2:
-				if(oi->getAngle() < 120)
+				if(oi->getAngle() < 60)
 				{
 					chassis->tankDrive2(CAN_MOTOR_FAST_SPEED, -CAN_MOTOR_FAST_SPEED);
 				}
@@ -342,7 +342,7 @@ void AutoDriveDefense::Execute()
 			break;
 
 			case 2:
-				if(oi->getAngle() > -116.45)
+				if(oi->getAngle() > -180 + 116.45)
 				{
 					chassis->tankDrive2(-CAN_MOTOR_FAST_SPEED, CAN_MOTOR_FAST_SPEED);
 				}

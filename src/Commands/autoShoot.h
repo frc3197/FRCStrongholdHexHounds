@@ -1,17 +1,16 @@
-#ifndef AUTONOMOUS_H
-#define AUTONOMOUS_H
+#ifndef AUTO_SHOOT_H
+#define AUTO_SHOOT_H
 
 #include "../CommandBase.h"
 #include "WPILib.h"
-#include "OI.h"
 
-class Autonomous: public CommandGroup
+class autoShoot: public CommandBase
 {
 private:
-	int number = 0;
-
+	int shoot = 1;
+	Timer time;
 public:
-	Autonomous();
+	autoShoot();
 	void Initialize();
 	void Execute();
 	bool IsFinished();

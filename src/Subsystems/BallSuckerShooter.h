@@ -9,14 +9,12 @@ class BallSuckerShooter: public Subsystem
 private:
 
 	CANTalon can5; //Ball Pickup
-	CANTalon can6; //Low Goal Shooter
-	CANTalon can7; //High Goal Shooter
+	CANTalon can6; //high Goal Shooter
 
 public:
 	BallSuckerShooter();
 	void InitDefaultCommand();
 	void setPickupMotorSpeed(float val);
-	void setLowGoalShoot(float val);
 	void setHighGoalShoot(float val);
 };
 

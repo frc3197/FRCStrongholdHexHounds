@@ -1,16 +1,18 @@
 #include "autoDrive.h"
 #include "AutoDriveDefense.h"
 //#include "CommandGroup.h"
-#define TIME 2
+#define ERROR_RANGE 0.75
 
-#define ERROR_RANGE 0
-#define ON_RAMP_RANGE 0.26
+#define ON_RAMP_RANGE 1.5
+#define ELEVATION_ANGLE_RANGE 1
+#define DOWN_RAMP_RANGE -1.5
 
 #define OLD_OUTOUT_PERCENT .95
 #define ABS_INPUT_PERCENT .05
 
 #define CAN_MOTOR_SLOW_SPEED -.4
 #define CAN_MOTOR_FAST_SPEED -.45
+#define STOP_SPEED 0.0
 
 autoDrive::autoDrive()
 {
@@ -20,26 +22,80 @@ autoDrive::autoDrive()
 // Called just before this Command runs the first time
 void autoDrive::Initialize()
 {
-	time.Reset();
-	time.Start();
-	oi->gyroReset();
 	onRamp = false;
 	finish = false;
 	oi->elevationGyroReset();
+	time.Reset();
+	time.Start();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void autoDrive::Execute()
 {
-	absInput = fabs(chassis->getAccelerometerZ() - 1);
-	output = (OLD_OUTOUT_PERCENT*oldOutput) + (ABS_INPUT_PERCENT*absInput);
-	SmartDashboard::PutNumber("Output", output);
+	SmartDashboard::PutNumber("Time", time.Get());
+	//absInput = fabs(chassis->getAccelerometerZ() - 1);
+	//output = (OLD_OUTOUT_PERCENT*oldOutput) + (ABS_INPUT_PERCENT*absInput);
+	//SmartDashboard::PutNumber("Output", output);
 	elevationAngle = oi->getElevationAngle();
 
-	 if((onRamp) && (elevationAngle >=.05))//output >= ON_RAMP_RANGE))
+	switch(number)
+	{
+		case 1:
+			SmartDashboard::PutNumber("Case", number);
+			chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
+			if(elevationAngle >= ON_RAMP_RANGE)//output > .36)
+			{
+				number = 2;
+			}
+		break;
+
+		case 2:
+			 SmartDashboard::PutNumber("Case", number);
+			 angle = oi->getAngle();
+			 if(angle > ERROR_RANGE)
+			 {
+				 chassis->tankDrive2(CAN_MOTOR_FAST_SPEED, CAN_MOTOR_SLOW_SPEED);
+			 }
+			 else if(angle < ERROR_RANGE)
+			 {
+				 chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_FAST_SPEED);
+			 }
+			 else
+			 {
+				 chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
+			 }
+
+			 if(elevationAngle <= DOWN_RAMP_RANGE)
+			 {
+				 goingDownRamp = true;
+				 SmartDashboard::PutString("Case", "finished");
+			 }
+
+			 if((goingDownRamp) && ((elevationAngle <= ELEVATION_ANGLE_RANGE) && (elevationAngle >= -ELEVATION_ANGLE_RANGE)))
+			 {
+				 SmartDashboard::PutString("Finishing", "true");
+				 finish = true;
+				 number = 3;
+			 }
+		break;
+
+		default:
+
+		break;
+	}
+
+	/*if(oi->getElevationAngle() <= DOWN_RAMP_RANGE)
+	{
+		goingDownRamp = true;
+	}
+
+	elevationAngle = oi->getElevationAngle();
+
+	 if((onRamp) && (elevationAngle >= ELEVATION_ANGLE_RANGE))//output >= ON_RAMP_RANGE))
 	 {
 		 SmartDashboard::PutString("Running", "on ramp code");
 	 	 angle = oi->getAngle();
+
 	 	 if(angle > ERROR_RANGE)
 	 	 {
 	 		SmartDashboard::PutBoolean("Adjusting for angle", true);
@@ -68,7 +124,7 @@ void autoDrive::Execute()
 	 		chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 	 	 }
 	 }
-	 else if(onRamp)
+	 else if(onRamp && goingDownRamp)
 	 {
 	 	 finish = true;
 	 }
@@ -80,11 +136,12 @@ void autoDrive::Execute()
 	 	//chassis->SetCan3Speed(CAN_MOTOR_SLOW_SPEED);
 	 	//chassis->SetCan4Speed(CAN_MOTOR_SLOW_SPEED);
 	 	chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
-	 	if(elevationAngle >= .1)//output > .36)
+
+	 	if(elevationAngle >= ON_RAMP_RANGE)//output > .36)
 		{
 			onRamp = true;
 		}
-	}
+	}*/
 
 	/*if(time.Get() < TIME  chassis->GetEncodeDistance() <= 122 + 17)
 	{
@@ -93,28 +150,14 @@ void autoDrive::Execute()
 		chassis->SetCan3Speed(-.25);
 		chassis->SetCan4Speed(-.25);
 	}*/
-	oldOutput = output;
 	SmartDashboard::PutBoolean("Finish", finish);
 	SmartDashboard::PutBoolean("On Ramp", onRamp);
+	SmartDashboard::PutNumber("Elevation Angle", elevationAngle);
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool autoDrive::IsFinished()
 {
-	/*if(time.Get() >= TIMEchassis->GetEncodeDistance() <= 122 + 16)
-	{
-		SmartDashboard::PutString("AutoDrive Over", "booyeah!");
-		chassis->SetCan1Speed(0);
-		chassis->SetCan2Speed(0);
-		chassis->SetCan3Speed(0);
-		chassis->SetCan4Speed(0);
-		return true;
-	}
-	else
-	{
-		SmartDashboard::PutString("AutoDrive Over", "Nope");
-		return false;
-	}*/
 	if(finish)
 	{
 		chassis->tankDrive2(0, 0);
