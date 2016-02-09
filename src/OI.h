@@ -1,6 +1,6 @@
 #ifndef OI_H
 #define OI_H
-//hi
+
 #include "WPILib.h"
 #include <iostream>
 #include <string>
@@ -36,6 +36,11 @@ private:
 	JoystickButton button9; //Left Stick Click
 	JoystickButton button10; //Right Stick Click
 
+	Joystick climberStick;
+	JoystickButton climberButton1; //a
+	JoystickButton climberButton4; //y
+
+
 	string currButton;
 	AnalogInput ultra;
 	AnalogInput ultra2;
@@ -68,7 +73,7 @@ public:
 	void rangeSensor();
 	bool getBoolean();
 	bool getButtonX();
-	bool getButtonLB();
+	bool getButtonY();
 	float getRangeDif();
 	float getAngle();
 	void gyroReset();
@@ -78,6 +83,8 @@ public:
 	float getElevationAngle();
 	bool GetLT();
 	bool getButton9();
+	bool getClimberButton1();
+	bool getClimberButton4();
 };
 
 #endif

@@ -21,7 +21,7 @@ void driveWithJoystick::Execute()
 
 	if(!LBPressed)
 	{
-		LBPressed = oi->getButtonLB();
+		LBPressed = oi->getButtonY();
 		LBLast = false;
 	}
 
@@ -71,7 +71,7 @@ void driveWithJoystick::Execute()
 
 	if(oi->getAngle() >= TURNAMOUNT && resetLB)
 	{
-		resetLB = oi->getButtonLB();
+		resetLB = oi->getButtonY();
 		LBLast = LBPressed;
 		LBPressed = false;
 	}

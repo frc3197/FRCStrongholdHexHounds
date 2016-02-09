@@ -17,7 +17,10 @@ private:
 	RobotDrive robotDrive;
 	Encoder encode;
 	ADXL362 accel;
-	USBCamera usbCam;
+	USBCamera usbCam1;
+	USBCamera usbCam2;
+
+	int activeCam = 1;
 
 public:
 	Chassis();
@@ -37,6 +40,7 @@ public:
 	//void Forward();
 	//void Backward();
 	float getAccelerometerZ();
+	void changeCam();
 };
 
 #endif

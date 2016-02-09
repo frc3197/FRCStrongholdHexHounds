@@ -13,9 +13,12 @@ private:
 	bool onRamp = false;
 	bool finish = false;
 	float elevationAngle = 0.0;
+	float oldElevationAngle = 0.0;
 	bool goingDownRamp = false;
 	int number = 1;
 	Timer time;
+	int position = 1;
+
 
 public:
 	autoDrive();

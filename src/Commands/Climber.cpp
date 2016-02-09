@@ -3,6 +3,7 @@
 #define TIME 2.5
 #define CLIMBER_SPEED .5
 
+
 Climber::Climber()
 {
 	Requires(climberUp);
@@ -26,7 +27,7 @@ void Climber::Execute()
 	topSwitchPressed = climberUp->getTopSwitch();
 	middleSwitchPressed = climberUp->getMiddleSwitch();
 
-	if(oi->getButton9())
+	if(oi->getClimberButton4())
 	{//only runs if left stick is held
 		if(middleSwitchPressed && !endMiddleSwitch)
 		{//stops running motor for .75 sec when middle switch is hit
@@ -48,7 +49,7 @@ void Climber::Execute()
 			climberUp->setCANTalon7(CLIMBER_SPEED);
 		}
 	}
-	else if(oi->getButton10())
+	else if(oi->getClimberButton1())
 	{//only runs if right stick is hit
 		if (middleSwitchPressed  && !endMiddleSwitch)
 		{//stops reversing for .75 sec when middle switch is hit

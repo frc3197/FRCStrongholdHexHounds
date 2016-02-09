@@ -14,6 +14,8 @@
 #define CAN_MOTOR_FAST_SPEED -.45
 #define STOP_SPEED 0.0
 
+#define ELEVATIONCHANGERANGE 10
+
 autoDrive::autoDrive()
 {
  	Requires(chassis);
@@ -26,7 +28,8 @@ void autoDrive::Initialize()
 	finish = false;
 	oi->elevationGyroReset();
 	time.Reset();
-	time.Start();
+	elevationAngle = 0.0;
+	oldElevationAngle = 0.0;
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -37,7 +40,8 @@ void autoDrive::Execute()
 	//output = (OLD_OUTOUT_PERCENT*oldOutput) + (ABS_INPUT_PERCENT*absInput);
 	//SmartDashboard::PutNumber("Output", output);
 	elevationAngle = oi->getElevationAngle();
-
+switch(position){
+case 1:
 	switch(number)
 	{
 		case 1://movs forward until on ramp
@@ -83,6 +87,34 @@ void autoDrive::Execute()
 
 		break;
 	}
+break;
+
+case 2://rough terrain none-detection
+	time.Start();
+	if(time.Get() >= .1)
+	{
+		time.Reset();
+		elevationAngle = fabs(oi->getElevationAngle() - oldElevationAngle);
+	}
+
+	if(elevationAngle > ELEVATIONCHANGERANGE)
+	{
+		chassis->tankDrive2(CAN_MOTOR_FAST_SPEED, CAN_MOTOR_FAST_SPEED);
+	}
+	else if(oi->getElevationAngle() < ELEVATION_ANGLE_RANGE)
+	{
+		chassis->tankDrive2(0, 0);
+		finish = true;
+	}
+
+	oldElevationAngle = oi->getElevationAngle();
+
+break;
+
+default:
+
+break;
+}
 	SmartDashboard::PutBoolean("Finish", finish);
 	SmartDashboard::PutBoolean("On Ramp", onRamp);
 	SmartDashboard::PutNumber("Elevation Angle", elevationAngle);

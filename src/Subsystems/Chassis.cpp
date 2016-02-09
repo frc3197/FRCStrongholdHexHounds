@@ -5,6 +5,7 @@
 #define MOTOR_SPEED .5
 #define MOTOR_SPEED_FAST .8
 
+#define FPS 10
 
 Chassis::Chassis():
 	Subsystem("Chassis"),
@@ -12,7 +13,8 @@ Chassis::Chassis():
 	robotDrive(can3,can2,can1,can4),
 	encode(1, 2, false, Encoder::k4X),
 	accel(SPI::kOnboardCS1, ADXL362::kRange_2G),
-	usbCam("USB Camera", true)
+	usbCam1("USB Camera 1", true),
+	usbCam2("USB Camera 2", true)
 {
 	robotDrive.SetSafetyEnabled(false);
 }
@@ -20,6 +22,7 @@ Chassis::Chassis():
 void Chassis::InitDefaultCommand()
 {
 	SetDefaultCommand(new driveWithJoystick());
+
 }
 
 void Chassis::tankDrive(float left, float right)
@@ -106,3 +109,24 @@ float Chassis::getAccelerometerZ()
 	return accel.GetAcceleration(ADXL362::kAxis_Z);
 }
 
+void Chassis::changeCam()
+{
+	if(activeCam == 1)
+	{
+		usbCam1.CloseCamera();
+		usbCam1.StopCapture();
+		usbCam2.StartCapture();
+		usbCam2.OpenCamera();
+		usbCam2.SetFPS(FPS);
+	}
+	else
+	{
+		usbCam2.CloseCamera();
+		usbCam2.StopCapture();
+		usbCam1.StartCapture();
+		usbCam1.OpenCamera();
+		usbCam1.SetFPS(FPS);
+	}
+
+
+}

@@ -2,6 +2,8 @@
 #include "SPI.h"
 
 #define DEADZONE .1
+#define VOLTAGEMULT 104
+#define INCHESOFF 2
 
 OI::OI():
 	stick(0),
@@ -15,6 +17,9 @@ OI::OI():
 	button8(&stick, BUTTON8),//Start
 	button9(&stick, BUTTON9),//Left Stick
 	button10(&stick, BUTTON10),//Right Stick
+	climberStick(1),
+	climberButton1(&climberStick, BUTTON1),
+	climberButton4(&climberStick, BUTTON4),
 	ultra(1), ultra2(2),
 	rangeFinder(6),
 	dio(0),
@@ -29,14 +34,18 @@ OI::OI():
 float OI::getLeft()//gets left stick Y value
 	{
 	float yVal = stick.GetRawAxis(1);
-	if((yVal < DEADZONE)&&(yVal > -DEADZONE)) return 0;
+	if((yVal < DEADZONE)&&(yVal > -DEADZONE))
+	{
+		yVal = 0;
+	}
 	return -yVal;
 	}
 
 float OI::getRight()//gets right stick Y value
 	{
 	float yVal = stick.GetRawAxis(5);
-	if((yVal<.1)&&(yVal>-.1)){
+	if((yVal < DEADZONE)&&(yVal > -DEADZONE))
+	{
 		yVal = 0;
 	}
 	return -yVal;
@@ -79,12 +88,12 @@ void OI::rangeSensor()
 
 	voltage = ultra.GetAverageVoltage();//gets range sensor 1
 	SmartDashboard::PutNumber("Voltage", voltage);
-	range = voltage*104 + 2;
+	range = voltage * VOLTAGEMULT + INCHESOFF;
 	SmartDashboard::PutNumber("Range", range);
 
 	voltage2 = ultra2.GetAverageVoltage();//gets range sensor 2
 	SmartDashboard::PutNumber("Voltage 2", voltage2);
-	range2 = voltage2*104 + 2;
+	range2 = voltage2 * VOLTAGEMULT + INCHESOFF;
 	SmartDashboard::PutNumber("Range 2", range2);
 
 	if(rangeFinder.Get() == 1)//gets whether there is a ball or not
@@ -120,14 +129,14 @@ bool OI::getButtonX()
 	return autoAlignBot;
 }
 
-bool OI::getButtonLB()
+bool OI::getButtonY()
 {//returns LB
-	return button5.Get();
+	return button4.Get();
 }
 
 float OI::getRangeDif()
 {//returns difference between the range sensors
-	return (ultra.GetAverageVoltage()*104 + 2) - (ultra2.GetAverageVoltage()*104 + 2);
+	return (ultra.GetAverageVoltage() * VOLTAGEMULT + INCHESOFF) - (ultra2.GetAverageVoltage() * VOLTAGEMULT  + INCHESOFF);
 }
 
 float OI::getAngle()
@@ -177,4 +186,14 @@ bool OI::GetLT()
 bool OI::getButton9()
 {//returns left stick pressed
 	return button9.Get();
+}
+
+bool OI::getClimberButton1()
+{
+	return climberButton1.Get();
+}
+
+bool OI::getClimberButton4()
+{
+	return climberButton4.Get();
 }
