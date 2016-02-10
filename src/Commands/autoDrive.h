@@ -15,8 +15,8 @@ private:
 	float elevationAngle = 0.0;
 	float oldElevationAngle = 0.0;
 	bool goingDownRamp = false;
-	int number = 1;
 	Timer time;
+	int number = 1;
 	int position = 1;
 
 

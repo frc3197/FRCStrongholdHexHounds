@@ -35,6 +35,8 @@ void autoDrive::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void autoDrive::Execute()
 {
+	time.Start();
+	SmartDashboard::PutNumber("Position", position);
 	SmartDashboard::PutNumber("Time", time.Get());
 	//absInput = fabs(chassis->getAccelerometerZ() - 1);
 	//output = (OLD_OUTOUT_PERCENT*oldOutput) + (ABS_INPUT_PERCENT*absInput);
