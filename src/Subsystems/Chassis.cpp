@@ -11,10 +11,9 @@ Chassis::Chassis():
 	Subsystem("Chassis"),
 	can1(1), can2(2), can3(3), can4(4),
 	robotDrive(can3,can2,can1,can4),
-	encode(1, 2, false, Encoder::k4X),
-	accel(SPI::kOnboardCS1, ADXL362::kRange_2G),
-	usbCam1("USB Camera 1", true),
-	usbCam2("USB Camera 2", true)
+	encode(1, 2, false, Encoder::k4X)
+	//usbCam1("USB Camera 1", true),
+	//usbCam2("USB Camera 2", true)
 {
 	robotDrive.SetSafetyEnabled(false);
 }
@@ -27,17 +26,11 @@ void Chassis::InitDefaultCommand()
 
 void Chassis::tankDrive(float left, float right)
 {//tele-op tank drive
-	SmartDashboard::PutNumber("Accel X", accel.GetAcceleration(ADXL362::kAxis_X));
-	SmartDashboard::PutNumber("Accel Y", accel.GetAcceleration(ADXL362::kAxis_Y));
-	SmartDashboard::PutNumber("Accel Z", accel.GetAcceleration(ADXL362::kAxis_Z));
 	robotDrive.TankDrive(left, right, true);
 }
 
 void Chassis::tankDrive2(float left, float right)
 {//auto tank drive
-	SmartDashboard::PutNumber("Accel X", accel.GetAcceleration(ADXL362::kAxis_X));
-	SmartDashboard::PutNumber("Accel Y", accel.GetAcceleration(ADXL362::kAxis_Y));
-	SmartDashboard::PutNumber("Accel Z", accel.GetAcceleration(ADXL362::kAxis_Z));
 	robotDrive.TankDrive(-left, -right, false);
 }
 
@@ -59,7 +52,7 @@ void Chassis::turnCounterClockwise() //auto-aligns if left sensor > right sensor
 	robotDrive.TankDrive(-MOTOR_SPEED_FAST, MOTOR_SPEED_FAST, false);
 }
 
-/*void Chassis::SetCan1Speed(float speed)
+void Chassis::SetCan1Speed(float speed)
 {
 	can1.Set(speed);
 }
@@ -77,7 +70,7 @@ void Chassis::SetCan3Speed(float speed)
 void Chassis::SetCan4Speed(float speed)
 {
 	can4.Set(speed);
-}*/
+}
 
 float Chassis::GetEncodeDistance()
 {//gets encoder distance
@@ -104,12 +97,8 @@ void Chassis::Backward()
 	robotDrive.TankDrive(-MOTOR_SPEED, -MOTOR_SPEED, true);
 }
 */
-float Chassis::getAccelerometerZ()
-{//gets accelerometer z-axis
-	return accel.GetAcceleration(ADXL362::kAxis_Z);
-}
 
-void Chassis::changeCam()
+/*void Chassis::changeCam()
 {
 	if(activeCam == 1)
 	{
@@ -127,6 +116,4 @@ void Chassis::changeCam()
 		usbCam1.OpenCamera();
 		usbCam1.SetFPS(FPS);
 	}
-
-
-}
+}*/

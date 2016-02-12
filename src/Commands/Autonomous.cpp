@@ -1,20 +1,22 @@
-#include <Commands/Autonomous.h>
+/*#include <Commands/Autonomous.h>
 #include <Commands/autoDrive.h>
 #include <Commands/AutoDriveDefense.h>
 #include <unistd.h>
 #include <Commands/autoSquaredAlign.h>
 #include <Commands/autoShoot.h>
+#include <Commands/testCommand.h>
+
 Autonomous::Autonomous()
 {
-	AddSequential(new autoDrive());//drives over defense
-	/*AddSequential(new AutoDriveDefense());//drives to batter
+	AddSequential(new testCommand());//drives over defense
+	AddSequential(new AutoDriveDefense());//drives to batter
 	AddSequential(new autoSquaredAlign());//auto aligns
-	AddSequential(new autoShoot());//shoots*/
+	AddSequential(new autoShoot());//shoots
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
 }
 
-// Called just before this Command runs the first time
+//Called just before this Command runs the first time
 void Autonomous::Initialize()
 {
 
@@ -23,14 +25,13 @@ void Autonomous::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void Autonomous::Execute()
 {
-	number++;
-	SmartDashboard::PutNumber("Number", number);
+
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool Autonomous::IsFinished()
 {
-	return false;
+	return true;
 }
 
 // Called once after isFinished returns true
@@ -44,4 +45,4 @@ void Autonomous::End()
 void Autonomous::Interrupted()
 {
 
-}
+}*/

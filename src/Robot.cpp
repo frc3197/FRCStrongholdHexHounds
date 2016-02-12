@@ -1,7 +1,8 @@
 #include "WPILib.h"
 #include "Commands/Command.h"
-#include "Commands/Autonomous.h"
+#include "Commands/autoDrive.h"
 #include "CommandBase.h"
+#include "OI.h"
 
 
 //comment
@@ -13,15 +14,15 @@
 class Robot: public IterativeRobot
 {
 private:
-	int num = 0;
+	//int num = 0;
 	Command *autonomousCommand;
 	LiveWindow *lw;
 
 	void RobotInit()
 	{
-		SmartDashboard::PutString("Is Running", "Not yet");
+		//SmartDashboard::PutString("Is Running", "Not yet");
 		CommandBase::init();
-		autonomousCommand = new Autonomous();
+		autonomousCommand = new autoDrive();
 		lw = LiveWindow::GetInstance();
 	}
 	
@@ -32,15 +33,18 @@ private:
 
 	void AutonomousInit()
 	{
-		SmartDashboard::PutString("Is Running", "Yes");
+		//SmartDashboard::PutString("Is Running", "Yes");
 		if (autonomousCommand != NULL)
+		{
+			//SmartDashboard::PutString("Auto Initiated", "Yes");
 			autonomousCommand->Start();
+		}
 	}
 
 	void AutonomousPeriodic()
 	{
-		num++;
-		SmartDashboard::PutNumber("Executing Num", num);
+		//num++;
+		//SmartDashboard::PutNumber("Executing Num", num);
 		Scheduler::GetInstance()->Run();
 	}
 

@@ -157,13 +157,14 @@ void OI::gyroReset()
 
 void OI::elevationGyroReset()
 {//resets elevation gyro
-	elevationGyro.Calibrate();
-	elevationGyro.Reset();
+	//elevationGyro.Calibrate();
+	//elevationGyro.Reset();
 }
 
 float OI::getElevationAngle()
 {//gets elevation gyro angle
-	return elevationGyro.GetAngle();
+	//return elevationGyro.GetAngle();
+	return 0;
 }
 
 bool OI::getButton10()

@@ -16,9 +16,9 @@ private:
 	CANTalon can4;
 	RobotDrive robotDrive;
 	Encoder encode;
-	ADXL362 accel;
-	USBCamera usbCam1;
-	USBCamera usbCam2;
+	//ADXL362 accel;
+	//USBCamera usbCam1;
+	//USBCamera usbCam2;
 
 	int activeCam = 1;
 
@@ -39,7 +39,6 @@ public:
 	void Turn();
 	//void Forward();
 	//void Backward();
-	float getAccelerometerZ();
 	void changeCam();
 };
 

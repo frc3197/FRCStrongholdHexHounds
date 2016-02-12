@@ -18,7 +18,9 @@ private:
 	Timer time;
 	int number = 1;
 	int position = 1;
-
+	int command = 1;
+	int state = 1;
+	int shoot = 1;
 
 public:
 	autoDrive();

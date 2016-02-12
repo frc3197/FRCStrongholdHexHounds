@@ -1,17 +1,13 @@
-/*#ifndef AUTONOMOUS_H
-#define AUTONOMOUS_H
+#ifndef TEST_COMMAND_H
+#define TEST_COMMAND_H
 
 #include "../CommandBase.h"
 #include "WPILib.h"
-#include "OI.h"
 
-class Autonomous: public CommandGroup
+class testCommand: public CommandBase
 {
-private:
-	int number = 0;
-
 public:
-	Autonomous();
+	testCommand();
 	void Initialize();
 	void Execute();
 	bool IsFinished();
@@ -19,4 +15,4 @@ public:
 	void Interrupted();
 };
 
-#endif*/
+#endif
