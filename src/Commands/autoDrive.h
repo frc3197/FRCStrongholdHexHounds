@@ -4,6 +4,8 @@
 #include "../CommandBase.h"
 #include "WPILib.h"
 #include "OI.h"
+#include "math.h"
+#include <string>
 
 
 class autoDrive: public CommandBase
@@ -17,13 +19,16 @@ private:
 	bool goingDownRamp = false;
 	Timer time;
 	int number = 1;
-	int position = 1;
+	int position = 0;
+	string p = "";
 	int command = 1;
 	int state = 1;
 	int shoot = 1;
+	int terrainType = 1;//not rough terrain
+
 
 public:
-	autoDrive();
+	autoDrive(string pos);
 	void Initialize();
 	void Execute();
 	bool IsFinished();

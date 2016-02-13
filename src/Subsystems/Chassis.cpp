@@ -7,15 +7,25 @@
 
 #define FPS 10
 
+
+
 Chassis::Chassis():
 	Subsystem("Chassis"),
 	can1(1), can2(2), can3(3), can4(4),
 	robotDrive(can3,can2,can1,can4),
-	encode(1, 2, false, Encoder::k4X)
+	encode(1, 2, false, Encoder::k4X),
+	encode2(3, 4, false, Encoder::k4X)
 	//usbCam1("USB Camera 1", true),
 	//usbCam2("USB Camera 2", true)
 {
+
 	robotDrive.SetSafetyEnabled(false);
+
+	encoderRevolution = gearRatio * wheelDiameter * pi;
+	encoderRevolution /= enconderPulses;
+	encode.SetDistancePerPulse(encoderRevolution);
+	encode2.SetDistancePerPulse(encoderRevolution);
+	SmartDashboard::PutNumber("encoderRevolution", encoderRevolution);
 }
 
 void Chassis::InitDefaultCommand()
@@ -75,12 +85,14 @@ void Chassis::SetCan4Speed(float speed)
 float Chassis::GetEncodeDistance()
 {//gets encoder distance
 	float distance = encode.Get();
-	return distance;
+	float distance2 = encode2.Get();
+	return (distance+distance2)/2;
 }
 
 void Chassis::ResetEncoder()
 {//resets encoder
 	encode.Reset();
+	encode2.Reset();
 }
 
 void Chassis::Turn()

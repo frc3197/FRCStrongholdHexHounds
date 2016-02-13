@@ -13,7 +13,7 @@ AutoDriveToDefense::AutoDriveToDefense() :
 
 void AutoDriveToDefense::InitDefaultCommand()
 {
-	SetDefaultCommand(new autoDrive());
+	//SetDefaultCommand(new autoDrive());
 	// Set the default command for a subsystem here.
 	//SetDefaultCommand(new MySpecialCommand());
 }

@@ -3,6 +3,7 @@
 #include "Commands/autoDrive.h"
 #include "CommandBase.h"
 #include "OI.h"
+#include <string>
 
 
 //comment
@@ -13,6 +14,9 @@
 
 class Robot: public IterativeRobot
 {
+public:
+	SendableChooser autoChooser;
+
 private:
 	//int num = 0;
 	Command *autonomousCommand;
@@ -20,9 +24,18 @@ private:
 
 	void RobotInit()
 	{
+		autoChooser.InitTable(NetworkTable::GetTable("Position Chooser"));
+		autoChooser.AddDefault("Position 1", (void*)"1");
+		autoChooser.AddObject("Position 2", (void*)"2");
+		autoChooser.AddObject("Position 3", (void*)"3");
+		autoChooser.AddObject("Position 4", (void*)"4");
+		autoChooser.AddObject("Position 5", (void*)"5");
+
+		string p = (const char*)autoChooser.GetSelected();
+
 		//SmartDashboard::PutString("Is Running", "Not yet");
 		CommandBase::init();
-		autonomousCommand = new autoDrive();
+		autonomousCommand = new autoDrive(p);
 		lw = LiveWindow::GetInstance();
 	}
 	

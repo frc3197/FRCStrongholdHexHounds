@@ -27,8 +27,33 @@
 #define LOWGOALPUSHSPEED 0.5
 #define HIGHGOALPUSHSPEED 0.9
 
-autoDrive::autoDrive()
+#define POSITION1FIRSTDISTANCE 149.34
+#define POSITION1FIRSTTURNANGLE 60
+#define POSITION1SECONDDISTANCE (149.34 + 68.1 - 17)
+
+#define POSITION2FIRSTDISTANCE 137.59
+#define POSITION2FIRSTTURNANGLE 60
+#define POSITION2SECONDDISTANCE (36.34 - 17)
+
+#define POSITION3FIRSTDISTANCE 27.33
+#define POSITION3FIRSTTURNANGLE 45
+#define POSITION3SECONDDISTANCE 54
+#define POSITION3SECONDTURNANGLE -45
+#define POSITION3THIRDDISTANCE (57.3 - 17)
+
+#define POSITION4FIRSTDISTANCE 48.36
+#define POSITION4FIRSTTURNANGLE -45
+#define POSITION4SECONDDISTANCE 24.85
+#define POSITION4SECONDTURNANGLE 45
+#define POSITION4THIRDDISTANCE (57.43 - 17)
+
+#define POSITION5FIRSTDISTANCE (154.91 - 17)
+#define POSITION5FIRSTTURNANGLE (-180 + 116.45)
+#define POSITION5SECONDDISTANCE 9.34
+
+autoDrive::autoDrive(string pos)
 {
+	p = pos;
  	Requires(chassis);
  	Requires(ballSuckerShooter);
 }
@@ -42,6 +67,26 @@ void autoDrive::Initialize()
 	time.Reset();
 	elevationAngle = 0.0;
 	oldElevationAngle = 0.0;
+	if(((p.compare("1")) == 0))
+	{
+		position = 1;
+	}
+	else if(((p.compare("2")) == 0))
+	{
+		position = 2;
+	}
+	else if(((p.compare("3")) == 0))
+	{
+		position = 3;
+	}
+	else if(((p.compare("4")) == 0))
+	{
+		position = 4;
+	}
+	else if(((p.compare("5")) == 5))
+	{
+		position = 5;
+	}
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -54,7 +99,7 @@ void autoDrive::Execute()
 switch(command)
 {
 case 1:
-	switch(position){
+	switch(terrainType){
 	case 1:
 		switch(number)
 		{
@@ -91,6 +136,7 @@ case 1:
 
 			 	 if((goingDownRamp) && ((elevationAngle <= ELEVATION_ANGLE_RANGE) && (elevationAngle >= -ELEVATION_ANGLE_RANGE)))
 			 	 {
+			 		 position = 1;
 				 	 command = 2;
 			 	 }
 			 break;
@@ -116,6 +162,7 @@ case 1:
 		else if(oi->getElevationAngle() < ELEVATION_ANGLE_RANGE)
 		{
 			chassis->tankDrive2(0, 0);
+			position = 1;
 			command = 2;
 		}
 
@@ -136,7 +183,7 @@ case 2:
 		switch(state)
 		{
 			case 1:
-				if(time.Get() <= 2.5)//chassis->GetEncodeDistance() < (149.34))
+				if(chassis->GetEncodeDistance() < POSITION1FIRSTDISTANCE)
 				{
 					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 
@@ -151,7 +198,7 @@ case 2:
 			break;
 
 			case 2:
-				if(oi->getAngle() < 60)
+				if(oi->getAngle() < POSITION1FIRSTTURNANGLE)
 				{
 					chassis->tankDrive2(CAN_MOTOR_FAST_SPEED, -CAN_MOTOR_FAST_SPEED);
 				}
@@ -166,7 +213,7 @@ case 2:
 			break;
 
 			case 3:
-				if(time.Get() <= 2.5)//chassis->GetEncodeDistance() < 149.34 + 68.1 - 17)
+				if(chassis->GetEncodeDistance() < POSITION1SECONDDISTANCE)
 				{
 					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 				}
@@ -188,7 +235,7 @@ case 2:
 		switch(state)
 		{
 			case 1:
-				if(chassis->GetEncodeDistance() < (137.59))
+				if(chassis->GetEncodeDistance() < (POSITION2FIRSTDISTANCE))
 				{
 					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 				}
@@ -199,7 +246,7 @@ case 2:
 			break;
 
 			case 2:
-				if(oi->getAngle() < 60)
+				if(oi->getAngle() < POSITION2FIRSTTURNANGLE)
 				{
 					chassis->tankDrive2(CAN_MOTOR_FAST_SPEED, -CAN_MOTOR_FAST_SPEED);
 				}
@@ -211,7 +258,7 @@ case 2:
 			break;
 
 			case 3:
-				if(chassis->GetEncodeDistance() < 36.34 - 17)
+				if(chassis->GetEncodeDistance() < POSITION2SECONDDISTANCE)
 				{
 					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 				}
@@ -231,7 +278,7 @@ case 2:
 		switch(state)
 		{
 			case 1:
-				if(chassis->GetEncodeDistance() <= 27.33)
+				if(chassis->GetEncodeDistance() <= POSITION3FIRSTDISTANCE)
 				{
 					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 				}
@@ -242,7 +289,7 @@ case 2:
 			break;
 
 			case 2:
-				if(oi->getAngle() <= 45)
+				if(oi->getAngle() <= POSITION3FIRSTTURNANGLE)
 				{
 					chassis->tankDrive2(CAN_MOTOR_FAST_SPEED, -CAN_MOTOR_FAST_SPEED);
 				}
@@ -254,7 +301,7 @@ case 2:
 			break;
 
 			case 3:
-				if(chassis->GetEncodeDistance() <= 54)
+				if(chassis->GetEncodeDistance() <= POSITION3SECONDDISTANCE)
 				{
 					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 				}
@@ -266,7 +313,7 @@ case 2:
 			break;
 
 			case 4:
-				if(oi->getAngle() >= -45)
+				if(oi->getAngle() >= POSITION3SECONDTURNANGLE)
 				{
 					chassis->tankDrive2(-CAN_MOTOR_FAST_SPEED, CAN_MOTOR_FAST_SPEED);
 				}
@@ -278,7 +325,7 @@ case 2:
 			break;
 
 			case 5:
-				if(chassis->GetEncodeDistance() <= (57.3 - 17))
+				if(chassis->GetEncodeDistance() <= POSITION3THIRDDISTANCE)
 				{
 					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 				}
@@ -298,7 +345,7 @@ case 2:
 		switch(state)
 		{
 			case 1:
-				if(chassis->GetEncodeDistance() <= 48.36)
+				if(chassis->GetEncodeDistance() <= POSITION4FIRSTDISTANCE)
 				{
 					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 				}
@@ -309,7 +356,7 @@ case 2:
 			break;
 
 			case 2:
-				if(oi->getAngle() >= -45)
+				if(oi->getAngle() >= POSITION4FIRSTTURNANGLE)
 				{
 					chassis->tankDrive2(-CAN_MOTOR_FAST_SPEED, CAN_MOTOR_FAST_SPEED);
 				}
@@ -321,7 +368,7 @@ case 2:
 			break;
 
 			case 3:
-				if(chassis->GetEncodeDistance() <= 24.85)
+				if(chassis->GetEncodeDistance() <= POSITION4SECONDDISTANCE)
 				{
 					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED,CAN_MOTOR_SLOW_SPEED);
 				}
@@ -333,7 +380,7 @@ case 2:
 			break;
 
 			case 4:
-				if(oi->getAngle() <= 45)
+				if(oi->getAngle() <= POSITION4SECONDTURNANGLE)
 				{
 					chassis->tankDrive2(CAN_MOTOR_FAST_SPEED, -CAN_MOTOR_FAST_SPEED);
 				}
@@ -345,7 +392,7 @@ case 2:
 			break;
 
 			case 5:
-				if(chassis->GetEncodeDistance() <= 57.43 - 17)
+				if(chassis->GetEncodeDistance() <= POSITION4THIRDDISTANCE)
 				{
 					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 				}
@@ -365,7 +412,7 @@ case 2:
 		switch(state)
 		{
 			case 1:
-				if(chassis->GetEncodeDistance() < (154.91 - 17))
+				if(chassis->GetEncodeDistance() < POSITION5FIRSTDISTANCE)
 				{
 					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 				}
@@ -376,7 +423,7 @@ case 2:
 			break;
 
 			case 2:
-				if(oi->getAngle() > -180 + 116.45)
+				if(oi->getAngle() > POSITION5FIRSTTURNANGLE)
 				{
 					chassis->tankDrive2(-CAN_MOTOR_FAST_SPEED, CAN_MOTOR_FAST_SPEED);
 				}
@@ -388,7 +435,7 @@ case 2:
 			break;
 
 			case 3:
-				if(chassis->GetEncodeDistance() < 9.34)
+				if(chassis->GetEncodeDistance() < POSITION5SECONDDISTANCE)
 				{
 					chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 				}
@@ -471,8 +518,6 @@ default:
 
 break;
 }
-	SmartDashboard::PutBoolean("Finish", finish);
-	SmartDashboard::PutBoolean("On Ramp", onRamp);
 	SmartDashboard::PutNumber("Elevation Angle", elevationAngle);
 }
 

@@ -5,7 +5,6 @@
 driveWithJoystick::driveWithJoystick()
 {
 	Requires(chassis);
-
 }
 
 void driveWithJoystick::Initialize()
@@ -16,6 +15,7 @@ void driveWithJoystick::Initialize()
 
 void driveWithJoystick::Execute()
 {
+	SmartDashboard::PutNumber("Encoder Distance", chassis->GetEncodeDistance());
 	elevationAngle = fabs(oi->getElevationAngle());
 	SmartDashboard::PutNumber("Elevation Angle", elevationAngle);
 

@@ -16,11 +16,18 @@ private:
 	CANTalon can4;
 	RobotDrive robotDrive;
 	Encoder encode;
+	Encoder encode2;
 	//ADXL362 accel;
 	//USBCamera usbCam1;
 	//USBCamera usbCam2;
 
 	int activeCam = 1;
+
+	double pi = 3.14159265358979323846;
+	double gearRatio = 13.0 / 24.0;
+	double wheelDiameter = 11.75;
+	int enconderPulses = 1440;
+	double encoderRevolution; //in inches
 
 public:
 	Chassis();
