@@ -10,7 +10,10 @@ driveWithJoystick::driveWithJoystick()
 void driveWithJoystick::Initialize()
 {
 	inverse = false;
-	oi->elevationGyroReset();
+	//oi->elevationGyroReset();
+	time.Reset();
+	time.Start();
+	chassis->ResetEncoder();
 }
 
 void driveWithJoystick::Execute()
@@ -19,20 +22,20 @@ void driveWithJoystick::Execute()
 	elevationAngle = fabs(oi->getElevationAngle());
 	SmartDashboard::PutNumber("Elevation Angle", elevationAngle);
 
-	if(!LBPressed)
+	if(!YPressed)//Y is really Y
 	{
-		LBPressed = oi->getButtonY();
-		LBLast = false;
+		YPressed = oi->getButtonY();
+		YLast = false;
 	}
 
-	if(LBPressed && !LBLast)
+	if(YPressed && !YLast)
 	{
-		LBLast = true;
+		YLast = true;
 		oi->gyroReset();
 	}
 
 
-	inverse = oi->getBoolean();
+	inverse = oi->getBooleanA();
 	oi->rangeSensor();
 
 	if(((oi->GetLT()) && (!oi->getButton10())) && ((oi->getRangeDif() >= ERROR_RANGE) || (oi->getRangeDif() <= -ERROR_RANGE)))
@@ -47,11 +50,10 @@ void driveWithJoystick::Execute()
 			chassis->turnCounterClockwise();
 		}
 	}
-	else if((LBPressed) && (oi-> getAngle()  <= TURNAMOUNT))
+	else if((YPressed) && (oi-> getAngle()  <= TURNAMOUNT))
 	{//reverses 180 deg
-		resetLB = true;
+		resetY = true;
 		chassis->reverse180();
-		SmartDashboard::PutNumber("Working", 1);
 
 	}
 	else if (inverse) //Inverse Motors
@@ -63,18 +65,13 @@ void driveWithJoystick::Execute()
 		chassis->tankDrive(oi->getLeft(), oi->getRight()); //Normal Drive
 	}
 
-
-	/*if(((oi->getRangeDif() <= ERROR_RANGE) && (oi->getRangeDif() >= -ERROR_RANGE)) && (!oi->getButton10()))
+	if(oi->getAngle() >= TURNAMOUNT && resetY)
 	{
-		oi->resetButtonX();
-	}*/
-
-	if(oi->getAngle() >= TURNAMOUNT && resetLB)
-	{
-		resetLB = oi->getButtonY();
-		LBLast = LBPressed;
-		LBPressed = false;
+		resetY = oi->getButtonY();
+		YLast = YPressed;
+		YPressed = false;
 	}
+
 }
 
 

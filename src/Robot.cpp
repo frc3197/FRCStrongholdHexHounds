@@ -15,7 +15,6 @@
 class Robot: public IterativeRobot
 {
 public:
-	SendableChooser autoChooser;
 
 private:
 	//int num = 0;
@@ -24,18 +23,8 @@ private:
 
 	void RobotInit()
 	{
-		autoChooser.InitTable(NetworkTable::GetTable("Position Chooser"));
-		autoChooser.AddDefault("Position 1", (void*)"1");
-		autoChooser.AddObject("Position 2", (void*)"2");
-		autoChooser.AddObject("Position 3", (void*)"3");
-		autoChooser.AddObject("Position 4", (void*)"4");
-		autoChooser.AddObject("Position 5", (void*)"5");
-
-		string p = (const char*)autoChooser.GetSelected();
-
-		//SmartDashboard::PutString("Is Running", "Not yet");
+		autonomousCommand = new autoDrive();
 		CommandBase::init();
-		autonomousCommand = new autoDrive(p);
 		lw = LiveWindow::GetInstance();
 	}
 	
@@ -46,18 +35,14 @@ private:
 
 	void AutonomousInit()
 	{
-		//SmartDashboard::PutString("Is Running", "Yes");
 		if (autonomousCommand != NULL)
 		{
-			//SmartDashboard::PutString("Auto Initiated", "Yes");
 			autonomousCommand->Start();
 		}
 	}
 
 	void AutonomousPeriodic()
 	{
-		//num++;
-		//SmartDashboard::PutNumber("Executing Num", num);
 		Scheduler::GetInstance()->Run();
 	}
 

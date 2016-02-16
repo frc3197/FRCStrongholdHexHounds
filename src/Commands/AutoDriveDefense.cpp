@@ -24,8 +24,6 @@ void AutoDriveDefense::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void AutoDriveDefense::Execute()
 {
-	SmartDashboard::PutNumber("State", state);
-	SmartDashboard::PutNumber("Gyro", oi->getAngle());
 	switch(position)
 	{
 	case 1://low bar position 1
@@ -42,7 +40,6 @@ void AutoDriveDefense::Execute()
 					chassis->tankDrive2(0, 0);
 					state = 2;
 				}
-				SmartDashboard::PutNumber("case 1", 1);
 
 			break;
 
@@ -58,7 +55,6 @@ void AutoDriveDefense::Execute()
 					state = 3;
 					time.Reset();
 				}
-				SmartDashboard::PutNumber("case 2", 2);
 			break;
 
 			case 3:
@@ -71,7 +67,6 @@ void AutoDriveDefense::Execute()
 					chassis->tankDrive2(0, 0);
 					finish = true;
 				}
-			 SmartDashboard::PutNumber("case 3", 3);
 			break;
 
 			default:

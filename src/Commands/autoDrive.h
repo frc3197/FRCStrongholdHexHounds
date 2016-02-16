@@ -21,19 +21,30 @@ private:
 	int number = 1;
 	int position = 0;
 	string p = "";
+	string p2 = "";
 	int command = 1;
 	int state = 1;
 	int shoot = 1;
 	int terrainType = 1;//not rough terrain
 
+	string s1 = "1";
+	string s2 = "2";
+	string s3 = "3";
+	string s4 = "4";
+	string s5 = "5";
+	string st0 = "0";
+	string st1 = "1";
 
 public:
-	autoDrive(string pos);
+	SendableChooser autoChooser;
+	SendableChooser autoChooser2;
+	autoDrive();
 	void Initialize();
 	void Execute();
 	bool IsFinished();
 	void End();
 	void Interrupted();
+
 };
 
 #endif

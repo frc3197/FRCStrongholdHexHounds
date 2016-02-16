@@ -23,7 +23,7 @@ void BallSuckerShooter::setPickupMotorSpeed(float val)
 
 void BallSuckerShooter::setHighGoalShoot(float val)
 {//sets high goal motor speed
-	can6.Set(val);//sets high goal motor speed
+	can6.Set(-val);//sets high goal motor speed
 }
 
 

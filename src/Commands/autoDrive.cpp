@@ -1,6 +1,5 @@
 #include "autoDrive.h"
 #include "AutoDriveDefense.h"
-//#include "CommandGroup.h"
 #define ERROR_RANGE 1.5
 
 #define ON_RAMP_RANGE 1.5
@@ -27,74 +26,101 @@
 #define LOWGOALPUSHSPEED 0.5
 #define HIGHGOALPUSHSPEED 0.9
 
+#define HALFBOTLENGTH 17
 #define POSITION1FIRSTDISTANCE 149.34
 #define POSITION1FIRSTTURNANGLE 60
-#define POSITION1SECONDDISTANCE (149.34 + 68.1 - 17)
+#define POSITION1SECONDDISTANCE (149.34 + 68.1 - HALFBOTLENGTH)
 
 #define POSITION2FIRSTDISTANCE 137.59
 #define POSITION2FIRSTTURNANGLE 60
-#define POSITION2SECONDDISTANCE (36.34 - 17)
+#define POSITION2SECONDDISTANCE (36.34 - HALFBOTLENGTH)
 
 #define POSITION3FIRSTDISTANCE 27.33
 #define POSITION3FIRSTTURNANGLE 45
 #define POSITION3SECONDDISTANCE 54
 #define POSITION3SECONDTURNANGLE -45
-#define POSITION3THIRDDISTANCE (57.3 - 17)
+#define POSITION3THIRDDISTANCE (57.3 - HALFBOTLENGTH)
 
 #define POSITION4FIRSTDISTANCE 48.36
 #define POSITION4FIRSTTURNANGLE -45
 #define POSITION4SECONDDISTANCE 24.85
 #define POSITION4SECONDTURNANGLE 45
-#define POSITION4THIRDDISTANCE (57.43 - 17)
+#define POSITION4THIRDDISTANCE (57.43 - HALFBOTLENGTH)
 
-#define POSITION5FIRSTDISTANCE (154.91 - 17)
+#define POSITION5FIRSTDISTANCE (154.91 - HALFBOTLENGTH)
 #define POSITION5FIRSTTURNANGLE (-180 + 116.45)
 #define POSITION5SECONDDISTANCE 9.34
 
-autoDrive::autoDrive(string pos)
+autoDrive::autoDrive()
 {
-	p = pos;
  	Requires(chassis);
  	Requires(ballSuckerShooter);
+
+	autoChooser.InitTable(NetworkTable::GetTable("Position Chooser"));
+	autoChooser.AddDefault("Position 1", &s1);
+	autoChooser.AddObject("Position 2", &s2);
+	autoChooser.AddObject("Position 3", &s3);
+	autoChooser.AddObject("Position 4", &s4);
+	autoChooser.AddObject("Position 5", &s5);
+	SmartDashboard::PutData("Position Chooser", &autoChooser);
+
+	autoChooser2.AddDefault("ON ROUGH TERRAIN", &st0);
+	autoChooser2.AddObject("NOT ON ROUGH TERRAIN", &st1);
+	SmartDashboard::PutData("Defense Chooser", &autoChooser2);
+
 }
 
 // Called just before this Command runs the first time
 void autoDrive::Initialize()
 {
+	string* p = (string *)(autoChooser).GetSelected();
+	string* p2 = (string *)(autoChooser2).GetSelected();
+
 	onRamp = false;
 	finish = false;
-	oi->elevationGyroReset();
+	//oi->elevationGyroReset();
 	time.Reset();
 	elevationAngle = 0.0;
 	oldElevationAngle = 0.0;
-	if(((p.compare("1")) == 0))
+
+	if(((p->compare("1")) == 0))
 	{
 		position = 1;
 	}
-	else if(((p.compare("2")) == 0))
+	else if(((p->compare("2")) == 0))
 	{
 		position = 2;
 	}
-	else if(((p.compare("3")) == 0))
+	else if(((p->compare("3")) == 0))
 	{
 		position = 3;
 	}
-	else if(((p.compare("4")) == 0))
+	else if(((p->compare("4")) == 0))
 	{
 		position = 4;
 	}
-	else if(((p.compare("5")) == 5))
+	else if(((p->compare("5")) == 5))
 	{
 		position = 5;
 	}
+
+	if(((p2->compare("0")) == 0))
+	{
+		terrainType = 2;
+	}
+	else if(((p2->compare("1")) == 0))
+	{
+		terrainType = 1;
+	}
+
+	SmartDashboard::PutNumber("Position Number", position);
+	SmartDashboard::PutNumber("Terrain Type Number", terrainType);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void autoDrive::Execute()
 {
 	time.Start();
-	SmartDashboard::PutNumber("Position", position);
-	SmartDashboard::PutNumber("Time", time.Get());
 	elevationAngle = oi->getElevationAngle();
 switch(command)
 {
@@ -104,7 +130,6 @@ case 1:
 		switch(number)
 		{
 			case 1://moves forward until on ramp
-				SmartDashboard::PutNumber("Case", number);
 				chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
 				if(elevationAngle >= ON_RAMP_RANGE)//output > .36)
 				{
@@ -113,7 +138,6 @@ case 1:
 			break;
 
 			case 2://moves forward until off ramp
-				SmartDashboard::PutNumber("Case", number);
 			 	 angle = oi->getAngle();
 
 			 	 if(angle > ERROR_RANGE)
@@ -193,7 +217,6 @@ case 2:
 					chassis->tankDrive2(0, 0);
 					state = 2;
 				}
-				SmartDashboard::PutNumber("case 1", 1);
 
 			break;
 
@@ -209,7 +232,6 @@ case 2:
 					state = 3;
 					time.Reset();
 				}
-				SmartDashboard::PutNumber("case 2", 2);
 			break;
 
 			case 3:
@@ -222,7 +244,6 @@ case 2:
 					chassis->tankDrive2(0, 0);
 					command = 3;
 				}
-			 SmartDashboard::PutNumber("case 3", 3);
 			break;
 
 			default:
@@ -518,7 +539,6 @@ default:
 
 break;
 }
-	SmartDashboard::PutNumber("Elevation Angle", elevationAngle);
 }
 
 // Make this return true when this Command no longer needs to run execute()

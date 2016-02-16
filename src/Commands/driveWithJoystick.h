@@ -10,15 +10,16 @@ class driveWithJoystick: public CommandBase
 {
 private:
 
-	bool inverse;
+	bool inverse = false;
 	float TURNAMOUNT = 180;
-	bool LBPressed = false;
-	bool resetLB = true;//useless variable to set LB to false
-	bool LBLast = false;
+	bool YPressed = false;
+	bool resetY = true;//useless variable to set LB to false
+	bool YLast = false;
 	float absInput = 0.0;
 	float oldOutput = 0.0;
 	float output = 0.0;
 	float elevationAngle = 0.0;
+	Timer time;
 
 public:
 	driveWithJoystick();

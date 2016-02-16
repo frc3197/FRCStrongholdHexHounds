@@ -22,9 +22,9 @@ OI::OI():
 	climberButton4(&climberStick, BUTTON4),
 	ultra(1), ultra2(2),
 	rangeFinder(6),
-	dio(0),
-	gyro(SPI::kOnboardCS0),
-	elevationGyro(0)
+	pulseGenerator(0),
+	gyro(0),
+	elevationGyro(SPI::kOnboardCS0)
 {
 	gyro.Calibrate();
 	gyro.Reset();
@@ -38,7 +38,7 @@ float OI::getLeft()//gets left stick Y value
 	{
 		yVal = 0;
 	}
-	return -yVal;
+	return yVal*.85;
 	}
 
 float OI::getRight()//gets right stick Y value
@@ -48,7 +48,7 @@ float OI::getRight()//gets right stick Y value
 	{
 		yVal = 0;
 	}
-	return -yVal;
+	return yVal*.85;
 }
 
 int OI::getShoot()
@@ -79,36 +79,33 @@ int OI::getShoot()
 		currButton = " ";
 		return 0;
 	}
-	SmartDashboard::PutString("Button Pressed", currButton);
 }
 
 void OI::rangeSensor()
 {
-	dio.Pulse(1.6);//sets up pulse
+	pulseGenerator.Pulse(1.6);//sets up pulse
 
 	voltage = ultra.GetAverageVoltage();//gets range sensor 1
-	SmartDashboard::PutNumber("Voltage", voltage);
 	range = voltage * VOLTAGEMULT + INCHESOFF;
 	SmartDashboard::PutNumber("Range", range);
 
 	voltage2 = ultra2.GetAverageVoltage();//gets range sensor 2
-	SmartDashboard::PutNumber("Voltage 2", voltage2);
 	range2 = voltage2 * VOLTAGEMULT + INCHESOFF;
 	SmartDashboard::PutNumber("Range 2", range2);
 
 	if(rangeFinder.Get() == 1)//gets whether there is a ball or not
 	{
-		SmartDashboard::PutString("Range Finder Range", "You've got balls");
+		SmartDashboard::PutString("ULTRA BALLS", "YES");
 	}
 	else
 	{
-		SmartDashboard::PutString("Range Finder Range", "Sorry, no balls");
+		SmartDashboard::PutString("ULTRA BALLS", "NO");
 	}
 }
 
-bool OI::getBoolean()
+bool OI::getBooleanA()
 {//changes bool value when button6 is pressed
-	bool newButton = button6.Get();
+	bool newButton = button1.Get();
 	if(inverse&&newButton)
 	{
 		inverse = false;
@@ -157,14 +154,13 @@ void OI::gyroReset()
 
 void OI::elevationGyroReset()
 {//resets elevation gyro
-	//elevationGyro.Calibrate();
-	//elevationGyro.Reset();
+	elevationGyro.Calibrate();
+	elevationGyro.Reset();
 }
 
 float OI::getElevationAngle()
 {//gets elevation gyro angle
-	//return elevationGyro.GetAngle();
-	return 0;
+	return elevationGyro.GetAngle();
 }
 
 bool OI::getButton10()

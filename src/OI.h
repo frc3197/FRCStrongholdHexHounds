@@ -45,25 +45,24 @@ private:
 	AnalogInput ultra;
 	AnalogInput ultra2;
 	DigitalInput rangeFinder;
-	float voltage;
-	float range;
-	float voltage2;
-	float range2;
-	DigitalOutput dio;
-	ADXRS450_Gyro gyro;
-	AnalogGyro elevationGyro;
+	float voltage = 0.0;
+	float range = 0.0;
+	float voltage2 = 0.0;
+	float range2 = 0.0;
+	DigitalOutput pulseGenerator;
+	AnalogGyro gyro;
+	ADXRS450_Gyro elevationGyro;
+
 
 	bool inverse = false;
 	bool LB = false;
 	bool autoAlignBot = false;
 
-	bool newButton1;
-	bool newButton2;
-	bool newButton3;
-	bool newButton4;
-	bool newButton5;
-
-
+	bool newButton1 = false;
+	bool newButton2 = false;
+	bool newButton3 = false;
+	bool newButton4 = false;
+	bool newButton5 = false;
 
 public:
 	OI();
@@ -71,7 +70,7 @@ public:
 	float getRight();
 	int getShoot();
 	void rangeSensor();
-	bool getBoolean();
+	bool getBooleanA();
 	bool getButtonX();
 	bool getButtonY();
 	float getRangeDif();
