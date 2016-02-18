@@ -4,9 +4,9 @@
 ClimberUp::ClimberUp() :
 		Subsystem("ClimberUp"),
 		CAN7(7),
-		limitSwitchDown(3),
-		limitSwitchMiddle(4),
-		limitSwitchTop(5)
+		limitSwitchDown(5),
+		limitSwitchMiddle(6),
+		limitSwitchTop(7)
 {
 
 }

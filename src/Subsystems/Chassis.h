@@ -17,8 +17,8 @@ private:
 	RobotDrive robotDrive;
 	Encoder encode;
 	Encoder encode2;
-	USBCamera usbCam1;
-	USBCamera usbCam2;
+//	USBCamera usbCam1;
+//  USBCamera usbCam2;
 
 	int activeCam = 1;
 

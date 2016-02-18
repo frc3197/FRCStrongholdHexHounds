@@ -21,7 +21,7 @@ OI::OI():
 	climberButton1(&climberStick, BUTTON1),
 	climberButton4(&climberStick, BUTTON4),
 	ultra(1), ultra2(2),
-	rangeFinder(6),
+	rangeFinder(8),
 	pulseGenerator(0),
 	gyro(0),
 	elevationGyro(SPI::kOnboardCS0)
@@ -154,12 +154,12 @@ void OI::gyroReset()
 
 void OI::elevationGyroReset()
 {//resets elevation gyro
-	elevationGyro.Calibrate();
 	elevationGyro.Reset();
 }
 
 float OI::getElevationAngle()
 {//gets elevation gyro angle
+	SmartDashboard::PutNumber("Elevation Angle", elevationGyro.GetAngle());
 	return elevationGyro.GetAngle();
 }
 

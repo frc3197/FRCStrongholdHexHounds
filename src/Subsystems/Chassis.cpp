@@ -12,10 +12,11 @@ Chassis::Chassis():
 	can1(1), can2(2), can3(3), can4(4),
 	robotDrive(can1,can2,can3,can4),
 	encode(1, 2, false, Encoder::k1X),
-	encode2(3, 4, false, Encoder::k1X),
-	usbCam1("USB Camera 1", true),
-	usbCam2("USB Camera 2", true)
+	encode2(3, 4, false, Encoder::k1X)
+//	usbCam1("USB Camera 1", true),
+//	usbCam2("USB Camera 2", true)
 {
+	SmartDashboard::PutString("Chassis Working", "yes");
 	robotDrive.SetSafetyEnabled(false);
 
 	encoderRevolution = gearRatio * wheelDiameter * pi;
@@ -100,7 +101,7 @@ void Chassis::Turn()
 	robotDrive.TankDrive(MOTOR_SPEED_FAST, -MOTOR_SPEED_FAST, true);
 }
 
-void Chassis::changeCam()
+/*void Chassis::changeCam()
 {
 	if(activeCam == 1)
 	{
@@ -118,4 +119,4 @@ void Chassis::changeCam()
 		usbCam1.OpenCamera();
 		usbCam1.SetFPS(FPS);
 	}
-}
+}*/

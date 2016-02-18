@@ -23,9 +23,9 @@ private:
 
 	void RobotInit()
 	{
-		autonomousCommand = new autoDrive();
 		CommandBase::init();
 		lw = LiveWindow::GetInstance();
+		autonomousCommand = new autoDrive();
 	}
 	
 	void DisabledPeriodic()
