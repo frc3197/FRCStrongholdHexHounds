@@ -22,7 +22,7 @@ private:
 	int position = 0;
 	string p = "";
 	string p2 = "";
-	int command = 1;
+	int defenseNumber = 1;
 	int state = 1;
 	int shoot = 1;
 	int terrainType = 1;//not rough terrain
@@ -34,6 +34,15 @@ private:
 	string s5 = "5";
 	string st0 = "0";
 	string st1 = "1";
+
+	bool firstRun = true;
+
+	//smartdashboard variables
+
+	double POSITION1FIRSTDISTANCE = 0;
+	double POSITION1FIRSTTURNANGLE = 0;
+	double POSITION1SECONDDISTANCE = 0;
+
 
 public:
 	SendableChooser autoChooser;

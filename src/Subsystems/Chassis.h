@@ -17,9 +17,8 @@ private:
 	RobotDrive robotDrive;
 	Encoder encode;
 	Encoder encode2;
-	//ADXL362 accel;
-	//USBCamera usbCam1;
-	//USBCamera usbCam2;
+	USBCamera usbCam1;
+	USBCamera usbCam2;
 
 	int activeCam = 1;
 
@@ -44,8 +43,6 @@ public:
 	float GetEncodeDistance();
 	void ResetEncoder();
 	void Turn();
-	//void Forward();
-	//void Backward();
 	void changeCam();
 };
 

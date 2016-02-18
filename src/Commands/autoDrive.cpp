@@ -27,9 +27,11 @@
 #define HIGHGOALPUSHSPEED 0.9
 
 #define HALFBOTLENGTH 17
+/*
 #define POSITION1FIRSTDISTANCE 149.34
 #define POSITION1FIRSTTURNANGLE 60
 #define POSITION1SECONDDISTANCE (149.34 + 68.1 - HALFBOTLENGTH)
+*/
 
 #define POSITION2FIRSTDISTANCE 137.59
 #define POSITION2FIRSTTURNANGLE 60
@@ -67,18 +69,23 @@ autoDrive::autoDrive()
 	autoChooser2.AddDefault("ON ROUGH TERRAIN", &st0);
 	autoChooser2.AddObject("NOT ON ROUGH TERRAIN", &st1);
 	SmartDashboard::PutData("Defense Chooser", &autoChooser2);
-
 }
 
-// Called just before this Command runs the first time
+// Called just before this defenseNumber runs the first time
 void autoDrive::Initialize()
 {
+	POSITION1FIRSTDISTANCE = SmartDashboard::GetNumber("POSITION 1 FIRST DISTANCE", 149.34);
+	POSITION1FIRSTTURNANGLE = SmartDashboard::GetNumber("POSITION 1 FIRST TURNANGLE", 60);
+	POSITION1SECONDDISTANCE = SmartDashboard::GetNumber("POSITION 1 SECOND DISTANCE", (36.34 - HALFBOTLENGTH));
+	SmartDashboard::PutNumber("POSITION 1 FIRST DISTANCE:", POSITION1FIRSTDISTANCE);
+	SmartDashboard::PutNumber("POSITION 1 FIRST ANGLE:", POSITION1FIRSTTURNANGLE);
+	SmartDashboard::PutNumber("POSITION 1 SECOND DISTANCE:", POSITION1SECONDDISTANCE);
+
 	string* p = (string *)(autoChooser).GetSelected();
 	string* p2 = (string *)(autoChooser2).GetSelected();
 
 	onRamp = false;
 	finish = false;
-	//oi->elevationGyroReset();
 	time.Reset();
 	elevationAngle = 0.0;
 	oldElevationAngle = 0.0;
@@ -117,15 +124,21 @@ void autoDrive::Initialize()
 	SmartDashboard::PutNumber("Terrain Type Number", terrainType);
 }
 
-// Called repeatedly when this Command is scheduled to run
+// Called repeatedly when this defenseNumber is scheduled to run
 void autoDrive::Execute()
 {
+	if(firstRun)
+	{
+		oi->elevationGyroReset();
+	}
+
 	time.Start();
 	elevationAngle = oi->getElevationAngle();
-switch(command)
+switch(defenseNumber)
 {
 case 1:
-	switch(terrainType){
+	switch(terrainType)
+	{
 	case 1:
 		switch(number)
 		{
@@ -161,7 +174,8 @@ case 1:
 			 	 if((goingDownRamp) && ((elevationAngle <= ELEVATION_ANGLE_RANGE) && (elevationAngle >= -ELEVATION_ANGLE_RANGE)))
 			 	 {
 			 		 position = 1;
-				 	 command = 2;
+				 	 defenseNumber = 2;
+				 	 finish = true;
 			 	 }
 			 break;
 
@@ -187,7 +201,7 @@ case 1:
 		{
 			chassis->tankDrive2(0, 0);
 			position = 1;
-			command = 2;
+			defenseNumber = 2;
 		}
 
 		oldElevationAngle = oi->getElevationAngle();
@@ -242,7 +256,7 @@ case 2:
 				else
 				{
 					chassis->tankDrive2(0, 0);
-					command = 3;
+					defenseNumber = 3;
 				}
 			break;
 
@@ -285,7 +299,7 @@ case 2:
 				}
 				else
 				{
-					command = 3;
+					defenseNumber = 3;
 				}
 			break;
 
@@ -352,7 +366,7 @@ case 2:
 				}
 				else
 				{
-					command = 3;
+					defenseNumber = 3;
 				}
 			break;
 
@@ -419,7 +433,7 @@ case 2:
 				}
 				else
 				{
-					command = 3;
+					defenseNumber = 3;
 				}
 			break;
 
@@ -462,7 +476,7 @@ case 2:
 				}
 				else
 				{
-					command = 3;
+					defenseNumber = 3;
 				}
 			break;
 
@@ -491,7 +505,7 @@ case 3:
 
 		if(oi->getRangeDif() < ERROR_RANGE && oi->getRangeDif() > -ERROR_RANGE)
 		{
-			command = 4;
+			defenseNumber = 4;
 		}
 break;
 
@@ -541,7 +555,7 @@ break;
 }
 }
 
-// Make this return true when this Command no longer needs to run execute()
+// Make this return true when this defenseNumber no longer needs to run execute()
 bool autoDrive::IsFinished()
 {
 	if(finish)

@@ -7,24 +7,23 @@
 
 #define FPS 10
 
-
-
 Chassis::Chassis():
 	Subsystem("Chassis"),
 	can1(1), can2(2), can3(3), can4(4),
 	robotDrive(can1,can2,can3,can4),
 	encode(1, 2, false, Encoder::k1X),
-	encode2(3, 4, false, Encoder::k1X)
-	//usbCam1("USB Camera 1", true),
-	//usbCam2("USB Camera 2", true)
+	encode2(3, 4, false, Encoder::k1X),
+	usbCam1("USB Camera 1", true),
+	usbCam2("USB Camera 2", true)
 {
-
 	robotDrive.SetSafetyEnabled(false);
 
 	encoderRevolution = gearRatio * wheelDiameter * pi;
 	encoderRevolution /= enconderPulses;
-	encode.SetDistancePerPulse(encoderRevolution);
-	encode2.SetDistancePerPulse(encoderRevolution);
+	//encode.SetDistancePerPulse(encoderRevolution);
+	//encode2.SetDistancePerPulse(encoderRevolution);
+	encode.SetDistancePerPulse(SmartDashboard::GetNumber("Distance_per_pulse", encoderRevolution));
+	encode2.SetDistancePerPulse(SmartDashboard::GetNumber("Distance_per_pulse", encoderRevolution));
 }
 
 void Chassis::InitDefaultCommand()
@@ -100,18 +99,8 @@ void Chassis::Turn()
 {//turns robot
 	robotDrive.TankDrive(MOTOR_SPEED_FAST, -MOTOR_SPEED_FAST, true);
 }
-/*
-void Chassis::Forward()
-{
-	robotDrive.TankDrive(MOTOR_SPEED, MOTOR_SPEED, true);
-}
-void Chassis::Backward()
-{
-	robotDrive.TankDrive(-MOTOR_SPEED, -MOTOR_SPEED, true);
-}
-*/
 
-/*void Chassis::changeCam()
+void Chassis::changeCam()
 {
 	if(activeCam == 1)
 	{
@@ -129,4 +118,4 @@ void Chassis::Backward()
 		usbCam1.OpenCamera();
 		usbCam1.SetFPS(FPS);
 	}
-}*/
+}

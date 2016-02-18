@@ -10,18 +10,12 @@ driveWithJoystick::driveWithJoystick()
 void driveWithJoystick::Initialize()
 {
 	inverse = false;
-	//oi->elevationGyroReset();
 	time.Reset();
 	time.Start();
-	chassis->ResetEncoder();
 }
 
 void driveWithJoystick::Execute()
 {
-	SmartDashboard::PutNumber("Encoder Distance", chassis->GetEncodeDistance());
-	elevationAngle = fabs(oi->getElevationAngle());
-	SmartDashboard::PutNumber("Elevation Angle", elevationAngle);
-
 	if(!YPressed)//Y is really Y
 	{
 		YPressed = oi->getButtonY();
