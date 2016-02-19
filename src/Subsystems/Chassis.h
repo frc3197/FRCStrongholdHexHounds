@@ -17,11 +17,16 @@ private:
 	RobotDrive robotDrive;
 	Encoder encode;
 	Encoder encode2;
-//	USBCamera usbCam1;
-//  USBCamera usbCam2;
+	USBCamera usbCamFront;
+	USBCamera usbCamBack;
+
+	//camera objects declaration
+	//Image image;
+//	IMAQdxSession session;
+	const char* CAM_ONE = "cam1";
+	const char* CAM_TWO = "cam2";
 
 	int activeCam = 1;
-
 	double pi = 3.14159265358979323846;
 	double gearRatio = 13.0 / 24.0;
 	double wheelDiameter = 11.75;
@@ -44,6 +49,7 @@ public:
 	void ResetEncoder();
 	void Turn();
 	void changeCam();
+	void startCam();
 };
 
 #endif

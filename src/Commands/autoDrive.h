@@ -39,9 +39,9 @@ private:
 
 	//smartdashboard variables
 
-	//double POSITION1FIRSTDISTANCE = 0;
-	//double POSITION1FIRSTTURNANGLE = 0;
-	//double POSITION1SECONDDISTANCE = 0;
+	double POSITION1FIRSTDISTANCE = 0;
+	double POSITION1FIRSTTURNANGLE = 0;
+	double POSITION1SECONDDISTANCE = 0;
 
 
 public:

@@ -20,6 +20,7 @@ private:
 	float output = 0.0;
 	float elevationAngle = 0.0;
 	Timer time;
+	bool changeCameras = true;
 
 public:
 	driveWithJoystick();

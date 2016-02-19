@@ -12,9 +12,9 @@ Chassis::Chassis():
 	can1(1), can2(2), can3(3), can4(4),
 	robotDrive(can1,can2,can3,can4),
 	encode(1, 2, false, Encoder::k1X),
-	encode2(3, 4, false, Encoder::k1X)
-//	usbCam1("USB Camera 1", true),
-//	usbCam2("USB Camera 2", true)
+	encode2(3, 4, false, Encoder::k1X),
+	usbCamFront("cam0", true),
+	usbCamBack("cam1", true)
 {
 	SmartDashboard::PutString("Chassis Working", "yes");
 	robotDrive.SetSafetyEnabled(false);
@@ -101,22 +101,43 @@ void Chassis::Turn()
 	robotDrive.TankDrive(MOTOR_SPEED_FAST, -MOTOR_SPEED_FAST, true);
 }
 
-/*void Chassis::changeCam()
+void Chassis::changeCam()
 {
 	if(activeCam == 1)
 	{
-		usbCam1.CloseCamera();
-		usbCam1.StopCapture();
-		usbCam2.StartCapture();
-		usbCam2.OpenCamera();
-		usbCam2.SetFPS(FPS);
+		usbCamFront.CloseCamera();
+		usbCamFront.StopCapture();
+		/*usbCamBack.StartCapture();
+		usbCamBack.OpenCamera();
+		usbCamBack.SetFPS(FPS);
+		IMAQdxStopAcquisition(session);
+		IMAQdxCloseCamera(session);*/
 	}
 	else
 	{
-		usbCam2.CloseCamera();
-		usbCam2.StopCapture();
-		usbCam1.StartCapture();
-		usbCam1.OpenCamera();
-		usbCam1.SetFPS(FPS);
+		usbCamBack.CloseCamera();
+		usbCamBack.StopCapture();
+		/*usbCamFront.StartCapture();
+		usbCamFront.OpenCamera();
+		usbCamFront.SetFPS(FPS);
+		IMAQdxStopAcquisition(session2);
+		IMAQdxCloseCamera(session2);*/
 	}
-}*/
+}
+
+void Chassis::startCam()
+{	if(activeCam == 1)
+	{
+		//frame = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
+		usbCamFront.OpenCamera();
+		usbCamFront.SetFPS(FPS);
+		usbCamFront.StartCapture();
+		//IMAQdxOpenCamera(CAMERA::CAM_ONE, IMAQdxCameraControlModeController, &session);
+	}
+	else
+	{
+		usbCamBack.OpenCamera();
+		usbCamBack.SetFPS(FPS);
+		usbCamBack.StartCapture();
+	}
+}

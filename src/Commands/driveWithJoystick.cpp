@@ -12,10 +12,12 @@ void driveWithJoystick::Initialize()
 	inverse = false;
 	time.Reset();
 	time.Start();
+	chassis->startCam();
 }
 
 void driveWithJoystick::Execute()
 {
+	chassis->startCam();
 	if(!YPressed)//Y is really Y
 	{
 		YPressed = oi->getButtonY();
@@ -53,10 +55,16 @@ void driveWithJoystick::Execute()
 	else if (inverse) //Inverse Motors
 	{
 		chassis->tankDrive(-oi->getRight(), -oi->getLeft());//Inversed Drive
+		if(changeCameras)
+		{
+			chassis->changeCam();
+			changeCameras = false;
+		}
 	}
 	else
 	{
 		chassis->tankDrive(oi->getLeft(), oi->getRight()); //Normal Drive
+		changeCameras = true;
 	}
 
 	if(oi->getAngle() >= TURNAMOUNT && resetY)
