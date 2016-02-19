@@ -17,14 +17,6 @@ private:
 	RobotDrive robotDrive;
 	Encoder encode;
 	Encoder encode2;
-	USBCamera usbCamFront;
-	USBCamera usbCamBack;
-
-	//camera objects declaration
-	//Image image;
-//	IMAQdxSession session;
-	const char* CAM_ONE = "cam1";
-	const char* CAM_TWO = "cam2";
 
 	int activeCam = 1;
 	double pi = 3.14159265358979323846;
@@ -48,8 +40,6 @@ public:
 	float GetEncodeDistance();
 	void ResetEncoder();
 	void Turn();
-	void changeCam();
-	void startCam();
 };
 
 #endif

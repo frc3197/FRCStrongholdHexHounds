@@ -194,3 +194,20 @@ bool OI::getClimberButton4()
 {
 	return climberButton4.Get();
 }
+
+unsigned int OI::getCameraNumber()
+{
+	if(button1.Get() && !currentButtonA)
+	{
+		if(activeCam == 1)
+		{
+			activeCam = 2;
+		}
+		else
+		{
+			activeCam = 1;
+		}
+	}
+	currentButtonA = button1.Get();
+	return activeCam;
+}

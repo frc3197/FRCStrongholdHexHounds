@@ -63,6 +63,8 @@ private:
 	bool newButton3 = false;
 	bool newButton4 = false;
 	bool newButton5 = false;
+	unsigned int activeCam = 1;
+	bool currentButtonA = false;
 
 public:
 	OI();
@@ -84,6 +86,7 @@ public:
 	bool getButton9();
 	bool getClimberButton1();
 	bool getClimberButton4();
+	unsigned int getCameraNumber();
 };
 
 #endif

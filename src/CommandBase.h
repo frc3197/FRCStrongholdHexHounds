@@ -10,6 +10,7 @@
 #include "WPILib.h"
 #include "Subsystems/BallSuckerShooter.h"
 #include "Subsystems/ClimberUp.h"
+#include "Subsystems/Camera.h"
 
 class CommandBase: public Command
 {
@@ -24,6 +25,7 @@ public:
 	static Chassis *chassis;
 	static BallSuckerShooter *ballSuckerShooter;
 	static ClimberUp *climberUp;
+	static Camera *camera;
 
 };
 
