@@ -20,7 +20,8 @@ OI::OI():
 	climberStick(1),
 	climberButton1(&climberStick, BUTTON1),
 	climberButton4(&climberStick, BUTTON4),
-	ultra(1), ultra2(2),
+	ultra(2),//left sensor
+	ultra2(1),//right sensor
 	rangeFinder(8),
 	pulseGenerator(0),
 	gyro(0),
@@ -38,7 +39,7 @@ float OI::getLeft()//gets left stick Y value
 	{
 		yVal = 0;
 	}
-	return yVal*.85;
+	return yVal*.85;//scales value down
 	}
 
 float OI::getRight()//gets right stick Y value
@@ -48,7 +49,7 @@ float OI::getRight()//gets right stick Y value
 	{
 		yVal = 0;
 	}
-	return yVal*.85;
+	return yVal*.85;//scales value down
 }
 
 int OI::getShoot()
@@ -75,7 +76,7 @@ int OI::getShoot()
 		return 5;
 	}
 	else
-	{
+	{//default value
 		currButton = " ";
 		return 0;
 	}
@@ -186,17 +187,17 @@ bool OI::getButton9()
 }
 
 bool OI::getClimberButton1()
-{
+{//returns stick #2 button A
 	return climberButton1.Get();
 }
 
 bool OI::getClimberButton4()
-{
+{//returns stick #2 button Y
 	return climberButton4.Get();
 }
 
 unsigned int OI::getCameraNumber()
-{
+{//returns current camera #/ changes cam # if button A is pressed
 	if(button1.Get() && !currentButtonA)
 	{
 		if(activeCam == 1)

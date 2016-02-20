@@ -9,24 +9,25 @@
 #define OLD_OUTOUT_PERCENT .95
 #define ABS_INPUT_PERCENT .05
 
-#define CAN_MOTOR_SLOW_SPEED -.35
-#define CAN_MOTOR_FAST_SPEED -.4
+#define CAN_MOTOR_SLOW_SPEED -.45
+#define CAN_MOTOR_FAST_SPEED -.5
 #define STOP_SPEED 0.0
-
-#define ELEVATIONCHANGERANGE 10
 
 #define STOPSPEED 0
 #define FULLSPEED 1
 
-#define STARTTIME 0.3
-#define REVTIME 1.25
-#define SHOOTFINISH 1.5
-
-#define LOWGOALRETRACTSPEED -0.15
+#define LOWGOALRETRACTSPEED 0.45
 #define LOWGOALPUSHSPEED 0.5
-#define HIGHGOALPUSHSPEED 0.9
+#define HIGHGOALPUSHSPEED 0.8
+#define LOWHIGHGOALPUSHSPEED -1
+
+#define STARTTIME 0.18
+#define REVTIME 3
+#define SHOOTFINISH 4
 
 #define HALFBOTLENGTH 17
+
+#define ROUGHTERRAINTIME 6
 
 //#define POSITION1FIRSTDISTANCE 149.34
 //#define POSITION1FIRSTTURNANGLE 60
@@ -63,11 +64,11 @@ autoDrive::autoDrive()
 	autoChooser.AddObject("Position 3", &s3);
 	autoChooser.AddObject("Position 4", &s4);
 	autoChooser.AddObject("Position 5", &s5);
-	SmartDashboard::PutData("Position Chooser", &autoChooser);
+	SmartDashboard::PutData("Position Chooser", &autoChooser);//sets up position # chooser
 
 	autoChooser2.AddDefault("ON ROUGH TERRAIN", &st0);
 	autoChooser2.AddObject("NOT ON ROUGH TERRAIN", &st1);
-	SmartDashboard::PutData("Defense Chooser", &autoChooser2);
+	SmartDashboard::PutData("Defense Chooser", &autoChooser2);//sets up type of defense chooser
 }
 
 // Called just before this defenseNumber runs the first time
@@ -77,15 +78,15 @@ void autoDrive::Initialize()
 
 	POSITION1FIRSTDISTANCE = SmartDashboard::GetNumber("POSITION 1 FIRST DISTANCE", 149.34);
 	POSITION1FIRSTTURNANGLE = SmartDashboard::GetNumber("POSITION 1 FIRST TURNANGLE", 60);
-	POSITION1SECONDDISTANCE = SmartDashboard::GetNumber("POSITION 1 SECOND DISTANCE", (36.34 - HALFBOTLENGTH));
-	SmartDashboard::PutNumber("POSITION 1 FIRST DISTANCE:", POSITION1FIRSTDISTANCE);
+	POSITION1SECONDDISTANCE = SmartDashboard::GetNumber("POSITION 1 SECOND DISTANCE", (36.34 - HALFBOTLENGTH));//gets distances from SmartDashboard
+	SmartDashboard::PutNumber("POSITION 1 FIRST DISTANCE:", POSITION1FIRSTDISTANCE);//prints out those distances
 	SmartDashboard::PutNumber("POSITION 1 FIRST ANGLE:", POSITION1FIRSTTURNANGLE);
 	SmartDashboard::PutNumber("POSITION 1 SECOND DISTANCE:", POSITION1SECONDDISTANCE);
 
 	string* p = (string *)(autoChooser).GetSelected();
-	string* p2 = (string *)(autoChooser2).GetSelected();
+	string* p2 = (string *)(autoChooser2).GetSelected();//gets selected values for position # and defense type
 
-	onRamp = false;
+	onRamp = false;//initializes variables
 	finish = false;
 	time.Reset();
 	elevationAngle = 0.0;
@@ -95,7 +96,7 @@ void autoDrive::Initialize()
 	goingDownRamp = false;
 	number = 1;
 
-	if(((p->compare("1")) == 0))
+	if(((p->compare("1")) == 0))//sets position based off p
 	{
 		position = 1;
 	}
@@ -116,7 +117,7 @@ void autoDrive::Initialize()
 		position = 5;
 	}
 
-	if(((p2->compare("0")) == 0))
+	if(((p2->compare("0")) == 0))//sets terrainType based off p2
 	{
 		terrainType = 2;
 	}
@@ -125,32 +126,26 @@ void autoDrive::Initialize()
 		terrainType = 1;
 	}
 
-	SmartDashboard::PutNumber("Position Number", position);
+	SmartDashboard::PutNumber("Position Number", position);//prints out position # and terrainType #
 	SmartDashboard::PutNumber("Terrain Type Number", terrainType);
 }
 
 // Called repeatedly when this defenseNumber is scheduled to run
 void autoDrive::Execute()
 {
-	SmartDashboard::PutString("Is Running Autonomous", "yes");
-	if(firstRun)
-	{
-		firstRun = false;
-	}
-
 	time.Start();
 	elevationAngle = oi->getElevationAngle();
+
 switch(defenseNumber)
 {
 case 1:
 	switch(terrainType)
 	{
-	case 1:
+	case 1://not on rough terrain
 		switch(number)
 		{
 			case 1://moves forward until on ramp
 				chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
-				SmartDashboard::PutString("Is Running Switch Statement", "yes");
 				if(elevationAngle >= ON_RAMP_RANGE)//output > .36)
 				{
 					number = 2;
@@ -180,6 +175,7 @@ case 1:
 
 			 	 if((goingDownRamp) && ((elevationAngle <= ELEVATION_ANGLE_RANGE) && (elevationAngle >= -ELEVATION_ANGLE_RANGE)))
 			 	 {
+			 		 chassis->tankDrive2(0, 0);
 			 		 position = 1;
 				 	 defenseNumber = 2;
 				 	 finish = true;
@@ -192,27 +188,30 @@ case 1:
 		}
 	break;
 
-	case 2://rough terrain none-detection
+	case 2://on rough terrain
 		time.Start();
-		if(time.Get() >= .1)
+		if(time.Get() <= ROUGHTERRAINTIME)
 		{
-			time.Reset();
-			elevationAngle = fabs(oi->getElevationAngle() - oldElevationAngle);
+			if(angle > ERROR_RANGE)
+			{
+				chassis->tankDrive2(CAN_MOTOR_FAST_SPEED, CAN_MOTOR_SLOW_SPEED);
+			}
+			else if(angle < ERROR_RANGE)
+			{
+				chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_FAST_SPEED);
+			}
+			else
+			{
+				chassis->tankDrive2(CAN_MOTOR_SLOW_SPEED, CAN_MOTOR_SLOW_SPEED);
+			}
 		}
-
-		if(elevationAngle > ELEVATIONCHANGERANGE)
-		{
-			chassis->tankDrive2(CAN_MOTOR_FAST_SPEED, CAN_MOTOR_FAST_SPEED);
-		}
-		else if(oi->getElevationAngle() < ELEVATION_ANGLE_RANGE)
+		else
 		{
 			chassis->tankDrive2(0, 0);
-			position = 1;
 			defenseNumber = 2;
+			position = 1;
+			finish = true;
 		}
-
-		oldElevationAngle = oi->getElevationAngle();
-
 	break;
 
 	default:
@@ -536,7 +535,7 @@ case 4:
 
 		if((time.Get() >= REVTIME) && (time.Get() < SHOOTFINISH))
 		{
-			ballSuckerShooter->setPickupMotorSpeed(LOWGOALRETRACTSPEED);
+			ballSuckerShooter->setPickupMotorSpeed(LOWHIGHGOALPUSHSPEED);
 			ballSuckerShooter->setHighGoalShoot(HIGHGOALPUSHSPEED);//shoots ball forward into high goal motor to shoot ball out
 		}
 

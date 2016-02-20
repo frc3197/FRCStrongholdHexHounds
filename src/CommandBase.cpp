@@ -27,7 +27,7 @@ void CommandBase::init()
 	oi = new OI();
 	ballSuckerShooter = new BallSuckerShooter();
 	camera = new Camera();
-	//climberUp = new ClimberUp();
+	climberUp = new ClimberUp();
 
 
 

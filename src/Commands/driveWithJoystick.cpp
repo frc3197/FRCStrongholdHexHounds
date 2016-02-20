@@ -16,14 +16,17 @@ void driveWithJoystick::Initialize()
 
 void driveWithJoystick::Execute()
 {
+	counter++;
+	SmartDashboard::PutNumber("Counter", counter);
+
 	if(!YPressed)//Y is really Y
-	{
+	{//gets y only if y is false
 		YPressed = oi->getButtonY();
 		YLast = false;
 	}
 
 	if(YPressed && !YLast)
-	{
+	{//resets gyro when y is first pressed
 		YLast = true;
 		oi->gyroReset();
 	}
@@ -54,14 +57,14 @@ void driveWithJoystick::Execute()
 	{
 		chassis->tankDrive(-oi->getRight(), -oi->getLeft());//Inversed Drive
 	}
-	else
+	else//drives normally
 	{
 		chassis->tankDrive(oi->getLeft(), oi->getRight()); //Normal Drive
 		changeCameras = true;
 	}
 
 	if(oi->getAngle() >= TURNAMOUNT && resetY)
-	{
+	{//resets Y
 		resetY = oi->getButtonY();
 		YLast = YPressed;
 		YPressed = false;

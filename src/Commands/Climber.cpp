@@ -1,7 +1,8 @@
 #include "Climber.h"
 
 #define TIME 2.5
-#define CLIMBER_SPEED .5
+#define CLIMBER_SPEED 1
+#define STOPTIME 1
 
 
 Climber::Climber()
@@ -18,6 +19,10 @@ void Climber::Initialize()
 	topSwitchPressed = climberUp->getTopSwitch();
 	middleSwitchPressed = climberUp->getMiddleSwitch();
 	time.Reset();
+	endMiddleSwitch = false;
+	state = 1;
+	up = false;
+	down = false;
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -27,55 +32,86 @@ void Climber::Execute()
 	topSwitchPressed = climberUp->getTopSwitch();
 	middleSwitchPressed = climberUp->getMiddleSwitch();
 
-	if(oi->getClimberButton4())
-	{//only runs if left stick is held
-		if(middleSwitchPressed && !endMiddleSwitch)
-		{//stops running motor for .75 sec when middle switch is hit
+if(oi->getClimberButton1())
+{
+	climberUp->setCANTalon7(CLIMBER_SPEED);
+}
+else if(oi->getClimberButton4())
+{
+	climberUp->setCANTalon7(-CLIMBER_SPEED);
+}
+else
+{
+	climberUp->setCANTalon7(0);
+}
+
+/*up = oi->getClimberButton1();//should climb up
+down = oi->getClimberButton4();//should climb down
+if(up)
+{//moves up
+	switch(state)
+	{
+		case 1://climbs up until middle switch is pressed
+			climberUp->setCANTalon7(CLIMBER_SPEED);
+			if(middleSwitchPressed)
+			{
+				state = 2;
+			}
+		break;
+
+		case 2://waits
 			time.Start();
 			climberUp->setCANTalon7(0);
-		}
-		else if(time.Get() >= .75)
-		{//continues to run motor and sets endMiddleSwitch to true to stop previous code
+			if(time.Get() >= STOPTIME)
+			{
+				state = 3;
+			}
+		break;
+
+		case 3://climbs up until top switch is pressed
 			climberUp->setCANTalon7(CLIMBER_SPEED);
-			endMiddleSwitch = true;
-		}
-		else if(topSwitchPressed)
-		{//stops code when top switch is pressed
-			climberUp->setCANTalon7(0);
-			finish = true;
-		}
-		else
-		{//runs normally
-			climberUp->setCANTalon7(CLIMBER_SPEED);
-		}
+			if(topSwitchPressed)
+			{
+				finish = true;
+				state = 4;
+			}
+		break;
+
+		default:
+
+		break;
 	}
-	else if(oi->getClimberButton1())
-	{//only runs if right stick is hit
-		if (middleSwitchPressed  && !endMiddleSwitch)
-		{//stops reversing for .75 sec when middle switch is hit
-			climberUp->setCANTalon7(0);
-			time.Start();
-		}
-		else if (time.Get() >= .75)
-		{//continues reversing and stops previous code
+}
+else if(down)
+{//moves down/pulls up
+	switch(state)
+	{
+		case 1://pulls bot up until middle switch is pressed
 			climberUp->setCANTalon7(-CLIMBER_SPEED);
-			endMiddleSwitch = true;
-		}
-		else if (bottomSwitchPressed)
-		{//stops when bottom switch is hit
-			climberUp->setCANTalon7(0);
-			finish = true;
-		}
-		else
-		{//reverses normally
-			climberUp->setCANTalon7(-CLIMBER_SPEED);
-		}
+			if(middleSwitchPressed)
+			{
+				finish = true;
+				state = 2;
+			}
+		break;
+
+		default:
+
+		break;
 	}
+}
+else
+{}*/
+
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool Climber::IsFinished()
 {
+	if(finish)
+	{
+		climberUp->setCANTalon7(0);
+	}
 	return finish;
 }
 

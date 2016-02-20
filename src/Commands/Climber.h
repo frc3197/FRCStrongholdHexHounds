@@ -13,6 +13,9 @@ private:
 	Timer time;
 	bool finish = false;
 	bool endMiddleSwitch = false;
+	int state = 0;
+	bool up = false;
+	bool down = false;
 
 public:
 	Climber();

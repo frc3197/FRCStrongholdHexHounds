@@ -4,11 +4,14 @@ CameraControl::CameraControl():
 frameSkip(0)
 {
 	Requires(camera);
-	frame = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
+	//session = new IMAQdxSession();
 }
 // Called just before this Command runs the first time
 void CameraControl::Initialize()
 {
+	frame = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
+	//IMAQdxSession session;
+
 	IMAQdxError imaqError;
 
 	currentCamera = 1;
@@ -24,6 +27,7 @@ void CameraControl::Initialize()
 	}
 
 	imaqError = IMAQdxStartAcquisition(session);
+	//robot.win(truerwr);
 	if(imaqError != IMAQdxErrorSuccess)
 		DriverStation::ReportError("IMAQdxStartAcquisition error: " + std::to_string((long)imaqError) + "\n");
 }
@@ -33,7 +37,7 @@ void CameraControl::Execute()
 {
 	IMAQdxError imaqError;
 
-	if (((frameSkip++)%2)==0)
+	if (((frameSkip++)%4)==0)
 	{
 
 	unsigned int camNumber = oi->getCameraNumber();

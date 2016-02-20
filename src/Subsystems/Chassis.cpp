@@ -48,12 +48,12 @@ void Chassis::reverse180() //auto reverses 180 degrees
 
 void Chassis::turnClockwise() //auto-aligns if right sensor>left sensor
 {
-	robotDrive.TankDrive(MOTOR_SPEED_FAST, -MOTOR_SPEED_FAST, false);
+	robotDrive.TankDrive(-MOTOR_SPEED_FAST, MOTOR_SPEED_FAST, false);
 }
 
 void Chassis::turnCounterClockwise() //auto-aligns if left sensor > right sensor
 {
-	robotDrive.TankDrive(-MOTOR_SPEED_FAST, MOTOR_SPEED_FAST, false);
+	robotDrive.TankDrive(MOTOR_SPEED_FAST, -MOTOR_SPEED_FAST, false);
 }
 
 void Chassis::SetCan1Speed(float speed)

@@ -9,7 +9,7 @@ class ShooterSucker: public CommandBase
 {
 private:
 	Timer time;
-	int buttonNum;
+	int buttonNum = 0;;
 	bool highGoalBool = false;
 
 public:

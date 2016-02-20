@@ -1,5 +1,6 @@
 #include "ClimberUp.h"
 #include "../RobotMap.h"
+#include "Commands/Climber.h"
 
 ClimberUp::ClimberUp() :
 		Subsystem("ClimberUp"),
@@ -13,13 +14,14 @@ ClimberUp::ClimberUp() :
 
 void ClimberUp::InitDefaultCommand()
 {
+	SetDefaultCommand(new Climber());
 	// Set the default command for a subsystem here.
 	//SetDefaultCommand(new MySpecialCommand());
 }
 
 void ClimberUp::setCANTalon7(float val)
 {
-	CAN7.Set(val);//sets climber motor speed
+	CAN7.Set(-val);//sets climber motor speed
 }
 
 bool ClimberUp::getBottomSwitch()

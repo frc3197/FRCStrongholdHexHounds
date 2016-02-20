@@ -9,7 +9,7 @@ class CameraControl: public CommandBase
 private:
 	IMAQdxSession session;
 	Image *frame;
-	unsigned int currentCamera;
+	unsigned int currentCamera = 0;
     unsigned char frameSkip;
 
 public:
