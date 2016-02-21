@@ -19,7 +19,7 @@ void Climber::Initialize()
 	topSwitchPressed = climberUp->getTopSwitch();
 	middleSwitchPressed = climberUp->getMiddleSwitch();
 	time.Reset();
-	endMiddleSwitch = false;
+	endMiddleSwitch = false;//initializes values
 	state = 1;
 	up = false;
 	down = false;
@@ -28,9 +28,9 @@ void Climber::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void Climber::Execute()
 {//gets limit switches
-	bottomSwitchPressed = climberUp->getBottomSwitch();
-	topSwitchPressed = climberUp->getTopSwitch();
-	middleSwitchPressed = climberUp->getMiddleSwitch();
+	bottomSwitchPressed = climberUp->getBottomSwitch();//gets bottom limit switch
+	topSwitchPressed = climberUp->getTopSwitch();//gets top limit switch
+	middleSwitchPressed = climberUp->getMiddleSwitch();//gets middle limit switch
 
 if(oi->getClimberButton1())
 {
@@ -109,7 +109,7 @@ else
 bool Climber::IsFinished()
 {
 	if(finish)
-	{
+	{//stops climber motor when code is finished
 		climberUp->setCANTalon7(0);
 	}
 	return finish;

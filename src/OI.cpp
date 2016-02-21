@@ -6,7 +6,7 @@
 #define INCHESOFF 2
 
 OI::OI():
-	stick(0),
+	stick(0),//joystick 1
 	button1(&stick, BUTTON1),//A
 	button2(&stick, BUTTON2),//B
 	button3(&stick, BUTTON3),//X
@@ -17,18 +17,20 @@ OI::OI():
 	button8(&stick, BUTTON8),//Start
 	button9(&stick, BUTTON9),//Left Stick
 	button10(&stick, BUTTON10),//Right Stick
-	climberStick(1),
-	climberButton1(&climberStick, BUTTON1),
-	climberButton4(&climberStick, BUTTON4),
+	climberStick(1),//joystick 2
+	climberButton1(&climberStick, BUTTON1),//A
+	climberButton4(&climberStick, BUTTON4),//Y
 	ultra(2),//left sensor
 	ultra2(1),//right sensor
-	rangeFinder(8),
-	pulseGenerator(0),
-	gyro(0),
-	elevationGyro(SPI::kOnboardCS0)
+	rangeFinder(8),//ball sensor
+	pulseGenerator(0),//pulse generator
+	gyro(0),//horizontal gyro
+	elevationGyro(SPI::kOnboardCS0)//elevation gyro
 {
 	gyro.Calibrate();
 	gyro.Reset();
+	elevationGyro.Calibrate();
+	elevationGyro.Reset();
 	// Process operator interface input here.
 }
 
@@ -54,14 +56,11 @@ float OI::getRight()//gets right stick Y value
 
 int OI::getShoot()
 {//returns which button is pressed
-	newButton1 = button6.Get();
-	newButton2 = button2.Get();
-	newButton3 = button3.Get();
-	newButton4 = button4.Get();
-	newButton5 = button5.Get();
+	newButton6 = button6.Get();//gets RB
+	newButton5 = button5.Get();//gets LB
 	currButton = "";
 
-	if(newButton1)
+	if(newButton6)
 	{
 		currButton = "RB"; //low goal shooter
 		return 6;

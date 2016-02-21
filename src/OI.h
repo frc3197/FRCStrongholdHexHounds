@@ -58,11 +58,8 @@ private:
 	bool LB = false;
 	bool autoAlignBot = false;
 
-	bool newButton1 = false;
-	bool newButton2 = false;
-	bool newButton3 = false;
-	bool newButton4 = false;
 	bool newButton5 = false;
+	bool newButton6 = false;
 	unsigned int activeCam = 1;
 	bool currentButtonA = false;
 

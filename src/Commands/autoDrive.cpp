@@ -512,6 +512,7 @@ case 3:
 		if(oi->getRangeDif() < ERROR_RANGE && oi->getRangeDif() > -ERROR_RANGE)
 		{
 			defenseNumber = 4;
+			time.Reset();
 		}
 break;
 
@@ -524,34 +525,27 @@ case 4:
 	{
 		time.Start();
 
-		ballSuckerShooter->setPickupMotorSpeed(-LOWGOALRETRACTSPEED);
-		ballSuckerShooter->setHighGoalShoot(HIGHGOALPUSHSPEED);//winds ball back while starting high goal motor
-
-		if((time.Get() >= STARTTIME) && (time.Get()<REVTIME))
+		if(time.Get() <STARTTIME)
 		{
-			ballSuckerShooter->setPickupMotorSpeed(STOPSPEED);
-			ballSuckerShooter->setHighGoalShoot(HIGHGOALPUSHSPEED);//stops winding ball back
+			ballSuckerShooter->setPickupMotorSpeed(LOWGOALRETRACTSPEED);//starts sucking down
 		}
-
-		if((time.Get() >= REVTIME) && (time.Get() < SHOOTFINISH))
+		else if((time.Get() >= STARTTIME) && (time.Get()<REVTIME))
 		{
-			ballSuckerShooter->setPickupMotorSpeed(LOWHIGHGOALPUSHSPEED);
-			ballSuckerShooter->setHighGoalShoot(HIGHGOALPUSHSPEED);//shoots ball forward into high goal motor to shoot ball out
+			ballSuckerShooter->setPickupMotorSpeed(STOPSPEED);//stops sucking down
+			ballSuckerShooter->setHighGoalShoot(HIGHGOALPUSHSPEED);//starts winding up high goal motor
 		}
-
-		if(time.Get() >= SHOOTFINISH)
+		else if((time.Get() >= REVTIME) && (time.Get() < SHOOTFINISH))
 		{
+			ballSuckerShooter->setPickupMotorSpeed(LOWHIGHGOALPUSHSPEED);//shoots ball forward into high goal motor to shoot ball out
+			ballSuckerShooter->setHighGoalShoot(HIGHGOALPUSHSPEED);//continues running high goal motor
+		}
+		else
+		{//stops motors
 			ballSuckerShooter->setPickupMotorSpeed(STOPSPEED);
 			ballSuckerShooter->setHighGoalShoot(STOPSPEED);
 			time.Reset();
+			finish = true;
 		}
-	}
-
-	if(time.Get() >= SHOOTFINISH)
-	{
-		ballSuckerShooter->setPickupMotorSpeed(STOPSPEED);
-		ballSuckerShooter->setHighGoalShoot(STOPSPEED);
-		finish = true;
 	}
 break;
 
@@ -560,6 +554,7 @@ default:
 break;
 }
 }
+
 
 // Make this return true when this defenseNumber no longer needs to run execute()
 bool autoDrive::IsFinished()
