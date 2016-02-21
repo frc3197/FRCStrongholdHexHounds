@@ -26,17 +26,17 @@ void ClimberUp::setCANTalon7(float val)
 
 bool ClimberUp::getBottomSwitch()
 {
-	return limitSwitchDown.Get();//returns bottom limit switch
+	return !limitSwitchDown.Get();//returns bottom limit switch
 }
 
 bool ClimberUp::getMiddleSwitch()
 {
-	return limitSwitchMiddle.Get();//returns middle limit switch (when climber arm angle = 90 deg
+	return !limitSwitchMiddle.Get();//returns middle limit switch (when climber arm angle = 90 deg
 }
 
 bool ClimberUp::getTopSwitch()
 {
-	return limitSwitchTop.Get();//returns top limit switch
+	return !limitSwitchTop.Get();//returns top limit switch
 }
 
 // Put methods for controlling this subsystem

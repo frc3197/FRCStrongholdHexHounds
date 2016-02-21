@@ -1,5 +1,6 @@
 #include "OI.h"
 #include "SPI.h"
+#include <unistd.h>
 
 #define DEADZONE .1
 #define VOLTAGEMULT 104
@@ -24,8 +25,8 @@ OI::OI():
 	climberButton3(&climberStick, BUTTON3),//X
 	ultra(2),//left sensor
 	ultra2(1),//right sensor
-	rangeFinder(8),//ball sensor
-	pulseGenerator(0),//pulse generator
+	rangeFinder(0),//ball sensor
+	pulseGenerator(0, Relay::kForwardOnly),//pulse generator
 	gyro(0),//horizontal gyro
 	elevationGyro(SPI::kOnboardCS0)//elevation gyro
 {
@@ -33,6 +34,11 @@ OI::OI():
 	gyro.Reset();
 	elevationGyro.Calibrate();
 	elevationGyro.Reset();
+	pulseGenerator.Set(Relay::kOff);
+	Wait(.001);
+	pulseGenerator.Set(Relay::kForward);
+	Wait(.001);
+	pulseGenerator.Set(Relay::kOff);
 	// Process operator interface input here.
 }
 
@@ -85,8 +91,7 @@ int OI::getShoot()
 
 void OI::rangeSensor()
 {
-	pulseGenerator.Pulse(1.6);//sets up pulse
-
+	//pulseGenerator.Pulse(1.6);//sets up pulse
 	voltage = ultra.GetAverageVoltage();//gets range sensor 1
 	range = voltage * VOLTAGEMULT + INCHESOFF;
 	SmartDashboard::PutNumber("Range", range);

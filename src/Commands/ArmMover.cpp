@@ -12,8 +12,8 @@ ArmMover::ArmMover()
 // Called just before this Command runs the first time
 void ArmMover::Initialize()
 {
-	arm->setCan8Speed(0);
-	limitSwitchUp = false;
+	arm->setCan8Speed(0);//initializes speed to 0
+	limitSwitchUp = false;//initializes bools to false
 	limitSwitchDown = false;
 	finish = false;
 }
@@ -21,8 +21,8 @@ void ArmMover::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void ArmMover::Execute()
 {
-	limitSwitchUp = arm->getLimitSwitchUp();
-	limitSwitchDown = arm->getLimitSwitchDown();
+	limitSwitchUp = arm->getLimitSwitchUp();//gets top limit switch
+	limitSwitchDown = arm->getLimitSwitchDown();//gets bottom limit switch
 
 	if(oi->getClimberButton2())//moves arm down
 	{
@@ -52,7 +52,7 @@ void ArmMover::Execute()
 bool ArmMover::IsFinished()
 {
 	if(finish)
-	{
+	{//stops motor if finished
 		arm->setCan8Speed(0);
 	}
 	return finish;

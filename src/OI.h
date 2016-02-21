@@ -51,7 +51,7 @@ private:
 	float range = 0.0;
 	float voltage2 = 0.0;
 	float range2 = 0.0;
-	DigitalOutput pulseGenerator;
+	Relay pulseGenerator;
 	AnalogGyro gyro;
 	ADXRS450_Gyro elevationGyro;
 
