@@ -10,6 +10,7 @@ Chassis* CommandBase::chassis = NULL;
 BallSuckerShooter* CommandBase::ballSuckerShooter = NULL;
 ClimberUp* CommandBase::climberUp = NULL;
 Camera* CommandBase::camera = NULL;
+Arm* CommandBase::arm = NULL;
 
 CommandBase::CommandBase(char const *name) : Command(name)
 {
@@ -28,7 +29,5 @@ void CommandBase::init()
 	ballSuckerShooter = new BallSuckerShooter();
 	camera = new Camera();
 	climberUp = new ClimberUp();
-
-
-
+	arm = new Arm();
 }

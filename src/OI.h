@@ -39,6 +39,8 @@ private:
 	Joystick climberStick;
 	JoystickButton climberButton1; //a
 	JoystickButton climberButton4; //y
+	JoystickButton climberButton2;//b
+	JoystickButton climberButton3;//x
 
 
 	string currButton;
@@ -84,6 +86,8 @@ public:
 	bool getClimberButton1();
 	bool getClimberButton4();
 	unsigned int getCameraNumber();
+	bool getClimberButton2();
+	bool getClimberButton3();
 };
 
 #endif

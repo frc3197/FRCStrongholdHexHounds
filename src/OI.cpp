@@ -20,6 +20,8 @@ OI::OI():
 	climberStick(1),//joystick 2
 	climberButton1(&climberStick, BUTTON1),//A
 	climberButton4(&climberStick, BUTTON4),//Y
+	climberButton2(&climberStick, BUTTON2),//B
+	climberButton3(&climberStick, BUTTON3),//X
 	ultra(2),//left sensor
 	ultra2(1),//right sensor
 	rangeFinder(8),//ball sensor
@@ -210,4 +212,14 @@ unsigned int OI::getCameraNumber()
 	}
 	currentButtonA = button1.Get();
 	return activeCam;
+}
+
+bool OI::getClimberButton2()
+{//moves arm down
+	return climberButton2.Get();
+}
+
+bool OI::getClimberButton3()
+{//moves arm up
+	return climberButton3.Get();
 }

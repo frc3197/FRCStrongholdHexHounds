@@ -11,6 +11,7 @@
 #include "Subsystems/BallSuckerShooter.h"
 #include "Subsystems/ClimberUp.h"
 #include "Subsystems/Camera.h"
+#include "Subsystems/Arm.h"
 
 class CommandBase: public Command
 {
@@ -26,6 +27,7 @@ public:
 	static BallSuckerShooter *ballSuckerShooter;
 	static ClimberUp *climberUp;
 	static Camera *camera;
+	static Arm *arm;
 
 };
 
