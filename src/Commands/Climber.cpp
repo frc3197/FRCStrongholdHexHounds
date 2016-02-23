@@ -1,8 +1,7 @@
 #include "Climber.h"
 
-#define TIME 2.5
 #define CLIMBER_SPEED 1
-#define STOPTIME 1
+#define STOPTIME .5
 
 
 Climber::Climber()
@@ -16,7 +15,6 @@ Climber::Climber()
 void Climber::Initialize()
 {//gets limit switches
 	bottomSwitchPressed = climberUp->getBottomSwitch();
-	topSwitchPressed = climberUp->getTopSwitch();
 	middleSwitchPressed = climberUp->getMiddleSwitch();
 	time.Reset();
 	endMiddleSwitch = false;//initializes values
@@ -29,7 +27,6 @@ void Climber::Initialize()
 void Climber::Execute()
 {//gets limit switches
 	bottomSwitchPressed = climberUp->getBottomSwitch();//gets bottom limit switch
-	topSwitchPressed = climberUp->getTopSwitch();//gets top limit switch
 	middleSwitchPressed = climberUp->getMiddleSwitch();//gets middle limit switch
 
 if(oi->getClimberButton1())
@@ -69,7 +66,7 @@ if(up)
 		break;
 
 		case 3://climbs up until top switch is pressed
-			climberUp->setCANTalon7(CLIMBER_SPEED);
+			climberUp->setCANTalon7(-CLIMBER_SPEED);
 			if(topSwitchPressed)
 			{
 				finish = true;
@@ -87,7 +84,7 @@ else if(down)
 	switch(state)
 	{
 		case 1://pulls bot up until middle switch is pressed
-			climberUp->setCANTalon7(-CLIMBER_SPEED);
+			climberUp->setCANTalon7(CLIMBER_SPEED);
 			if(middleSwitchPressed)
 			{
 				finish = true;

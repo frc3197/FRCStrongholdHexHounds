@@ -9,8 +9,8 @@
 #define OLD_OUTOUT_PERCENT .95
 #define ABS_INPUT_PERCENT .05
 
-#define CAN_MOTOR_SLOW_SPEED -.45
-#define CAN_MOTOR_FAST_SPEED -.5
+#define CAN_MOTOR_SLOW_SPEED -.35
+#define CAN_MOTOR_FAST_SPEED -.4
 #define STOP_SPEED 0.0
 
 #define STOPSPEED 0
@@ -27,7 +27,7 @@
 
 #define HALFBOTLENGTH 17
 
-#define ROUGHTERRAINTIME 6
+#define ROUGHTERRAINTIME 3.5
 
 //#define POSITION1FIRSTDISTANCE 149.34
 //#define POSITION1FIRSTTURNANGLE 60
@@ -112,7 +112,7 @@ void autoDrive::Initialize()
 	{
 		position = 4;
 	}
-	else if(((p->compare("5")) == 5))
+	else if(((p->compare("5")) == 0))
 	{
 		position = 5;
 	}

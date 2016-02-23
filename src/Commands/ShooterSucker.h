@@ -9,8 +9,10 @@ class ShooterSucker: public CommandBase
 {
 private:
 	Timer time;
-	int buttonNum = 0;;
+	int buttonNum = 0;
 	bool highGoalBool = false;
+	SendableChooser autoChooser;
+	float HIGHGOALPUSHSPEED = 0.625;
 
 public:
 	ShooterSucker();

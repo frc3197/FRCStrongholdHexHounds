@@ -1,16 +1,18 @@
 #include "ShooterSucker.h"
+#include <string>
 
 #define STOPSPEED 0
 #define FULLSPEED 1
 
-#define LOWGOALRETRACTSPEED 0.45
+#define LOWGOALRETRACTSPEED 0.5
 #define LOWGOALPUSHSPEED 0.5
-#define HIGHGOALPUSHSPEED 0.8
 #define LOWHIGHGOALPUSHSPEED -1
 
-#define STARTTIME 0.18
+#define STARTTIME 0.2
 #define REVTIME 3
-#define SHOOTFINISH 4
+#define SHOOTFINISH 3.75
+
+#define HIGH
 
 #define BUTTONA 1
 #define BUTTONB 2
@@ -23,6 +25,23 @@
 ShooterSucker::ShooterSucker()
 {
 	Requires(ballSuckerShooter);
+
+	/*string p1 = ".80";
+	string p2 = ".75";
+	string p3 = ".70";
+	string p4 = ".65";
+	string p5 = ".85";
+	string p6 = ".90";
+
+	//sets up power table
+	autoChooser.InitTable(NetworkTable::GetTable("High Goal Power"));
+	autoChooser.AddDefault("Power: .80", &p1);
+	autoChooser.AddObject("Power: .75", &p2);
+	autoChooser.AddObject("Power: .70", &p3);
+	autoChooser.AddObject("Power: .65", &p4);
+	autoChooser.AddObject("Power: .85", &p5);
+	autoChooser.AddObject("Power: .90", &p6);
+	SmartDashboard::PutData("Power Chooser", &autoChooser);//sets up power % chooser*/
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
 }
@@ -39,6 +58,34 @@ void ShooterSucker::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void ShooterSucker::Execute()
 {
+	/*string* p = (string *)(autoChooser).GetSelected();//gets power %
+	if((p->compare(".80")) == 0)
+	{
+		HIGHGOALPUSHSPEED = 0.8;
+	}
+	else if((p->compare(".75")) == 0)
+	{
+		HIGHGOALPUSHSPEED = 0.75;
+	}
+	else if((p->compare(".60")) == 0)
+	{
+		HIGHGOALPUSHSPEED = 0.60;
+	}
+	else if((p->compare(".65")) == 0)
+	{
+		HIGHGOALPUSHSPEED = 0.65;
+	}
+	else if((p->compare(".85")) == 0)
+	{
+		HIGHGOALPUSHSPEED = 0.85;
+	}
+	else if((p->compare(".90")) == 0)
+	{
+		HIGHGOALPUSHSPEED = 0.9;
+	}
+	//SmartDashboard::PutString("Power String", *p);
+	SmartDashboard::PutNumber("High Goal Motor Speed", HIGHGOALPUSHSPEED);*/
+
 	buttonNum = oi->getShoot();//gets button number for button that is pressed
 
 	if(buttonNum == BUTTONLB)

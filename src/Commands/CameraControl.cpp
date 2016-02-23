@@ -55,7 +55,7 @@ void CameraControl::Execute()
 
 		if (camNumber ==1)
 		{
-			imaqError = IMAQdxOpenCamera("cam0", IMAQdxCameraControlModeController, &session);
+			imaqError = IMAQdxOpenCamera("cam1", IMAQdxCameraControlModeController, &session);
 			if(imaqError != IMAQdxErrorSuccess) {
 				DriverStation::ReportError("IMAQdxOpenCamera error: " + std::to_string((long)imaqError) + "\n");
 			}
@@ -71,7 +71,7 @@ void CameraControl::Execute()
 		}
 		else
 		{
-			imaqError = IMAQdxOpenCamera("cam1", IMAQdxCameraControlModeController, &session);
+			imaqError = IMAQdxOpenCamera("cam0", IMAQdxCameraControlModeController, &session);
 			if(imaqError != IMAQdxErrorSuccess) {
 				DriverStation::ReportError("IMAQdxOpenCamera error: " + std::to_string((long)imaqError) + "\n");
 			}
@@ -84,6 +84,7 @@ void CameraControl::Execute()
 			imaqError = IMAQdxStartAcquisition(session);
 			if(imaqError != IMAQdxErrorSuccess)
 				DriverStation::ReportError("IMAQdxStartAcquisition error: " + std::to_string((long)imaqError) + "\n");
+
 		}
 
 		currentCamera = camNumber;

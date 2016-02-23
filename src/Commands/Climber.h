@@ -8,7 +8,6 @@ class Climber: public CommandBase
 {
 private:
 	bool bottomSwitchPressed= false;
-	bool topSwitchPressed= false;
 	bool middleSwitchPressed= false;
 	Timer time;
 	bool finish = false;

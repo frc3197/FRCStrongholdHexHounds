@@ -12,12 +12,13 @@ void driveWithJoystick::Initialize()
 	inverse = false;
 	time.Reset();
 	time.Start();
+	chassis->ResetEncoder();
 }
 
 void driveWithJoystick::Execute()
 {
-	counter++;
-	SmartDashboard::PutNumber("Counter", counter);
+	encodeDistance = chassis->GetEncodeDistance();
+	SmartDashboard::PutNumber("Encoder Distances", encodeDistance);
 
 	if(!YPressed)//Y is really Y
 	{//gets y only if y is false

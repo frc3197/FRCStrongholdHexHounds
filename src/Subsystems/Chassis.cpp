@@ -19,8 +19,6 @@ Chassis::Chassis():
 
 	encoderRevolution = gearRatio * wheelDiameter * pi;
 	encoderRevolution /= enconderPulses;
-	//encode.SetDistancePerPulse(encoderRevolution);
-	//encode2.SetDistancePerPulse(encoderRevolution);
 	encode.SetDistancePerPulse(SmartDashboard::GetNumber("Distance_per_pulse", encoderRevolution));
 	encode2.SetDistancePerPulse(SmartDashboard::GetNumber("Distance_per_pulse", encoderRevolution));
 }
