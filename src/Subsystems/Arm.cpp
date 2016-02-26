@@ -5,8 +5,8 @@
 Arm::Arm() :
 		Subsystem("ExampleSubsystem"),
 		can8(8),//can 8
-		limitSwitchUp(7),//top limit switch
-		limitSwitchDown(8)//bottom limit switch
+		limitSwitchUp(8),//top limit switch
+		limitSwitchDown(9)//bottom limit switch
 {
 
 }
@@ -14,6 +14,8 @@ Arm::Arm() :
 void Arm::InitDefaultCommand()
 {
 	SetDefaultCommand(new ArmMover());
+	// Set the default command for a subsystem here.
+	//SetDefaultCommand(new MySpecialCommand());
 }
 
 bool Arm::getLimitSwitchUp()

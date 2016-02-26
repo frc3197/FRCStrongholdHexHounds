@@ -1,11 +1,10 @@
 #include "OI.h"
-#include <SPI.h>
 #include "SPI.h"
 #include <unistd.h>
 
 #define DEADZONE .1
-//#define VOLTAGEMULT 104
-#define VOLTAGEMULT 40.2969076153
+#define VOLTAGEMULT 104
+#define INCHESOFF 2
 #define SCALING .92
 
 OI::OI():
@@ -24,12 +23,11 @@ OI::OI():
 	climberButton1(&climberStick, BUTTON1),//A
 	climberButton4(&climberStick, BUTTON4),//Y
 	climberButton2(&climberStick, BUTTON2),//B
-	climberButton3(&climberStick, BUTTON3), //X
+	climberButton3(&climberStick, BUTTON3),//X
 	ultra(2),//left sensor
 	ultra2(1),//right sensor
-	//rangeFinder(9),//ball sensor
-	//pulseGenerator(0, Relay::kForwardOnly),//pulse generator
-	pulseGenerator(0),
+	rangeFinder(0),//ball sensor
+	pulseGenerator(0),//pulse generator
 	gyro(0),//horizontal gyro
 	elevationGyro(SPI::kOnboardCS0)//elevation gyro
 {
@@ -38,6 +36,12 @@ OI::OI():
 	elevationGyro.Calibrate();
 	elevationGyro.Reset();
 
+	/*pulseGenerator.Set(Relay::kOff);//sets up pulse
+	Wait(.001);
+	pulseGenerator.Set(Relay::kForward);
+	Wait(.001);
+	pulseGenerator.Set(Relay::kOff);*/
+	// Process operator interface input here.
 }
 
 float OI::getLeft()//gets left stick Y value
@@ -91,21 +95,21 @@ void OI::rangeSensor()
 {
 	pulseGenerator.Pulse(1.6);//sets up pulse
 	voltage = ultra.GetAverageVoltage();//gets range sensor 1
-	range = voltage * VOLTAGEMULT;
+	range = voltage * VOLTAGEMULT + INCHESOFF;
 	SmartDashboard::PutNumber("Range", range);
 
 	voltage2 = ultra2.GetAverageVoltage();//gets range sensor 2
-	range2 = voltage2 * VOLTAGEMULT;
+	range2 = voltage2 * VOLTAGEMULT + INCHESOFF;
 	SmartDashboard::PutNumber("Range 2", range2);
 
-	/*if(rangeFinder.Get() == 1)//gets whether there is a ball or not
+	if(rangeFinder.Get() == 1)//gets whether there is a ball or not
 	{
 		SmartDashboard::PutString("ULTRA BALLS", "YES");
 	}
 	else
 	{
 		SmartDashboard::PutString("ULTRA BALLS", "NO");
-	}*/
+	}
 }
 
 bool OI::getBooleanA()
@@ -138,7 +142,7 @@ bool OI::getButtonY()
 
 float OI::getRangeDif()
 {//returns difference between the range sensors
-	return (ultra.GetAverageVoltage() * VOLTAGEMULT) - (ultra2.GetAverageVoltage() * VOLTAGEMULT);
+	return (ultra.GetAverageVoltage() * VOLTAGEMULT + INCHESOFF) - (ultra2.GetAverageVoltage() * VOLTAGEMULT  + INCHESOFF);
 }
 
 float OI::getAngle()
@@ -225,4 +229,13 @@ bool OI::getClimberButton2()
 bool OI::getClimberButton3()
 {//moves arm up
 	return climberButton3.Get();
+}
+
+void OI::RumbleOn()
+{
+	climberStick.SetRumble(Joystick::kLeftRumble, 0.5);
+}
+void OI::RumbleOff()
+{
+	climberStick.SetRumble(Joystick::kLeftRumble, 0);
 }

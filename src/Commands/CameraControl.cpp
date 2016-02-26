@@ -39,7 +39,6 @@ void CameraControl::Execute()
 
 	if (((frameSkip++)%4)==0)
 	{
-
 	unsigned int camNumber = oi->getCameraNumber();
 
 	if (camNumber != currentCamera)

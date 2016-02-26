@@ -46,12 +46,11 @@ private:
 	string currButton;
 	AnalogInput ultra;
 	AnalogInput ultra2;
-	//DigitalInput rangeFinder;
+	DigitalInput rangeFinder;
 	float voltage = 0.0;
 	float range = 0.0;
 	float voltage2 = 0.0;
 	float range2 = 0.0;
-	//Relay pulseGenerator;
 	DigitalOutput pulseGenerator;
 	AnalogGyro gyro;
 	ADXRS450_Gyro elevationGyro;
@@ -89,6 +88,8 @@ public:
 	unsigned int getCameraNumber();
 	bool getClimberButton2();
 	bool getClimberButton3();
+	void RumbleOn();
+	void RumbleOff();
 };
 
 #endif

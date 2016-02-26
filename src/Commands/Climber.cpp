@@ -1,7 +1,8 @@
 #include "Climber.h"
 
-#define CLIMBER_SPEED 1
-#define STOPTIME .5
+#define TIME 2.5
+#define CLIMBER_SPEED .5
+#define STOPTIME 1
 
 
 Climber::Climber()
@@ -46,6 +47,7 @@ else
 down = oi->getClimberButton4();//should climb down
 if(up)
 {//moves up
+	oi->RumbleOn();
 	switch(state)
 	{
 		case 1://climbs up until middle switch is pressed
@@ -66,7 +68,7 @@ if(up)
 		break;
 
 		case 3://climbs up until top switch is pressed
-			climberUp->setCANTalon7(-CLIMBER_SPEED);
+			climberUp->setCANTalon7(CLIMBER_SPEED);
 			if(topSwitchPressed)
 			{
 				finish = true;
@@ -81,10 +83,11 @@ if(up)
 }
 else if(down)
 {//moves down/pulls up
+oi->RumbleOn();
 	switch(state)
 	{
 		case 1://pulls bot up until middle switch is pressed
-			climberUp->setCANTalon7(CLIMBER_SPEED);
+			climberUp->setCANTalon7(-CLIMBER_SPEED);
 			if(middleSwitchPressed)
 			{
 				finish = true;
@@ -98,7 +101,9 @@ else if(down)
 	}
 }
 else
-{}*/
+{
+	oi->RumbleOff();
+}*/
 
 }
 
