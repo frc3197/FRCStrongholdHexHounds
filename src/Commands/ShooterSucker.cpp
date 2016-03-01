@@ -89,11 +89,11 @@ void ShooterSucker::Execute()
 	{
 		time.Start();
 
-		if(time.Get() <STARTTIME)
+		if(time.Get() < STARTTIME)
 		{
 			ballSuckerShooter->setPickupMotorSpeed(LOWGOALRETRACTSPEED);//starts sucking down
 		}
-		else if((time.Get() >= STARTTIME) && (time.Get()<REVTIME))
+		else if((time.Get() >= STARTTIME) && (time.Get() < REVTIME))
 		{
 			ballSuckerShooter->setPickupMotorSpeed(STOPSPEED);//stops sucking down
 			ballSuckerShooter->setHighGoalShoot(HIGHGOALPUSHSPEED);//starts winding up high goal motor

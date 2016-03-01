@@ -16,7 +16,7 @@ private:
 	CANTalon can4;
 	RobotDrive robotDrive;
 	Encoder encode;
-	Encoder encode2;
+	//Encoder encode2;
 
 	int activeCam = 1;
 	double pi = 3.14159265358979323846;

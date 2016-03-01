@@ -11,10 +11,10 @@ Chassis::Chassis():
 	Subsystem("Chassis"),
 	can1(1), can2(2), can3(3), can4(4),
 	robotDrive(can1,can2,can3,can4),
-	encode(1, 2, false, Encoder::k1X),
-	encode2(3, 4, false, Encoder::k1X)
+	encode(1, 2, false, Encoder::k1X)
+	//encode2(3, 4, false, Encoder::k1X)
 {
-	SmartDashboard::PutString("Chassis Working", "yes");
+	//SmartDashboard::PutString("Chassis Working", "yes");
 	robotDrive.SetSafetyEnabled(false);
 
 	encoderRevolution = gearRatio * wheelDiameter * pi;
@@ -22,7 +22,7 @@ Chassis::Chassis():
 	//encode.SetDistancePerPulse(encoderRevolution);
 	//encode2.SetDistancePerPulse(encoderRevolution);
 	encode.SetDistancePerPulse(SmartDashboard::GetNumber("Distance_per_pulse", encoderRevolution));
-	encode2.SetDistancePerPulse(SmartDashboard::GetNumber("Distance_per_pulse", encoderRevolution));
+	//encode2.SetDistancePerPulse(SmartDashboard::GetNumber("Distance_per_pulse", encoderRevolution));
 }
 
 void Chassis::InitDefaultCommand()
@@ -79,19 +79,20 @@ void Chassis::SetCan4Speed(float speed)
 float Chassis::GetEncodeDistance()
 {//gets encoder distance
 	float distance = encode.GetDistance();
-	float distance2 = encode2.GetDistance();
+	//float distance2 = encode2.GetDistance();
 	SmartDashboard::PutNumber("Encoder 1 Value", distance);
-	SmartDashboard::PutNumber("Encoder 2 Value", distance2);
-	SmartDashboard::PutNumber("Average Encoder Value", (distance + distance)/2);
-	return (distance+distance2)/2;
+	//SmartDashboard::PutNumber("Encoder 2 Value", distance2); DON'T DELETE: The practice robot only has one encoder so we will uncomment this for competitions
+	//SmartDashboard::PutNumber("Average Encoder Value", (distance + distance)/2);
+	//return (distance+distance2)/2;
+	return distance;
 }
 
 void Chassis::ResetEncoder()
 {//resets encoder
 	encode.Reset();
-	encode2.Reset();
+	//encode2.Reset();
 	encode.SetDistancePerPulse(encoderRevolution);
-	encode2.SetDistancePerPulse(encoderRevolution);
+	//encode2.SetDistancePerPulse(encoderRevolution);
 }
 
 void Chassis::Turn()

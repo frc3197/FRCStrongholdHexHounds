@@ -1,5 +1,7 @@
 #include "CameraControl.h"
 
+#define cam0 cam2
+
 CameraControl::CameraControl():
 frameSkip(0)
 {
